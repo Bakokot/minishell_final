@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   freeing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/08 23:31:12 by tbarde-c         ###   ########.fr       */
+/*   Created: 2023/11/08 23:22:01 by tbarde-c          #+#    #+#             */
+/*   Updated: 2023/11/08 23:25:16 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//int	main(int argc, char **argv, char **envp)
-int	main()
+void	free_all(t_token **token_lst)
 {
-	char	*line;
-	t_token	**token_lst;
+	t_token	*temp;
 
-
-	while (1)
+	while (*token_lst)
 	{
-		line = readline("minishell $>");
-		//add_history(line);
-		token_lst = tokenize(line);
-		free_all(token_lst);
-		free(line);
-		//rl_clear_history();
+		temp = (*token_lst)->next;
+		free((*token_lst)->token);
+		free(*token_lst);
+		*token_lst = temp;
 	}
+	free(token_lst);
 }

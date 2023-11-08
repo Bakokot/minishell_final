@@ -11,7 +11,7 @@ HEADERS        := $(addprefix $(INC_DIR), $(INC))
 
 SRC_DIR        :=	src/
 SRC            :=	main.c\
-					utils/error.c utils/utils.c utils/token_utils.c\
+					utils/error.c utils/utils.c utils/token_utils.c utils/freeing.c\
 					tokenizer/tokenizer.c
 
 COMPILED = 0

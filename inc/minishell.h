@@ -58,6 +58,11 @@ int		is_double_redirection(char *str);
 char	*ft_strndup(char *s1, size_t size);
 
 /**
+ * Freeing
+*/
+void	free_all(t_token **token_lst);
+
+/**
  * t_token struct utils
 */
 t_token	*create_new_token(char *str, int type);
