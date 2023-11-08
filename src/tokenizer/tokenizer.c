@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 12:56:19 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/08 19:07:38 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/11/08 23:13:16 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,29 @@ static int	skip_quotes(char *line, int *i)
 static void	add_metachar_token(t_token **token_lst, char *line, int *i)
 {
 	char	*str;
+	int		type;
 
+	type = line[*i];
 	if (is_double_redirection(line + *i))
 	{
+		if (type == '>')
+			type = ARO;
+		else if (type == '<')
+			type = HEREDOC;
 		str = ft_strndup(line + *i, 2);
-		add_back_token(token_lst, create_new_token(str));
+		add_back_token(token_lst, create_new_token(str, type));
 		*i+=2;
 	}
 	else
 	{
+		if (type == '>')
+			type = RO;
+		else if (type == '<')
+			type = RI;
+		else if (type == '|')
+			type = PIPE;
 		str = ft_strndup(line + *i, 1);
-		add_back_token(token_lst, create_new_token(str));
+		add_back_token(token_lst, create_new_token(str, type));
 		*i+=2;
 	}
 }
@@ -65,7 +77,7 @@ static void	add_litteral_token(t_token **token_lst, char *line, int *i)
 		dup_size++;
 	}
 	str = ft_strndup(line +  temp_i, dup_size);
-	add_back_token(token_lst, create_new_token(str));
+	add_back_token(token_lst, create_new_token(str, LITTERAL));
 }
 
 /**
@@ -73,9 +85,12 @@ static void	add_litteral_token(t_token **token_lst, char *line, int *i)
 */
 static void	print_token_lst(t_token *token_lst)
 {
+	printf("----- TOKEN LIST -----\n");
 	while (token_lst)
 	{
 		printf("TOKEN == %s\n", token_lst->token);
+		printf("TOKEN == %d\n", token_lst->type);
+		printf("---------------------\n");
 		token_lst = token_lst->next;
 	}
 }
@@ -88,7 +103,7 @@ t_token	**tokenize(char *line)
 	token_lst = malloc(sizeof(t_token *));
 	if (!token_lst)
 		return(log_error(ERR_MALLOC), NULL);
-	*token_lst = create_new_token("to delete"); 
+	*token_lst = create_new_token("to delete", 0); 
 	i = 0;
 	while (line[i])
 	{

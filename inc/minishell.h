@@ -21,7 +21,7 @@
 		LITTERAL	--> (0)		An argument
 		PIPE		-->	(1)		pipe (|)
 		RI			-->	(2)		redirecting input (<)
-		HD			-->	(3)		here documents (<<)
+		HEREDOC		-->	(3)		here documents (<<)
 		RO			-->	(4)		redirecting output (>)
 		ARO			-->	(5)		appending redirecting output (>>)
 */
@@ -30,7 +30,7 @@ typedef enum e_type
 	LITTERAL,
 	PIPE,
 	RI,
-	HD,
+	HEREDOC,
 	RO,
 	ARO,
 	
@@ -60,9 +60,8 @@ char	*ft_strndup(char *s1, size_t size);
 /**
  * t_token struct utils
 */
-t_token	*create_new_token(char *str);
+t_token	*create_new_token(char *str, int type);
 void	add_back_token(t_token **token_lst, t_token *token);
-void	add_one_token(t_token *token, char *str);
 t_token	*get_last_token(t_token *lst);
 
 /**
