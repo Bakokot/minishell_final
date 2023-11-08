@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 12:56:19 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/08 23:13:16 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/11/08 23:19:59 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,15 @@ static void	print_token_lst(t_token *token_lst)
 	}
 }
 
+void	delete_first_token(t_token **token_lst)
+{
+	t_token	*temp;
+
+	temp = (*token_lst);
+	(*token_lst) = (*token_lst)->next;
+	free(temp);
+}
+
 t_token	**tokenize(char *line)
 {
 	t_token	**token_lst;
@@ -114,6 +123,7 @@ t_token	**tokenize(char *line)
 		while (isspace(line[i]))
 			i++;
 	}
+	delete_first_token(token_lst);
 	print_token_lst(*token_lst);
 	return (token_lst);
 }
