@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 12:56:19 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/08 23:19:59 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/11/08 23:39:04 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,18 @@ static void	add_metachar_token(t_token **token_lst, char *line, int *i)
 			type = HEREDOC;
 		str = ft_strndup(line + *i, 2);
 		add_back_token(token_lst, create_new_token(str, type));
-		*i+=2;
+		*i += 2;
 	}
 	else
 	{
-		if (type == '>')
-			type = RO;
-		else if (type == '<')
-			type = RI;
-		else if (type == '|')
-			type = PIPE;
 		str = ft_strndup(line + *i, 1);
-		add_back_token(token_lst, create_new_token(str, type));
-		*i+=2;
+		*i += 1;
+		if (type == '>')
+			add_back_token(token_lst, create_new_token(str, RO));
+		else if (type == '<')
+			add_back_token(token_lst, create_new_token(str, RI));
+		else if (type == '|')
+			add_back_token(token_lst, create_new_token(str, PIPE));
 	}
 }
 
@@ -76,7 +75,7 @@ static void	add_litteral_token(t_token **token_lst, char *line, int *i)
 		*i += 1;
 		dup_size++;
 	}
-	str = ft_strndup(line +  temp_i, dup_size);
+	str = ft_strndup(line + temp_i, dup_size);
 	add_back_token(token_lst, create_new_token(str, LITTERAL));
 }
 
@@ -111,8 +110,8 @@ t_token	**tokenize(char *line)
 
 	token_lst = malloc(sizeof(t_token *));
 	if (!token_lst)
-		return(log_error(ERR_MALLOC), NULL);
-	*token_lst = create_new_token("to delete", 0); 
+		return (log_error(ERR_MALLOC), NULL);
+	*token_lst = create_new_token("to delete", 0);
 	i = 0;
 	while (line[i])
 	{

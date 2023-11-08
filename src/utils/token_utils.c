@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:40:06 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/08 23:09:04 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/11/08 23:32:46 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ t_token	*create_new_token(char *str, int type)
 
 void	add_back_token(t_token **token_lst, t_token *token)
 {
-
 	if (!token_lst || !token)
 		return ;
 	if (*token_lst)
