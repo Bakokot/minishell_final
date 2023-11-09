@@ -72,7 +72,9 @@ char	*ft_strndup(char *s1, size_t size);
 /**
  * Freeing
 */
-void	free_all(t_token **token_lst);
+void	free_all(t_token **token_lst, t_env *env);
+void	free_all_env(t_env *env_lst);
+void	free_all_token(t_token **token_lst);
 
 /**
  * t_token struct utils
