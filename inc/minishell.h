@@ -15,7 +15,7 @@
 /**
  * ERROR MESSAGES
 */
-# define ERR_MALLOC "Memory allocation error"
+# define ERR_MALLOC "Memory allocation error\n"
 
 /*
 		LITTERAL	--> (0)		An argument
@@ -43,13 +43,25 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+typedef struct s_env
+{
+	char				*key;
+	char				**values;
+	struct s_env		*next;
+}	t_env;
+
 /**
- * TOKENIZER
+ * Tokenizer
 */
 t_token	**tokenize(char *line);
 
 /**
- * UTILS
+ * Environment
+*/
+t_env	*init_env(char **envp);
+
+/**
+ * Utils
 */
 int		ft_isspace(char c);
 int		is_quote(char c);
@@ -70,8 +82,19 @@ void	add_back_token(t_token **token_lst, t_token *token);
 t_token	*get_last_token(t_token *lst);
 
 /**
+ * t_env struct utils 
+*/
+t_env	*create_new_env(char *key, char **values);
+void	add_back_env(t_env **env_lst, t_env *env);
+t_env	*get_last_env(t_env *lst);
+
+/**
  * Error management
 */
 void	log_error(char *str);
+
+
+void print_env(t_env *env);
+
 
 #endif
