@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 13:20:03 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/08 23:33:00 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/11/15 14:16:34 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ char	*ft_strndup(char *s1, size_t size)
 	size_t		i;
 	char		*cpy;
 
+	if (size = 0)
+		return (NULL);
 	i = 0;
 	cpy = (char *)malloc(sizeof(*s1) * (size + 1));
 	if (!cpy)
