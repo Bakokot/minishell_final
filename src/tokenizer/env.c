@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:30:00 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/09 16:47:26 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/11/15 14:40:58 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,49 +32,18 @@ static char	*get_env_key(char *envp)
 	return (ft_strndup(envp, i));
 }
 
-/*static int	count_values(char *envp, int i)
+static char	**get_env_values(char *envp)
 {
-	int	count;
+	char	**values;
+	int		i;
 
-	count = 1;
-	while (envp[i])
-	{
-		if (envp[i] == ':')
-			count++;
-		i++;
-	}
-	return (count);
-}*/
-
-/*static void	set_env_values(t_env *env, char *envp)
-{
-	int	i;
-	int	j;
-	int	temp;
-	int	count;
-
-	if (!envp)
-		return ;
 	i = 0;
-	j = 0;
 	while (envp[i] != '=')
 		i++;
-	count = count_values(envp, i);
-	env->values = malloc(sizeof(char *) * count);
-	if (!env->values)
-		return (log_error(ERR_MALLOC));
-	temp = i;
-	while (j < count)
-	{
-		if (envp[i] == ':' || envp[i] == '\0')
-		{
-			env->values[j] = ft_strndup(envp + temp, temp - i);
-			temp = i;
-			j++;
-		}
-		i++;
-	}
-}*/
+	i++;
+	values = ft_split(envp + i, ':');
+	return (values);
+}
 
 t_env	*init_env(char **envp)
 {
@@ -82,17 +51,18 @@ t_env	*init_env(char **envp)
 	t_env	*env;
 	t_env	*new;
 	char	*key;
-	//char	**values;
+	char	**values;
 
 	env = NULL;
 	i = 0;
 	while (envp[i])
 	{
 		key = get_env_key(envp[i]);
-		//values = get_env_values(env, envp[i]);
-		new = create_new_env(key, NULL);
+		values = get_env_values(envp[i]);
+		new = create_new_env(key, values);
 		add_back_env(&env, new);
 		i++;
 	}
+	(void)values;
 	return (env);
 }

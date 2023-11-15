@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/09 16:59:40 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/11/15 14:39:52 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,19 @@
 
 void print_env(t_env *env)
 {
+	int	i;
+
+	i = 0;
 	while (env)
 	{
+		printf("------------\n");
 		printf("KEY --> %s\n", env->key);
+		while (env->values[i])
+		{
+			printf("	VALUE --> %s\n", env->values[i]);
+			i++;
+		}
+		i = 0;
 		env = env->next;
 	}
 }
@@ -38,7 +48,6 @@ int	main(int argc, char **argv, char **envp)
 		i++;
 	}*/
 	env = init_env(envp);
-	printf("env-next %s\n", env->next->key);
 	print_env(env);
 	while (1)
 	{
