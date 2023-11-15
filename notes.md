@@ -19,10 +19,29 @@ RMQ : on n'a pas à prendre en compte le backslash qui nous amènerait à devoir
 
 ## Différents types de TOKENS
 
+		LITTERAL	--> (0)		An argument
+		PIPE		-->	(1)		pipe (|)
+		RI			-->	(2)		redirecting input (<)
+		HEREDOC		-->	(3)		here documents (<<)
+		RO			-->	(4)		redirecting output (>)
+		ARO			-->	(5)		appending redirecting output (>>)
+
 ## Checker que les quotes sont bien fermées lors de l'input ?
 
-## RMQ : Multiples Redirecting Input
+## QUELQUES CAS PARTICULIERS
 
-- Quand on a de multiples redirecting input 
+### RMQ : Multiples Redirecting Input
+
+Quand on a de multiples redirecting input 
   --> cat <firstfile <secondfile
   Seul le dernier redirecting input de la commande est pris en compte
+
+### RMQ : Comportement avec pipe et redirecting outputs
+
+--> ls >> outfile | cat --> cat n'imprime rien car la sortie de ls est dans l'outfile, donc on n'envoie aucune entrée à la commande cat
+
+# Environment
+
+On a une structure qui stocke l'environnement : 
+- char *key : La clef de la variable (ce qui se trouve avant le premier signe égal)
+- char **values : les valeurs de la variable (séparées par ':' s'il y en a plusieurs)
