@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/15 14:39:52 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/11/15 15:25:15 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = readline("minishell $>");
 		add_history(line);
-		token_lst = tokenize(line);
+		token_lst = tokenize(line, env);
 		free_all(token_lst, env);
 		free(line);
 		rl_clear_history();

@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 12:56:19 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/08 23:39:04 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/11/16 18:48:36 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,16 +94,8 @@ static void	print_token_lst(t_token *token_lst)
 	}
 }
 
-void	delete_first_token(t_token **token_lst)
-{
-	t_token	*temp;
 
-	temp = (*token_lst);
-	(*token_lst) = (*token_lst)->next;
-	free(temp);
-}
-
-t_token	**tokenize(char *line)
+t_token	**tokenize(char *line, t_env *env)
 {
 	t_token	**token_lst;
 	int		i;
@@ -123,6 +115,18 @@ t_token	**tokenize(char *line)
 			i++;
 	}
 	delete_first_token(token_lst);
+	/**
+	 * Debug print
+	*/
+	printf("--------------------------------\n");
+	printf("TOKEN LIST BEFORE REPLACING $VAR\n");
+	printf("--------------------------------\n");
+	print_token_lst(*token_lst);
+	(void)env;
+	replace_vars(token_lst, env);
+	printf("--------------------------------\n");
+	printf("TOKEN LIST AFTER REPLACING $VAR\n");
+	printf("--------------------------------\n");
 	print_token_lst(*token_lst);
 	return (token_lst);
 }

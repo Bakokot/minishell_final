@@ -53,12 +53,28 @@ typedef struct s_env
 /**
  * Tokenizer
 */
-t_token	**tokenize(char *line);
+t_token	**tokenize(char *line, t_env *env);
+void	replace_vars(t_token **token_lst, t_env *env);
+
+/**
+ * t_token struct utils
+*/
+t_token	*create_new_token(char *str, int type);
+void	add_back_token(t_token **token_lst, t_token *token);
+t_token	*get_last_token(t_token *lst);
+void	delete_first_token(t_token **token_lst);
 
 /**
  * Environment
 */
 t_env	*init_env(char **envp);
+
+/**
+ * t_env struct utils 
+*/
+t_env	*create_new_env(char *key, char **values);
+void	add_back_env(t_env **env_lst, t_env *env);
+t_env	*get_last_env(t_env *lst);
 
 /**
  * Utils
@@ -77,26 +93,13 @@ void	free_all_env(t_env *env_lst);
 void	free_all_token(t_token **token_lst);
 
 /**
- * t_token struct utils
-*/
-t_token	*create_new_token(char *str, int type);
-void	add_back_token(t_token **token_lst, t_token *token);
-t_token	*get_last_token(t_token *lst);
-
-/**
- * t_env struct utils 
-*/
-t_env	*create_new_env(char *key, char **values);
-void	add_back_env(t_env **env_lst, t_env *env);
-t_env	*get_last_env(t_env *lst);
-
-/**
  * Error management
 */
 void	log_error(char *str);
 
-
+/**
+ * TO ERASE IN THE END
+*/
 void print_env(t_env *env);
-
 
 #endif

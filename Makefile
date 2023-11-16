@@ -12,8 +12,8 @@ HEADERS        := $(addprefix $(INC_DIR), $(INC))
 SRC_DIR        :=	src/
 SRC            :=	main.c\
 					utils/error.c utils/utils.c utils/freeing.c\
-					tokenizer/tokenizer.c tokenizer/token_utils.c\
-					env/env_utils.c env/env.c
+					env/env_utils.c env/env.c\
+					tokenizer/tokenizer.c tokenizer/replace_vars.c tokenizer/token_utils.c
 
 COMPILED = 0
 TOTAL_COMPILATION = $(shell ((echo ${SRC}) | wc -w | sed -e 's/^[ \t]*//'))

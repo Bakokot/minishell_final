@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:40:06 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/08 23:32:46 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/11/15 14:58:03 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,13 @@ t_token	*get_last_token(t_token *lst)
 		lst = lst->next;
 	}
 	return (lst);
+}
+
+void	delete_first_token(t_token **token_lst)
+{
+	t_token	*temp;
+
+	temp = (*token_lst);
+	(*token_lst) = (*token_lst)->next;
+	free(temp);
 }

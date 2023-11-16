@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 23:22:01 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/09 16:59:17 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/11/16 18:29:58 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ void	free_all_env(t_env *env_lst)
 		{	
 			while (env_lst->values[i])
 			{
-				free(env_lst->values);
+				free(env_lst->values[i]);
 				i++;
 			}
+			i = 0;
 		}
 		free(env_lst);
 		env_lst = temp;
