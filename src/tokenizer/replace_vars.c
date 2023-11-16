@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:06:21 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/16 18:12:07 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/11/16 23:54:37 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,52 +17,28 @@
  * @return NULL if the KEY doesn't exist //
  * @return KEY VALUES if the KEY exists
 */
-static char	**lookup_key(char *key, t_env *env)
+static char	*lookup_values(char *key, t_env *env)
 {
 	while (env)
 	{
-		if (key == env->key)
+		if (ft_strcmp(key, env->key) == 0)
 			return (env->values);
 		env = env->next;
 	}
 	return (NULL);
 }
 
-static char	*add_values(char *dollarless_token, char **values)
+static char	*add_values(char *dollarless_token, char *values)
 {
-	int		i;
-	char	*to_add;
-	char	*dup;
 	char	*temp;
 
-	temp = NULL;
-	to_add = NULL;
-	i = 0;
-	while (values[i])
-	{
-		if (temp != NULL)
-			free(temp);
-		dup = ft_strdup(values[i]);
-		if (to_add == NULL)
-			to_add = dup;
-		else
-		{
-			temp = to_add;
-			to_add = ft_strjoin(to_add, dup);
-			free(temp);
-			free(dup);
-		}
-		i++;
-	}
+	temp = dollarless_token;
 	if (dollarless_token == NULL)
-		dollarless_token = to_add;
+		dollarless_token = ft_strdup(values);
 	else
-	{
-		temp = dollarless_token;
-		dollarless_token = ft_strjoin(dollarless_token, to_add);
+		dollarless_token = ft_strjoin(dollarless_token, values);
+	if (temp != NULL)
 		free(temp);
-		free(to_add);
-	}
 	return (dollarless_token);
 }
 
@@ -78,16 +54,16 @@ static char *replace_dollar(t_token *token, int *i, char *dollarless_token, t_en
 {
 	char	*key;
 	char	*tkn;
-	char	**values;
+	char	*values;
 	int		marker;
 	
 	*i += 1;
 	tkn = token->token;
 	marker = *i;
-	while (tkn[*i] != ' ' && !is_quote(tkn[*i]) && tkn[*i])
+	while (tkn[*i] != ' ' && !is_quote(tkn[*i]) && tkn[*i] && tkn[*i] != '$')
 		*i += 1;
 	key = strndup(tkn + marker, *i - marker);
-	values = lookup_key(key, env);
+	values = lookup_values(key, env);
 	if (values != NULL)
 	{
 		dollarless_token = add_values(dollarless_token, values);
@@ -132,6 +108,7 @@ static void	lookup_dollars(t_token *token, t_env *env)
 	int		marker;
 	int		flag_quotes;
 	char	*dollarless_token;
+	char	*temp;
 
 	dollarless_token = NULL;
 	i = 0;
@@ -149,11 +126,15 @@ static void	lookup_dollars(t_token *token, t_env *env)
 		{
 			dollarless_token = update_dollarless_token(token, i, marker, dollarless_token);
 		}
+		printf("BEFORE %s\n", dollarless_token);
 		if (token->token[i] == '$')
 		{
-			replace_dollar(token, &i, dollarless_token, env);
+			dollarless_token = replace_dollar(token, &i, dollarless_token, env);
 		}
 	}
+	temp = token->token;
+	token->token = dollarless_token;
+	free(temp);
 }
 
 void	replace_vars(t_token **token_lst, t_env *env)

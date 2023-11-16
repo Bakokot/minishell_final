@@ -46,7 +46,7 @@ typedef struct s_token
 typedef struct s_env
 {
 	char				*key;
-	char				**values;
+	char				*values;
 	struct s_env		*next;
 }	t_env;
 
@@ -72,7 +72,7 @@ t_env	*init_env(char **envp);
 /**
  * t_env struct utils 
 */
-t_env	*create_new_env(char *key, char **values);
+t_env	*create_new_env(char *key, char *values);
 void	add_back_env(t_env **env_lst, t_env *env);
 t_env	*get_last_env(t_env *lst);
 
@@ -84,6 +84,7 @@ int		is_quote(char c);
 int		is_metachar(char c);
 int		is_double_redirection(char *str);
 char	*ft_strndup(char *s1, size_t size);
+int		ft_strcmp(char *s1, char *s2);
 
 /**
  * Freeing

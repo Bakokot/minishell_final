@@ -6,13 +6,13 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:29:20 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/09 16:46:39 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/11/16 23:21:57 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*create_new_env(char *key, char **values)
+t_env	*create_new_env(char *key, char *values)
 {
 	t_env	*new_env;
 

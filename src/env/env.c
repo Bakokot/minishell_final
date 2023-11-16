@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:30:00 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/15 14:40:58 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/11/16 23:24:59 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ static char	*get_env_key(char *envp)
 	return (ft_strndup(envp, i));
 }
 
-static char	**get_env_values(char *envp)
+static char	*get_env_values(char *envp)
 {
-	char	**values;
+	char	*values;
 	int		i;
 
 	i = 0;
 	while (envp[i] != '=')
 		i++;
 	i++;
-	values = ft_split(envp + i, ':');
+	values = ft_strdup(envp + i);
 	return (values);
 }
 
@@ -51,7 +51,7 @@ t_env	*init_env(char **envp)
 	t_env	*env;
 	t_env	*new;
 	char	*key;
-	char	**values;
+	char	*values;
 
 	env = NULL;
 	i = 0;
@@ -63,6 +63,5 @@ t_env	*init_env(char **envp)
 		add_back_env(&env, new);
 		i++;
 	}
-	(void)values;
 	return (env);
 }

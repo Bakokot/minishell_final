@@ -2,7 +2,7 @@
 
 - QUOTES NON FERMES : ajouter un prompt puis strjoin avec la line d'avant
 - $ tout seul sans variable : à traiter comme un char littéral
-- Gérer les variables avec plusieurs :: pour ne pas perdre ces :: dans les values
+- DANS ENV : VALUES --> Passer en char *
 
 
 MINISHELL
