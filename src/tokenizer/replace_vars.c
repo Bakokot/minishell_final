@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:06:21 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/16 23:54:37 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/11/17 15:14:02 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,12 +122,19 @@ static void	lookup_dollars(t_token *token, t_env *env)
 			i++;
 			flag_quotes = is_quote(token->token[i]);
 		}
-		if (i != marker)
+		if (token->token[i] == '\'')
+		{
+			i++;
+			while (token->token[i] != '\'')
+				i++;
+			i++;
+			dollarless_token = update_dollarless_token(token, i, marker, dollarless_token);
+		}
+		else if (i != marker)
 		{
 			dollarless_token = update_dollarless_token(token, i, marker, dollarless_token);
 		}
-		printf("BEFORE %s\n", dollarless_token);
-		if (token->token[i] == '$')
+		else if (token->token[i] == '$')
 		{
 			dollarless_token = replace_dollar(token, &i, dollarless_token, env);
 		}
