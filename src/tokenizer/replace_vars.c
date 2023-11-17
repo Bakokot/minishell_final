@@ -6,27 +6,11 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:06:21 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/17 15:14:02 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/11/17 15:22:40 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * Look for the key in the env struct to check its existence
- * @return NULL if the KEY doesn't exist //
- * @return KEY VALUES if the KEY exists
-*/
-static char	*lookup_values(char *key, t_env *env)
-{
-	while (env)
-	{
-		if (ft_strcmp(key, env->key) == 0)
-			return (env->values);
-		env = env->next;
-	}
-	return (NULL);
-}
 
 static char	*add_values(char *dollarless_token, char *values)
 {
@@ -50,13 +34,14 @@ static char	*add_values(char *dollarless_token, char *values)
  * --> Else
  * - We add the VALUES connected to the KEY to the dollarless_token 
 */
-static char *replace_dollar(t_token *token, int *i, char *dollarless_token, t_env *env)
+static char	*replace_dollar(t_token *token, int *i, \
+char *dollarless_token, t_env *env)
 {
 	char	*key;
 	char	*tkn;
 	char	*values;
 	int		marker;
-	
+
 	*i += 1;
 	tkn = token->token;
 	marker = *i;
@@ -76,7 +61,8 @@ static char *replace_dollar(t_token *token, int *i, char *dollarless_token, t_en
  * Update the dolalrless token by adding the part we analyzed that doesn't
  * contain any $VAR
 */
-static char	*update_dollarless_token(t_token *token, int i, int marker, char *new_token)
+static char	*update_dollarless_token(t_token *token, int i, \
+int marker, char *new_token)
 {
 	char	*new_token_adress;
 	char	*strndup_adress;
@@ -106,41 +92,32 @@ static void	lookup_dollars(t_token *token, t_env *env)
 {
 	int		i;
 	int		marker;
-	int		flag_quotes;
-	char	*dollarless_token;
+	char	*dollarless;
 	char	*temp;
 
-	dollarless_token = NULL;
+	dollarless = NULL;
 	i = 0;
 	marker = 0;
 	while (token->token[i])
 	{
-		flag_quotes = is_quote(token->token[i]);
 		marker = i;
-		while (token->token[i] != '$' && flag_quotes != '\'' && token->token[i])
-		{
+		while (token->token[i] != '$' && token->token[i] != '\'' && token->token[i])
 			i++;
-			flag_quotes = is_quote(token->token[i]);
-		}
 		if (token->token[i] == '\'')
 		{
 			i++;
 			while (token->token[i] != '\'')
 				i++;
 			i++;
-			dollarless_token = update_dollarless_token(token, i, marker, dollarless_token);
+			dollarless = update_dollarless_token(token, i, marker, dollarless);
 		}
 		else if (i != marker)
-		{
-			dollarless_token = update_dollarless_token(token, i, marker, dollarless_token);
-		}
+			dollarless = update_dollarless_token(token, i, marker, dollarless);
 		else if (token->token[i] == '$')
-		{
-			dollarless_token = replace_dollar(token, &i, dollarless_token, env);
-		}
+			dollarless = replace_dollar(token, &i, dollarless, env);
 	}
 	temp = token->token;
-	token->token = dollarless_token;
+	token->token = dollarless;
 	free(temp);
 }
 

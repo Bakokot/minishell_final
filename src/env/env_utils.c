@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:29:20 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/16 23:21:57 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/11/17 15:22:04 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,20 @@ t_env	*get_last_env(t_env *lst)
 		lst = lst->next;
 	}
 	return (lst);
+}
+
+/**
+ * Look for the key in the env struct to check its existence
+ * @return NULL if the KEY doesn't exist //
+ * @return KEY VALUES if the KEY exists
+*/
+char	*lookup_values(char *key, t_env *env)
+{
+	while (env)
+	{
+		if (ft_strcmp(key, env->key) == 0)
+			return (env->values);
+		env = env->next;
+	}
+	return (NULL);
 }
