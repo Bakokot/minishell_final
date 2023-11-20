@@ -35,11 +35,17 @@ RMQ : on n'a pas à prendre en compte le backslash qui nous amènerait à devoir
 
 ## QUELQUES CAS PARTICULIERS
 
-### RMQ : Multiples Redirecting Input
+### RMQ : Multiples Redirecting Input / Output
 
 Quand on a de multiples redirecting input 
   --> cat <firstfile <secondfile
   Seul le dernier redirecting input de la commande est pris en compte
+  --> ls >out1 >out2
+  Le résultat de ls est écrit dans out2. Cependant, un fichier a bien été créé pour out1 ET out2
+
+Quand on a un redirecting input après un |
+ --> ls | cat < TODO
+ CAT VA PRENDRE EN INPUT TODO et pas l'output de ls !
 
 ### RMQ : Comportement avec pipe et redirecting outputs
 
