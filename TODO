@@ -1,0 +1,15 @@
+- QUOTES NON FERMES : ajouter un prompt puis strjoin avec la line d'avant
+- execve use char** env : should we forget about the env struct ? 
+- Signal handling
+  - cntrl + c --> Nothing and display ^C
+  - cntrl + D --> end an EOF : exit
+  - cntrl + \ --> Nothing happens
+
+- Freeing function that frees everything and can be called upon exit
+- Redirections
+  - >
+  - >>
+  - <<
+  - <
+    - --> SI plusiuers redirections out : on crée bien le fichier pour chaque redirection, mais on n'écrit le résultat que dans le dernier output redir
+- Execution with pipes

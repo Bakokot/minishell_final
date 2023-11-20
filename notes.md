@@ -1,8 +1,6 @@
 # TOFIX
 
-- QUOTES NON FERMES : ajouter un prompt puis strjoin avec la line d'avant
-- $ tout seul sans variable : à traiter comme un char littéral
-- DANS ENV : VALUES --> Passer en char *
+
 
 
 MINISHELL

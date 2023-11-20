@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:06:21 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/17 15:22:40 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/11/20 12:49:34 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,9 @@ int marker, char *new_token)
  * -------------------------------------------------------
  * To know how many char we wanna copy, we keep a marker
  * that remembers the index i before we started counting
+ * 
+ * If we find a $ alone, we consider the $ as a litteral char
+ * like we do in bash
 */
 static void	lookup_dollars(t_token *token, t_env *env)
 {
@@ -95,6 +98,13 @@ static void	lookup_dollars(t_token *token, t_env *env)
 	char	*dollarless;
 	char	*temp;
 
+	if (token->token[0] == '$' && token->token[1] == '\0')
+	{
+		temp = token->token;
+		token->token = ft_strdup("$");
+		free(temp);
+		return ;
+	}
 	dollarless = NULL;
 	i = 0;
 	marker = 0;
