@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/16 23:59:50 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/11/29 15:18:31 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 		add_history(line);
 		token_lst = tokenize(line, env);
 		free_all_token(token_lst);
-		free(line);
+		free(line); dazdaz
 	}
 	//rl_clear_history();
 	//free_all_env ou free_all
