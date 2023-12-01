@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 13:08:59 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/30 11:31:20 by yallo            ###   ########.fr       */
+/*   Created: 2023/11/30 11:56:31 by yallo             #+#    #+#             */
+/*   Updated: 2023/11/30 12:19:06 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlen(const char *s)
+//ajouter cd No arg --> cd $HOME
+
+int	cd(t_token	*token_lst)
 {
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	token_lst = token_lst->next;
+	if (chdir(token_lst->token) == -1)
+	{
+		printf("cd: %s: No such file or directory\n", token_lst->token);
+		return (1);
+	}
+	return (0);
 }

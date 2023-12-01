@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 13:08:59 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/30 11:31:20 by yallo            ###   ########.fr       */
+/*   Created: 2023/11/29 19:15:09 by yallo             #+#    #+#             */
+/*   Updated: 2023/11/30 11:54:27 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlen(const char *s)
+// echo -n --> int option != 0
+int	echo(t_token *token_lst, int option)
 {
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	while (token_lst != NULL && token_lst->type == 0)
+	{
+		printf("%s", token_lst->token);
+		if (token_lst->next)
+			printf(" ");
+		token_lst = token_lst->next;
+	}
+	if (option == 0)
+		printf("\n");
+	return (0);
 }

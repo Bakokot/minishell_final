@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/16 23:59:50 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:58:27 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	main(int argc, char **argv, char **envp)
 	t_token	**token_lst;
 	t_env	*env;
 
-	(void)argc;
 	(void)argv;
 	/*int	i;
 	i = 0;
@@ -40,6 +39,8 @@ int	main(int argc, char **argv, char **envp)
 		printf("%s\n", envp[i]);
 		i++;
 	}*/
+	if (argc > 1)
+		return (printf("./minishell takes no argument\n"), 0);
 	env = init_env(envp);
 	print_env(env);
 	while (1)

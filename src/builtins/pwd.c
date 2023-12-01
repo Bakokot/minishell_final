@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 13:08:59 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/30 11:31:20 by yallo            ###   ########.fr       */
+/*   Created: 2023/11/30 11:51:01 by yallo             #+#    #+#             */
+/*   Updated: 2023/11/30 11:51:52 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlen(const char *s)
+int	pwd(void)
 {
-	size_t	i;
+	char	path[1024];
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	if (getcwd(path, 1024) == NULL)
+		return (1);
+	printf("%s\n", path);
+	return (0);
 }

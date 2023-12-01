@@ -33,7 +33,7 @@ typedef enum e_type
 	HEREDOC,
 	RO,
 	ARO,
-	
+
 }	t_type;
 
 typedef struct s_token
@@ -70,7 +70,7 @@ void	delete_first_token(t_token **token_lst);
 t_env	*init_env(char **envp);
 
 /**
- * t_env struct utils 
+ * t_env struct utils
 */
 t_env	*create_new_env(char *key, char *values);
 void	add_back_env(t_env **env_lst, t_env *env);
@@ -86,6 +86,14 @@ int		is_metachar(char c);
 int		is_double_redirection(char *str);
 char	*ft_strndup(char *s1, size_t size);
 int		ft_strcmp(char *s1, char *s2);
+
+//Builtins
+int	echo(t_token *token_lst, int option);
+int	env_builtin(t_env *env);
+int	pwd(void);
+int	cd(t_token	*token_lst);
+int	export(t_token *token_lst, t_env **env);
+int	unset(t_token *token_lst, t_env **env);
 
 /**
  * Freeing
