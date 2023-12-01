@@ -91,7 +91,7 @@ int		ft_strcmp(char *s1, char *s2);
 int	echo(t_token *token_lst, int option);
 int	env_builtin(t_env *env);
 int	pwd(void);
-int	cd(t_token	*token_lst);
+int	cd(t_token	*token_lst, t_env *env);
 int	export(t_token *token_lst, t_env **env);
 int	unset(t_token *token_lst, t_env **env);
 
