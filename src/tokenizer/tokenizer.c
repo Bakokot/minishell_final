@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 12:56:19 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/17 00:00:05 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/01 13:03:24 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	add_litteral_token(t_token **token_lst, char *line, int *i)
 
 	dup_size = 0;
 	temp_i = *i;
-	while (!is_metachar(line[*i]) && !isspace(line[*i]) && line[*i])
+	while (!is_metachar(line[*i]) && !ft_isspace(line[*i]) && line[*i])
 	{
 		dup_size += skip_quotes(line, i);
 		*i += 1;
@@ -111,7 +111,7 @@ t_token	**tokenize(char *line, t_env *env)
 			add_metachar_token(token_lst, line, &i);
 		else
 			add_litteral_token(token_lst, line, &i);
-		while (isspace(line[i]))
+		while (ft_isspace(line[i]))
 			i++;
 	}
 	delete_first_token(token_lst);

@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:06:21 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/20 12:49:34 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/01 13:33:51 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,32 @@ static char	*add_values(char *dollarless_token, char *values)
 		dollarless_token = ft_strdup(values);
 	else
 		dollarless_token = ft_strjoin(dollarless_token, values);
+	if (temp != NULL)
+		free(temp);
+	return (dollarless_token);
+}
+
+/**
+ * When we have a $ followed by space or nothing,
+ * we treat the $ as a litteral char
+*/
+static char	*add_litteral_dollar(char *dollarless_token, int *i, char *tkn)
+{
+	char	*temp;
+
+	temp = dollarless_token;
+	if (tkn[*i] != '$')
+	{
+		dollarless_token = ft_strjoin(dollarless_token, "$");
+	}
+	if (tkn[*i] == '$')
+	{
+		if (dollarless_token == NULL)
+			dollarless_token = ft_strdup("$$");
+		else
+			dollarless_token = ft_strjoin(dollarless_token, "$$");
+		*i += 1;
+	}
 	if (temp != NULL)
 		free(temp);
 	return (dollarless_token);
@@ -45,6 +71,8 @@ char *dollarless_token, t_env *env)
 	*i += 1;
 	tkn = token->token;
 	marker = *i;
+	if (!tkn[*i] || ft_isspace(tkn[*i]) || tkn[*i] == '$')
+	 	return (add_litteral_dollar(dollarless_token, i, tkn));
 	while (tkn[*i] != ' ' && !is_quote(tkn[*i]) && tkn[*i] && tkn[*i] != '$')
 		*i += 1;
 	key = strndup(tkn + marker, *i - marker);
