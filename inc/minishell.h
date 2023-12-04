@@ -76,6 +76,8 @@ t_env	*create_new_env(char *key, char *values);
 void	add_back_env(t_env **env_lst, t_env *env);
 t_env	*get_last_env(t_env *lst);
 char	*lookup_values(char *key, t_env *env);
+char	*get_env_key(char *envp);
+char	*get_env_values(char *envp);
 
 /**
  * Utils
