@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:12:08 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/05 12:31:36 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/05 12:36:33 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ static void	ctrl_c_handler(int sig)
 }
 
 /**
- * [Ctrl + \ ]	SIGQUIT
- * [CTRL + C ]	SIGINT
- * [CTRL + D ]	
+ * [Ctrl + \]	SIGQUIT --> ignored
+ * [CTRL + C]	SIGINT --> print ^C and make a new prompt
+ * [CTRL + D]	End Of File (EOF)
 */
 void	signal_handling(void)
 {

@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/01 15:33:16 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/05 12:39:18 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,13 @@ static char	*read_new_line(char *line)
 	return (line);
 }
 
+/**
+ * EXPLANATION : 
+ * if (line == NULL)
+		exit(0);
+	--> line == NULL when we ctrl + D // EOF !
+	--> so we exit when we do ctrl + D
+*/
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
@@ -83,6 +90,8 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line = readline("minishell $>");
+		if (line == NULL)
+			exit(0);
 		while (close_quotes(line) == false)
 			line = read_new_line(line);
 		printf("the line we entered is : %s\n", line);
