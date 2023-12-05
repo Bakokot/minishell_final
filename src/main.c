@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/05 12:39:18 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/05 12:44:33 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,10 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = readline("minishell $>");
 		if (line == NULL)
+		{
+			// need to implement a freeing function with garbage collector to exit without memory leaks since we allocated env
 			exit(0);
+		}
 		while (close_quotes(line) == false)
 			line = read_new_line(line);
 		printf("the line we entered is : %s\n", line);
