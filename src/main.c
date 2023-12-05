@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/01 14:12:23 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:33:16 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	main(int argc, char **argv, char **envp)
 	}*/
 	env = init_env(envp);
 	print_env(env);
+	signal_handling();
 	while (1)
 	{
 		line = readline("minishell $>");

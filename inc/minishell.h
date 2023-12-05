@@ -7,6 +7,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdbool.h>
+# include <signal.h>
 
 # include "../libft/inc/libft.h"
 
@@ -99,6 +100,11 @@ void	free_all_token(t_token **token_lst);
  * Error management
 */
 void	log_error(char *str);
+
+/**
+ * Signals management
+*/
+void	signal_handling(void);
 
 /**
  * TO ERASE IN THE END
