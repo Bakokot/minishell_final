@@ -6,12 +6,12 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:47:32 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/01 13:33:12 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/05 13:52:21 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "stdio.h"
+
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*ret;
