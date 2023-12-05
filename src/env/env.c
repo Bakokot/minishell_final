@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:30:00 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/16 23:24:59 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:59:29 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 /**
  * Set the key to the environment struct
  * KEY --> What's before the =
- * For example : 
+ * For example :
  * PATH= /home/whatever/whatever:/another/path
  * |----|-----------------------|-------------|
  *  KEY      VALUE NUMBER 1      VALUE NMBER 2
 */
-static char	*get_env_key(char *envp)
+char	*get_env_key(char *envp)
 {
 	int	i;
 
@@ -32,7 +32,7 @@ static char	*get_env_key(char *envp)
 	return (ft_strndup(envp, i));
 }
 
-static char	*get_env_values(char *envp)
+char	*get_env_values(char *envp)
 {
 	char	*values;
 	int		i;
