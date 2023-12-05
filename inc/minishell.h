@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
+/*   Updated: 2023/12/05 13:45:54 by tbarde-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -35,7 +47,6 @@ typedef enum e_type
 	HEREDOC,
 	RO,
 	ARO,
-	
 }	t_type;
 
 typedef struct s_token
@@ -57,6 +68,10 @@ typedef struct s_env
 */
 t_token	**tokenize(char *line, t_env *env);
 void	replace_vars(t_token **token_lst, t_env *env);
+void	skip_single_quotes(int *i, char *str);
+bool	single_dollar(t_token *token);
+char	*update_dollarless_token(t_token *token, int i, \
+int marker, char *new_token);
 
 /**
  * t_token struct utils
@@ -65,6 +80,8 @@ t_token	*create_new_token(char *str, int type);
 void	add_back_token(t_token **token_lst, t_token *token);
 t_token	*get_last_token(t_token *lst);
 void	delete_first_token(t_token **token_lst);
+char	*add_litteral_dollar(char *dollarless_token, int *i, char *tkn);
+void	set_new_token(t_token *token, char *dollarless);
 
 /**
  * Environment
@@ -109,6 +126,6 @@ void	signal_handling(void);
 /**
  * TO ERASE IN THE END
 */
-void print_env(t_env *env);
+void	print_env(t_env *env);
 
 #endif

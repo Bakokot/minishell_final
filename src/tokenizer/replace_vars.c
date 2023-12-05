@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:06:21 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/01 13:33:51 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/05 13:46:23 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,6 @@ static char	*add_values(char *dollarless_token, char *values)
 		dollarless_token = ft_strdup(values);
 	else
 		dollarless_token = ft_strjoin(dollarless_token, values);
-	if (temp != NULL)
-		free(temp);
-	return (dollarless_token);
-}
-
-/**
- * When we have a $ followed by space or nothing,
- * we treat the $ as a litteral char
-*/
-static char	*add_litteral_dollar(char *dollarless_token, int *i, char *tkn)
-{
-	char	*temp;
-
-	temp = dollarless_token;
-	if (tkn[*i] != '$')
-	{
-		dollarless_token = ft_strjoin(dollarless_token, "$");
-	}
-	if (tkn[*i] == '$')
-	{
-		if (dollarless_token == NULL)
-			dollarless_token = ft_strdup("$$");
-		else
-			dollarless_token = ft_strjoin(dollarless_token, "$$");
-		*i += 1;
-	}
 	if (temp != NULL)
 		free(temp);
 	return (dollarless_token);
@@ -72,7 +46,7 @@ char *dollarless_token, t_env *env)
 	tkn = token->token;
 	marker = *i;
 	if (!tkn[*i] || ft_isspace(tkn[*i]) || tkn[*i] == '$')
-	 	return (add_litteral_dollar(dollarless_token, i, tkn));
+		return (add_litteral_dollar(dollarless_token, i, tkn));
 	while (tkn[*i] != ' ' && !is_quote(tkn[*i]) && tkn[*i] && tkn[*i] != '$')
 		*i += 1;
 	key = strndup(tkn + marker, *i - marker);
@@ -86,26 +60,13 @@ char *dollarless_token, t_env *env)
 }
 
 /**
- * Update the dolalrless token by adding the part we analyzed that doesn't
- * contain any $VAR
+ * Simple value initialization of lookup_dollars
 */
-static char	*update_dollarless_token(t_token *token, int i, \
-int marker, char *new_token)
+static void	init_values(char **dollarless, int *i, int *marker)
 {
-	char	*new_token_adress;
-	char	*strndup_adress;
-
-	new_token_adress = new_token;
-	strndup_adress = ft_strndup(token->token + marker, i - marker);
-	if (new_token != NULL)
-	{
-		new_token = ft_strjoin(new_token, strndup_adress);
-		free(new_token_adress);
-		free(strndup_adress);
-	}
-	else
-		new_token = strndup_adress;
-	return (new_token);
+	*i = 0;
+	*marker = 0;
+	*dollarless = NULL;
 }
 
 /**
@@ -124,29 +85,19 @@ static void	lookup_dollars(t_token *token, t_env *env)
 	int		i;
 	int		marker;
 	char	*dollarless;
-	char	*temp;
 
-	if (token->token[0] == '$' && token->token[1] == '\0')
-	{
-		temp = token->token;
-		token->token = ft_strdup("$");
-		free(temp);
+	if (single_dollar(token) == true)
 		return ;
-	}
-	dollarless = NULL;
-	i = 0;
-	marker = 0;
+	init_values(&dollarless, &i, &marker);
 	while (token->token[i])
 	{
 		marker = i;
-		while (token->token[i] != '$' && token->token[i] != '\'' && token->token[i])
+		while (token->token[i] != '$' \
+		&& token->token[i] != '\'' && token->token[i])
 			i++;
 		if (token->token[i] == '\'')
 		{
-			i++;
-			while (token->token[i] != '\'')
-				i++;
-			i++;
+			skip_single_quotes(&i, token->token);
 			dollarless = update_dollarless_token(token, i, marker, dollarless);
 		}
 		else if (i != marker)
@@ -154,9 +105,7 @@ static void	lookup_dollars(t_token *token, t_env *env)
 		else if (token->token[i] == '$')
 			dollarless = replace_dollar(token, &i, dollarless, env);
 	}
-	temp = token->token;
-	token->token = dollarless;
-	free(temp);
+	set_new_token(token, dollarless);
 }
 
 void	replace_vars(t_token **token_lst, t_env *env)

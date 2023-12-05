@@ -13,7 +13,7 @@ SRC_DIR        :=	src/
 SRC            :=	main.c\
 					utils/error.c utils/utils.c utils/freeing.c utils/ft_strcmp.c\
 					env/env_utils.c env/env.c\
-					tokenizer/tokenizer.c tokenizer/replace_vars.c tokenizer/token_utils.c\
+					tokenizer/tokenizer.c tokenizer/replace_vars.c tokenizer/replace_vars_utils.c tokenizer/token_utils.c\
 					signals/signals.c
 
 COMPILED = 0
