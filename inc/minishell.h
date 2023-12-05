@@ -96,6 +96,7 @@ int	pwd(void);
 int	cd(t_token	*token_lst, t_env *env);
 int	export(t_token *token_lst, t_env **env);
 int	unset(t_token *token_lst, t_env **env);
+void	print_export(t_env *env);
 
 /**
  * Freeing
