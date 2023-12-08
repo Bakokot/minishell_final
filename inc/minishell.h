@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/05 13:45:54 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:05:08 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@
  * ERROR MESSAGES
 */
 # define ERR_MALLOC "Memory allocation error\n"
+
+/*
+ * SIGNAL STATE
+*/
+# define IN_SHELL 1
+# define IN_PROGRAM 2
+
+extern int	global_status;
 
 /*
 		LITTERAL	--> (0)		An argument
@@ -122,6 +130,23 @@ void	log_error(char *str);
  * Signals management
 */
 void	signal_handling(void);
+
+/**
+ * Garbage collector
+*/
+typedef void* t_ptr;
+
+typedef struct s_gc {
+	t_ptr		ptr;
+	void		(*free_function)(t_ptr);
+	struct s_gc *next;
+} t_gc;
+
+void	gc_free_all(t_gc *gc);
+void	gc_malloc(t_gc **gc, size_t size, void **ptr, void (*free_function)(t_ptr));
+t_gc	*create_new_gc(void *ptr, void (*free_function)(t_ptr));
+void	add_back_gc(t_gc **gc, t_gc *new);
+t_gc	*get_last_gc(t_gc *lst);
 
 /**
  * TO ERASE IN THE END

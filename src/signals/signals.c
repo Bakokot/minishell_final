@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:12:08 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/08 15:32:17 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:06:45 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	ctrl_c_handler(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
+	global_status = 128 + SIGINT;
 	new_prompt();
 }
 
