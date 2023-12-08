@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:12:08 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/08 15:27:47 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:32:17 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ void	signal_handling(void)
 	- CTRL + C --> print ^C and get a new prompt display
 	- CTRL + \ --> do nothing
 	*/
+	/*if(status = IN_SHELL)
+	{
+
+	}*/
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, ctrl_c_handler);
 	/*
@@ -46,6 +50,10 @@ void	signal_handling(void)
 	- CTRL + C --> Stop program (natural behaviour of CTRL + C)
 	- CTRL + \ --> Stop program and print qui (core dump) (check what it does)
 	*/
+	/*if (status = IN_PROGRAM)
+	{
+		
+	}*/
 // TO implement both behaviour properly :
 // - Get an int as arg for the function 
 // 		- At the beginning of the prompt, initalize the signal state at 1
