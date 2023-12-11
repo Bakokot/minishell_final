@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/08 16:05:08 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/11 17:06:52 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,19 +134,36 @@ void	signal_handling(void);
 /**
  * Garbage collector
 */
-typedef void* t_ptr;
+#ifndef GC_H
+# define GC_H
 
-typedef struct s_gc {
-	t_ptr		ptr;
-	void		(*free_function)(t_ptr);
-	struct s_gc *next;
-} t_gc;
+# include <stdlib.h>
 
-void	gc_free_all(t_gc *gc);
-void	gc_malloc(t_gc **gc, size_t size, void **ptr, void (*free_function)(t_ptr));
-t_gc	*create_new_gc(void *ptr, void (*free_function)(t_ptr));
-void	add_back_gc(t_gc **gc, t_gc *new);
-t_gc	*get_last_gc(t_gc *lst);
+typedef struct s_gc_node
+{
+	struct s_gc_node	*prev;
+	struct s_gc_node	*next;
+	size_t				size;
+}	t_gc_node;
+
+/**
+ * We keep the adress of the first and last node
+ * to "travel" faster in the structure
+*/
+typedef struct s_gc_glob
+{
+	t_gc_node	*first_node;
+	t_gc_node	*last_node;
+	size_t		total_size;
+	size_t		nb_allocs;
+}	t_gc_glob;
+
+void	gc_init(t_gc_glob *gc);
+void	*gc_malloc(t_gc_glob *gc, size_t size);
+void	gc_free(t_gc_glob *gc, void **ptr);
+void	gc_free_all(t_gc_glob *gc);
+
+#endif
 
 /**
  * TO ERASE IN THE END
