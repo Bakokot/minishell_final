@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/05 14:02:20 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/11 13:43:24 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*read_new_line(char *line)
 {
 	char	*new_line;
 	char	*temp;
-	
+
 	temp = line;
 	new_line = readline("> ");
 	line = ft_strjoin(line, "\n");
@@ -62,7 +62,7 @@ static char	*read_new_line(char *line)
 }
 
 /**
- * EXPLANATION : 
+ * EXPLANATION :
  * if (line == NULL)
 		exit(0);
 	--> line == NULL when we ctrl + D // EOF !
@@ -75,18 +75,9 @@ int	main(int argc, char **argv, char **envp)
 	t_env	*env;
 
 	(void)argv;
-	/*int	i;
-	i = 0;
-	printf("----- ENV IS -----");
-	while (envp[i])
-	{
-		printf("%s\n", envp[i]);
-		i++;
-	}*/
 	if (argc > 1)
 		return (printf("./minishell takes no argument\n"), 0);
 	env = init_env(envp);
-	print_env(env);
 	signal_handling();
 	while (1)
 	{
@@ -98,9 +89,9 @@ int	main(int argc, char **argv, char **envp)
 		}
 		while (close_quotes(line) == false)
 			line = read_new_line(line);
-		printf("the line we entered is : %s\n", line);
 		add_history(line);
 		token_lst = tokenize(line, env);
+		exec_command(*token_lst, env);
 		free_all_token(token_lst);
 		free(line);
 	}

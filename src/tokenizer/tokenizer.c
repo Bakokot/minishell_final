@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 12:56:19 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/05 14:02:03 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/07 10:59:01 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,14 +115,8 @@ t_token	**tokenize(char *line, t_env *env)
 			i++;
 	}
 	delete_first_token(token_lst);
-	/**
-	 * Debug print
-	*/
+	print_token_lst(*token_lst);
 	(void)env;
 	replace_vars(token_lst, env);
-	printf("--------------------------------\n");
-	printf("TOKEN LIST AFTER REPLACING $VAR\n");
-	printf("--------------------------------\n");
-	print_token_lst(*token_lst);
 	return (token_lst);
 }

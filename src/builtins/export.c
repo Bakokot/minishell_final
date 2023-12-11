@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 12:04:37 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/05 13:04:21 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/11 13:47:13 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,15 @@ static int	is_plus(t_token *token_lst)
 {
 	size_t	i;
 
+	printf("before loop\n");
 	while (token_lst->token[i])
 	{
+		printf("in loop before\n");
 		if (token_lst->token[i] == '+')
+		{
+
 			return (1);
+		}
 		i++;
 	}
 	return (0);

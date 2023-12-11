@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/05 14:00:24 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/11 14:01:03 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/history.h>
 # include <stdbool.h>
 # include <signal.h>
+# include <sys/wait.h>
 
 # include "../libft/inc/libft.h"
 
@@ -82,6 +83,7 @@ t_token	*get_last_token(t_token *lst);
 void	delete_first_token(t_token **token_lst);
 char	*add_litteral_dollar(char *dollarless_token, int *i, char *tkn);
 void	set_new_token(t_token *token, char *dollarless);
+size_t	token_size(t_token *token_lst);
 
 /**
  * Environment
@@ -91,12 +93,14 @@ t_env	*init_env(char **envp);
 /**
  * t_env struct utils
 */
-t_env	*create_new_env(char *key, char *values);
-void	add_back_env(t_env **env_lst, t_env *env);
 t_env	*get_last_env(t_env *lst);
-char	*lookup_values(char *key, t_env *env);
+t_env	*create_new_env(char *key, char *values);
 char	*get_env_key(char *envp);
 char	*get_env_values(char *envp);
+char	**env_lst_into_char(t_env *env);
+size_t	env_size(t_env *env);
+char	*lookup_values(char *key, t_env *env);
+void	add_back_env(t_env **env_lst, t_env *env);
 
 /**
  * Utils
@@ -107,15 +111,20 @@ int		is_metachar(char c);
 int		is_double_redirection(char *str);
 char	*ft_strndup(char *s1, size_t size);
 int		ft_strcmp(char *s1, char *s2);
+void	free_array(char **arr);
 
 //Builtins
-int	echo(t_token *token_lst, int option);
+int	echo(t_token *token_lst);
 int	env_builtin(t_env *env);
 int	pwd(void);
 int	cd(t_token	*token_lst, t_env *env);
 int	export(t_token *token_lst, t_env **env);
 int	unset(t_token *token_lst, t_env **env);
 void	print_export(t_env *env);
+
+//Exec
+int	is_bultin(t_token *token_lst, t_env *env);
+void	exec_command(t_token *token_lst, t_env *env);
 
 /**
  * Freeing

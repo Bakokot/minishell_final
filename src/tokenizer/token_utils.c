@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:40:06 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/15 14:58:03 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/11 14:00:52 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,17 @@ void	delete_first_token(t_token **token_lst)
 	temp = (*token_lst);
 	(*token_lst) = (*token_lst)->next;
 	free(temp);
+}
+
+size_t	token_size(t_token *token_lst)
+{
+	size_t	size;
+
+	size = 0;
+	while (token_lst)
+	{
+		size++;
+		token_lst = token_lst->next;
+	}
+	return (size);
 }
