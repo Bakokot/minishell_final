@@ -46,34 +46,47 @@ void	*gc_malloc(t_gc_glob *gc, size_t size)
 /**
  * First we find out the node we need to erase :
  * - It's the adress just before the allocation of the pointer
- * Then we check if the node to erase is the first one : 
- * - We update the structure accordingly 
- * Then we check if the node to erase is the last one :
- * - We update the structure accordingly
- * Eventually we free what needs to be freed and reset the value to NULL after that
-*/
-/*
-NOT WORKING : WHEN WE FREE ONE AND MULTIPLE OBJECTS HAVE BEEN MALLOCATED, SEGFAULT !
+ * Then we update the structure to prepare the deletion of the node :
+ * - Set the previous node->next to the current next
+ * - Set the next node->prev to the current previous
+ * If the node we free is the first / last node, we just update the first / last node of gc global (since prev / next == NULL)
+
+ 	-------------------------------------------------
+	|								   				|
+	|								   				|
+	|								   				V
+	Node prev->Next		Current Node			Node next
+	Node prev		      					Node next->prev
+	^								   				|
+	|							           			|
+	|								   				|
+	-------------------------------------------------
+
+node->prev->next has to become current next & node->next->prev has to become current prev
+ *
 */
 void	gc_free(t_gc_glob *gc, void **ptr)
 {
 	t_gc_node	*node_to_erase;
-	t_gc_node	*temp;
+	t_gc_node	*temp_next;
+	t_gc_node	*temp_prev;
 
 	node_to_erase = ((t_gc_node *)(*ptr) - 1);
 	if (node_to_erase->prev == NULL)
+	{
 		gc->first_node = node_to_erase->next;
+	}
 	else
 	{
-		temp = node_to_erase->next;
-		temp->prev = node_to_erase->prev;
+		node_to_erase->prev->next = node_to_erase->next;
 	}
 	if (node_to_erase->next == NULL)
+	{
 		gc->last_node = node_to_erase->prev;
+	}
 	else
 	{
-		temp = node_to_erase->prev;
-		temp->next = node_to_erase->next;
+		node_to_erase->next->prev = node_to_erase->prev;
 	}
 	gc->total_size -= node_to_erase->size;
 	gc->nb_allocs -= 1;
