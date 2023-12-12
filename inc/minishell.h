@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/11 17:06:52 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/12 12:45:37 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void	log_error(char *str);
  * Signals management
 */
 void	signal_handling(void);
+void	ctrl_d_handler(void);
 
 /**
  * Garbage collector

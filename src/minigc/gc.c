@@ -68,8 +68,6 @@ node->prev->next has to become current next & node->next->prev has to become cur
 void	gc_free(t_gc_glob *gc, void **ptr)
 {
 	t_gc_node	*node_to_erase;
-	t_gc_node	*temp_next;
-	t_gc_node	*temp_prev;
 
 	node_to_erase = ((t_gc_node *)(*ptr) - 1);
 	if (node_to_erase->prev == NULL)
