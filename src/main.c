@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/05 14:02:20 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/12 13:19:41 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	main(int argc, char **argv, char **envp)
 	t_token	**token_lst;
 	t_env	*env;
 
+	//global = 0;
+	(void)argc;
 	(void)argv;
 	/*int	i;
 	i = 0;
@@ -87,15 +89,12 @@ int	main(int argc, char **argv, char **envp)
 		return (printf("./minishell takes no argument\n"), 0);
 	env = init_env(envp);
 	print_env(env);
-	signal_handling();
 	while (1)
 	{
+		signal_handling();
 		line = readline("minishell $>");
 		if (line == NULL)
-		{
-			// need to implement a freeing function with garbage collector to exit without memory leaks since we allocated env
-			exit(0);
-		}
+			ctrl_d_handler();
 		while (close_quotes(line) == false)
 			line = read_new_line(line);
 		printf("the line we entered is : %s\n", line);

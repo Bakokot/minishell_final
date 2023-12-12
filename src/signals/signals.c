@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:12:08 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/05 13:51:40 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/12 13:15:50 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	ctrl_c_handler(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
+	//global = 128 + SIGINT;
 	new_prompt();
 }
 
@@ -34,6 +35,34 @@ static void	ctrl_c_handler(int sig)
 */
 void	signal_handling(void)
 {
+	/*
+	FIRST CASE : We're in the shell : 
+	- CTRL + C --> print ^C and get a new prompt display
+	- CTRL + \ --> do nothing
+	*/
+	/*if(status = IN_SHELL)
+	{
+
+	}*/
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, ctrl_c_handler);
+	/*
+	TO IMPLEMENT : we're executing a programm inside our shell :
+	- CTRL + C --> Stop program (natural behaviour of CTRL + C)
+	- CTRL + \ --> Stop program and print qui (core dump) (check what it does)
+	*/
+	/*if (status = IN_PROGRAM)
+	{
+		
+	}*/
+// TO implement both behaviour properly :
+// - Get an int as arg for the function 
+// 		- At the beginning of the prompt, initalize the signal state at 1
+// 		- When we execute a prog : initialize the signal state at 2
+//		- Not sure how to deal with CTRL + D, check that too
+}
+
+void	ctrl_d_handler(void)
+{
+	exit(0);
 }

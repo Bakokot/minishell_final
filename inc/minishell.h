@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/05 14:00:24 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/12 13:17:46 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@
  * ERROR MESSAGES
 */
 # define ERR_MALLOC "Memory allocation error\n"
+
+/*
+ * SIGNAL STATE
+*/
+# define IN_SHELL 1
+# define IN_PROGRAM 2
+
+//extern int global;
 
 /*
 		LITTERAL	--> (0)		An argument
@@ -133,6 +141,41 @@ void	log_error(char *str);
  * Signals management
 */
 void	signal_handling(void);
+void	ctrl_d_handler(void);
+
+/**
+ * Garbage collector
+*/
+#ifndef GC_H
+# define GC_H
+
+# include <stdlib.h>
+
+typedef struct s_gc_node
+{
+	struct s_gc_node	*prev;
+	struct s_gc_node	*next;
+	size_t				size;
+}	t_gc_node;
+
+/**
+ * We keep the adress of the first and last node
+ * to "travel" faster in the structure
+*/
+typedef struct s_gc_glob
+{
+	t_gc_node	*first_node;
+	t_gc_node	*last_node;
+	size_t		total_size;
+	size_t		nb_allocs;
+}	t_gc_glob;
+
+void	gc_init(t_gc_glob *gc);
+void	*gc_malloc(t_gc_glob *gc, size_t size);
+void	gc_free(t_gc_glob *gc, void **ptr);
+void	gc_free_all(t_gc_glob *gc);
+
+#endif
 
 /**
  * TO ERASE IN THE END
