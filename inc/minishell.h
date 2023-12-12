@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/12 12:45:37 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/12 13:16:07 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define IN_SHELL 1
 # define IN_PROGRAM 2
 
-extern int	global_status;
+//extern int global;
 
 /*
 		LITTERAL	--> (0)		An argument

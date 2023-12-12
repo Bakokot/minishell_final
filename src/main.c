@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/12 12:45:07 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/12 13:15:57 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	main(int argc, char **argv, char **envp)
 	t_token	**token_lst;
 	t_env	*env;
 
+	//global = 0;
 	(void)argc;
 	(void)argv;
 	/*int	i;
