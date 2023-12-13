@@ -16,7 +16,8 @@ SRC            :=	main.c\
 					tokenizer/tokenizer.c tokenizer/replace_vars.c tokenizer/replace_vars_utils.c tokenizer/token_utils.c\
 					signals/signals.c\
 					builtins/echo.c builtins/env.c builtins/pwd.c builtins/cd.c \
-					builtins/unset.c builtins/export.c builtins/export2.c exec/exec.c exec/is_builtin.c
+					builtins/unset.c builtins/export.c builtins/export2.c exec/exec.c exec/is_builtin.c exec/utils.c\
+					exec/handle_command.c exec/redirection.c
 
 COMPILED = 0
 TOTAL_COMPILATION = $(shell ((echo ${SRC}) | wc -w | sed -e 's/^[ \t]*//'))

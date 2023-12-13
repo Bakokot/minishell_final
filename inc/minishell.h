@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/11 14:01:03 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/12 23:11:22 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdbool.h>
 # include <signal.h>
 # include <sys/wait.h>
+# include <fcntl.h>
 
 # include "../libft/inc/libft.h"
 
@@ -64,6 +65,19 @@ typedef struct s_env
 	struct s_env		*next;
 }	t_env;
 
+typedef struct s_exec
+{
+	char	**args;
+	char	**envp;
+	char	*path;
+	int	sstdin;
+	int	sstdout;
+	int	sstderr;
+	int	in;
+	int	out;
+	int	err;
+}	t_exec;
+
 /**
  * Tokenizer
 */
@@ -84,6 +98,7 @@ void	delete_first_token(t_token **token_lst);
 char	*add_litteral_dollar(char *dollarless_token, int *i, char *tkn);
 void	set_new_token(t_token *token, char *dollarless);
 size_t	token_size(t_token *token_lst);
+char	**token_lst_into_char(t_token *token_lst);
 
 /**
  * Environment
@@ -123,8 +138,12 @@ int	unset(t_token *token_lst, t_env **env);
 void	print_export(t_env *env);
 
 //Exec
+void handle_command(t_token *token_lst, t_env *env);
+void	exec_command(t_exec	*exec);
 int	is_bultin(t_token *token_lst, t_env *env);
-void	exec_command(t_token *token_lst, t_env *env);
+
+//Redirections
+void	handle_redirection(t_token *token_lst, t_exec *exec);
 
 /**
  * Freeing
