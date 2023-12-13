@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/11 17:38:06 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/13 15:31:51 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ static char	*read_new_line(char *line)
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
-	t_token	**token_lst;
 	t_env	*env;
+	t_token	**token_lst;
 
 	(void)argv;
 	if (argc > 1)

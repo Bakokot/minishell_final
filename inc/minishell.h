@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/12 23:11:22 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/13 15:49:20 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,12 +138,12 @@ int	unset(t_token *token_lst, t_env **env);
 void	print_export(t_env *env);
 
 //Exec
-void handle_command(t_token *token_lst, t_env *env);
+void	handle_command(t_token *token_lst, t_env *env);
 void	exec_command(t_exec	*exec);
 int	is_bultin(t_token *token_lst, t_env *env);
 
 //Redirections
-void	handle_redirection(t_token *token_lst, t_exec *exec);
+int	handle_redirection(t_token *token_lst, t_exec **exec);
 
 /**
  * Freeing
@@ -155,7 +155,7 @@ void	free_all_token(t_token **token_lst);
 /**
  * Error management
 */
-void	log_error(char *str);
+void	log_error(char *str, int fd);
 
 /**
  * Signals management

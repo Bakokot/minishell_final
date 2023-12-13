@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:24:23 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/12 22:58:21 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/13 15:17:53 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,38 +53,38 @@ void	remove_redirection(t_token *head)
 	}
 }
 
-void	change_output(t_token *token_lst, t_exec *exec, int flags)
+void	change_output(t_token *token_lst, t_exec **exec, int flags)
 {
 	int	file;
 
 	file = open(token_lst->next->token, flags, 0777);
 	if (!file)
 	{
-		exec = NULL;
+		*exec = NULL;
 		printf("Error in open\n");
 		return ;
 	}
-	exec->out = file;
+	(*exec)->out = file;
 	dup2(file, 1);
 	dup2(file, 2);
 }
 
-void	change_input(t_token *token_lst, t_exec *exec, int flags)
+void	change_input(t_token *token_lst, t_exec **exec, int flags)
 {
 	int	file;
 
 	file = open(token_lst->next->token, flags, 0777);
 	if (file == -1)
 	{
-		exec = NULL;
+		*exec = NULL;
 		printf("No such file or directory\n");
 		return ;
 	}
-	exec->in = file;
+	(*exec)->in = file;
 	dup2(file, 0);
 }
 
-void	handle_redirection(t_token *token_lst, t_exec *exec)
+int	handle_redirection(t_token *token_lst, t_exec **exec)
 {
 	t_token	*head;
 
@@ -99,6 +99,8 @@ void	handle_redirection(t_token *token_lst, t_exec *exec)
 			change_input(token_lst, exec, O_RDONLY);
 		token_lst = token_lst->next;
 	}
-	if (exec)
-		remove_redirection(head);
+	if (!*exec)
+		return (1);
+	remove_redirection(head);
+	return (0);
 }

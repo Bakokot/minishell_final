@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:29:20 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/06 14:54:59 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/13 15:50:22 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_env	*create_new_env(char *key, char *values)
 
 	new_env = malloc(sizeof(t_env));
 	if (!new_env)
-		return (log_error(ERR_MALLOC), NULL);
+		return (log_error(ERR_MALLOC, 2), NULL);
 	new_env->key = key;
 	new_env->values = values;
 	new_env->next = NULL;

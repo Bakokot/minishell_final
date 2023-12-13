@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 16:52:08 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/12 23:11:34 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/13 16:01:17 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	exec_command(t_exec	*exec)
 	if (pid == 0)
 	{
 		if (execve(exec->path, exec->args, exec->envp) == -1)
-			printf("%s: command not found\n", exec->args[0]);
+		{
+			write(exec->sstderr, exec->args[0], ft_strlen(exec->args[0]));
+			write(exec->sstderr, ": command not found\n", 21);
+		}
 		exit(0);
 	}
 	else
