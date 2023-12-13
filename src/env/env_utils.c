@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:29:20 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/17 15:22:04 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/13 15:50:22 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_env	*create_new_env(char *key, char *values)
 
 	new_env = malloc(sizeof(t_env));
 	if (!new_env)
-		return (log_error(ERR_MALLOC), NULL);
+		return (log_error(ERR_MALLOC, 2), NULL);
 	new_env->key = key;
 	new_env->values = values;
 	new_env->next = NULL;
@@ -60,4 +60,17 @@ char	*lookup_values(char *key, t_env *env)
 		env = env->next;
 	}
 	return (NULL);
+}
+
+size_t	env_size(t_env *env)
+{
+	size_t	size;
+
+	size = 0;
+	while (env)
+	{
+		size++;
+		env = env->next;
+	}
+	return (size);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:30:00 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/12 13:21:06 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:22:58 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,31 @@ t_env	*init_env(char **envp)
 		i++;
 	}
 	return (env);
+}
+
+char	**env_lst_into_char(t_env *env)
+{
+	char	**envp;
+	size_t	i;
+	size_t	size;
+
+	size = env_size(env);
+	envp = malloc(sizeof(char *) * (size + 1));
+	if (!envp)
+		return (NULL);
+	i = 0;
+	while (env)
+	{
+		size = ft_strlen(env->key) + ft_strlen(env->values) + 2;
+		envp[i] = malloc(sizeof(char) * size);
+		if (!envp[i])
+			return (NULL);
+		ft_strlcpy(envp[i], env->key, size);
+		ft_strlcat(envp[i], "=", size);
+		ft_strlcat(envp[i], env->values, size);
+		i++;
+		env = env->next;
+	}
+	envp[i] = NULL;
+	return (envp);
 }

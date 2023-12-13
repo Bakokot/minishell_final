@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 18:38:01 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/11/08 18:38:15 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:02:47 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	log_error(char *str)
+void	log_error(char *str, int fd)
 {
-	write(2, str, ft_strlen(str));
+	write(fd, str, ft_strlen(str));
 }

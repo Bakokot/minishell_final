@@ -17,7 +17,8 @@ SRC            :=	main.c\
 					minigc/gc.c\
 					signals/signals.c\
 					builtins/echo.c builtins/env.c builtins/pwd.c builtins/cd.c \
-					builtins/unset.c builtins/export.c builtins/export2.c
+					builtins/unset.c builtins/export.c builtins/export2.c exec/exec.c exec/is_builtin.c exec/utils.c\
+					exec/handle_command.c exec/redirection.c
 
 COMPILED = 0
 TOTAL_COMPILATION = $(shell ((echo ${SRC}) | wc -w | sed -e 's/^[ \t]*//'))
@@ -46,7 +47,7 @@ CC_FLAGS      :=    -Wextra -Werror -Wall
 
 all: $(NAME)
 
-$(NAME): $(OBJ) libft
+$(NAME): libft $(OBJ)
 	$(CC) $(CC_FLAGS) $(OBJ) -L ./libft -lft -lreadline -o $@
 	@echo "All compiled"
 
@@ -72,6 +73,7 @@ cleanlibft:
 fcleanlibft: cleanlibft
 	@make fclean -C ${LIBFT_DIR}
 
-re: fclean all
+re: fclean
+	make all
 
 .PHONY: all clean fclean re libft
