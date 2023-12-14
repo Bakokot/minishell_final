@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/13 16:23:16 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/14 11:25:08 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define IN_SHELL 1
 # define IN_PROGRAM 2
 
-//extern int global;
+extern int g_exit_status;
 
 /*
 		LITTERAL	--> (0)		An argument

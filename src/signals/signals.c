@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:12:08 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/12 13:15:50 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/14 11:25:19 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	ctrl_c_handler(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
-	//global = 128 + SIGINT;
+	g_exit_status = 128 + SIGINT;
 	new_prompt();
 }
 

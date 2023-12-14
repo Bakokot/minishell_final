@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/13 16:24:37 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/14 11:24:43 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_exit_status;
 
 void print_env(t_env *env)
 {
@@ -74,7 +76,7 @@ int	main(int argc, char **argv, char **envp)
 	t_env	*env;
 	t_token	**token_lst;
 
-	//global = 0;
+	g_exit_status = 0;
 	(void)argc;
 	(void)argv;
 	if (argc > 1)
