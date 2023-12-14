@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 12:04:37 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/11 13:47:13 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/14 10:37:53 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static int	is_plus(t_token *token_lst)
 {
 	size_t	i;
 
+	i = 0;
 	printf("before loop\n");
 	while (token_lst->token[i])
 	{
