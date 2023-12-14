@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/14 12:03:28 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/14 12:42:52 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	skip_single_quotes(int *i, char *str);
 bool	single_dollar(t_token *token);
 char	*update_dollarless_token(t_token *token, int i, \
 int marker, char *new_token);
+void	remove_token_quotes(t_token **token_lst);
 
 /**
  * t_token struct utils
@@ -137,6 +138,7 @@ int		is_double_redirection(char *str);
 char	*ft_strndup(char *s1, size_t size);
 int		ft_strcmp(char *s1, char *s2);
 void	free_array(char **arr);
+bool 	close_quotes(char *line);
 
 //Builtins
 int	echo(t_token *token_lst);
