@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/14 12:42:30 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/14 12:05:10 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,28 @@ void print_env(t_env *env)
 			printf("	VALUE --> %s\n", env->values);
 		env = env->next;
 	}
+}
+
+static bool close_quotes(char *line)
+{
+	int	i;
+	int	quote_type;
+
+	i = 0;
+	while (line[i])
+	{
+		quote_type = is_quote(line[i]);
+		i++;
+		while (quote_type != 0 && line[i])
+		{
+			if (quote_type == line[i])
+				quote_type = 0;
+			i++;
+		}
+	}
+	if (quote_type == 0)
+		return (true);
+	return (false);
 }
 
 static char	*read_new_line(char *line)
@@ -63,6 +85,7 @@ int	main(int argc, char **argv, char **envp)
 	t_token	**token_lst;
 
 	g_exit_status = 0;
+	(void)argc;
 	(void)argv;
 	if (argc > 1)
 		return (printf("./minishell takes no argument\n"), 0);

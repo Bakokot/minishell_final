@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 12:56:19 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/14 12:38:10 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/13 15:50:29 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ static void	print_token_lst(t_token *token_lst)
 	}
 }
 
+
 t_token	**tokenize(char *line, t_env *env)
 {
 	t_token	**token_lst;
@@ -117,7 +118,7 @@ t_token	**tokenize(char *line, t_env *env)
 	}
 	delete_first_token(token_lst);
 	print_token_lst(*token_lst);
+	(void)env;
 	replace_vars(token_lst, env);
-	remove_token_quotes(token_lst);
 	return (token_lst);
 }
