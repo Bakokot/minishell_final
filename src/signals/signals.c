@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:12:08 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/14 11:25:19 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/14 12:11:19 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,14 @@ void	signal_handling(void)
 //		- Not sure how to deal with CTRL + D, check that too
 }
 
-void	ctrl_d_handler(void)
+void	ctrl_d_handler(char *line, t_token **token_lst, t_env *env)
 {
+	if (line)
+		free(line);
+	if (token_lst)
+		free_all_token(token_lst);
+	if (env)
+		free_all_env(env);
+	write(1, "exit\n", 5);
 	exit(0);
 }

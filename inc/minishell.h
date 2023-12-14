@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/14 11:25:08 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/14 12:03:28 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
  * ERROR MESSAGES
 */
 # define ERR_MALLOC "Memory allocation error\n"
+# define ERR_EOF1 "minishell: unexpected EOF while looking for matching `"
+# define ERR_EOF2 "\'\nminishell: syntax error: unexpected end of file\n"
 
 /*
  * SIGNAL STATE
@@ -169,16 +171,11 @@ void	log_error(char *str, int fd);
  * Signals management
 */
 void	signal_handling(void);
-void	ctrl_d_handler(void);
+void	ctrl_d_handler(char *line, t_token **token_lst, t_env *env);
 
 /**
- * Garbage collector
+ * Garbage collector  -- TO ERASE
 */
-#ifndef GC_H
-# define GC_H
-
-# include <stdlib.h>
-
 typedef struct s_gc_node
 {
 	struct s_gc_node	*prev;
@@ -202,8 +199,6 @@ void	gc_init(t_gc_glob *gc);
 void	*gc_malloc(t_gc_glob *gc, size_t size);
 void	gc_free(t_gc_glob *gc, void **ptr);
 void	gc_free_all(t_gc_glob *gc);
-
-#endif
 
 /**
  * TO ERASE IN THE END

@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/14 11:24:43 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/14 12:05:10 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,14 @@ static char	*read_new_line(char *line)
 
 	temp = line;
 	new_line = readline("> ");
+	if (new_line == NULL)
+	{
+		write(1, ERR_EOF1, ft_strlen(ERR_EOF1));
+		write(1, &line[0], 1);
+		write(1, ERR_EOF2, ft_strlen(ERR_EOF2));
+		free(line);
+		return (NULL);	
+	}
 	line = ft_strjoin(line, "\n");
 	free(temp);
 	temp = line;
@@ -86,17 +94,21 @@ int	main(int argc, char **argv, char **envp)
 	signal_handling();
 	while (1)
 	{
+		token_lst = NULL;
 		signal_handling();
 		line = readline("minishell $>");
 		if (line == NULL)
-			ctrl_d_handler();
-		while (close_quotes(line) == false)
+			ctrl_d_handler(line, token_lst, env);
+		while (line != NULL && close_quotes(line) == false)
 			line = read_new_line(line);
-		add_history(line);
-		token_lst = tokenize(line, env);
-		handle_command(*token_lst, env);
-		free_all_token(token_lst);
-		free(line);
+		if (line != NULL)
+		{
+			add_history(line);
+			token_lst = tokenize(line, env);
+			handle_command(*token_lst, env);
+			free_all_token(token_lst);
+			free(line);
+		}
 	}
 	//rl_clear_history();
 	//free_all_env ou free_all
