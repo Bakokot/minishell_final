@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:17:00 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/14 12:31:04 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/15 22:45:09 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	**token_lst_into_char(t_token *token_lst)
 		size = ft_strlen(token_lst->token) + 1;
 		args[i] = malloc(sizeof(char) * size);
 		if (!args[i])
-			return (NULL);
+			return (free_array(args), NULL);
 		ft_strlcpy(args[i], token_lst->token, size);
 		token_lst = token_lst->next;
 		i++;

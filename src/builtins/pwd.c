@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 11:51:01 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/11 14:06:28 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/15 14:59:43 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	pwd(void)
 
 	path = getcwd(NULL, 0);
 	printf("%s\n", path);
-	free(path);
+	if (path)
+		free(path);
 	return (0);
 }

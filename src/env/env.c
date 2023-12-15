@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:30:00 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/14 12:18:01 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/15 22:45:33 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_env	*init_env(char **envp)
 	{
 		key = get_env_key(envp[i]);
 		values = get_env_values(envp[i]);
-		new = create_new_env(key, values);
+		new = create_new_env(key, values, 2);
 		add_back_env(&env, new);
 		i++;
 	}
@@ -68,9 +68,9 @@ t_env	*init_env(char **envp)
 
 char	**env_lst_into_char(t_env *env)
 {
-	char	**envp;
 	size_t	i;
 	size_t	size;
+	char	**envp;
 
 	size = env_size(env);
 	envp = malloc(sizeof(char *) * (size + 1));
@@ -82,7 +82,7 @@ char	**env_lst_into_char(t_env *env)
 		size = ft_strlen(env->key) + ft_strlen(env->values) + 2;
 		envp[i] = malloc(sizeof(char) * size);
 		if (!envp[i])
-			return (NULL);
+			return (free_array(envp), NULL);
 		ft_strlcpy(envp[i], env->key, size);
 		ft_strlcat(envp[i], "=", size);
 		ft_strlcat(envp[i], env->values, size);

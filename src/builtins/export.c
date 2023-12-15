@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 12:04:37 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/15 14:15:01 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/15 15:10:47 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void change_value(t_env **env, t_token *token_lst, int index)
 	tmp->values = get_env_values(token_lst->token);
 }
 
-static void add_value(t_env **env, t_token *token_lst, int index)
+static void add_value(t_env **env, t_token *token_lst, int index, int sstderr)
 {
 	t_env	*tmp;
 	char	*new_value;
@@ -76,34 +76,37 @@ static void add_value(t_env **env, t_token *token_lst, int index)
 	size_env = ft_strlen(tmp->values);
 	new_value = malloc(sizeof(char *) * (size_token * size_env + 1));
 	if (!new_value)
+	{
+		ft_printf(sstderr, "Malloc failed\n");
 		return ;
+	}
 	ft_strlcpy(new_value, tmp->values, size_token * size_env + 1);
 	ft_strlcat(new_value, get_env_values(token_lst->token), size_token * size_env + 1);
 	free(tmp->values);
 	tmp->values = new_value;
 }
 
-int	export(t_token *token_lst, t_env **env)
+int	export(t_token *token_lst, t_env **env, int sstderr)
 {
 	int		index;
 	t_env	*new;
 
 	token_lst = token_lst->next;
 	if (!token_lst || token_lst->type != 0)
-		return (print_export(*env), 0);
+		return (print_export(*env, sstderr), 0);
 	index = find_key(token_lst->token, *env);
 	if (index == -1)
 	{
 		new = *env;
 		while (new)
 			new = new->next;
-		new = create_new_env(get_env_key(token_lst->token), get_env_values(token_lst->token));
+		new = create_new_env(get_env_key(token_lst->token), get_env_values(token_lst->token), sstderr);
 		add_back_env(env, new);
 	}
 	else
 	{
 		if (is_plus(token_lst))
-			add_value(env, token_lst, index);
+			add_value(env, token_lst, index, sstderr);
 		else
 			change_value(env, token_lst, index);
 	}
