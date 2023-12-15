@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:24:23 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/13 15:17:53 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/14 14:53:10 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	handle_redirection(t_token *token_lst, t_exec **exec)
 	t_token	*head;
 
 	head = token_lst;
-	while (token_lst && exec)
+	while (token_lst && exec && token_lst->type != 1)
 	{
 		if (token_lst->type == 4)
 			change_output(token_lst, exec, O_WRONLY | O_CREAT | O_TRUNC);

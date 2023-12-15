@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/14 12:03:28 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/15 14:13:29 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <fcntl.h>
 
 # include "../libft/inc/libft.h"
+# include "../ft_printf/ft_printf.h"
 
 # define SUCCESS 0
 # define ERROR 404
@@ -88,6 +89,13 @@ typedef struct s_exec
 	int	err;
 }	t_exec;
 
+typedef struct s_data
+{
+	t_exec *exec;
+	t_env *env;
+	t_token **token;
+}	t_data;
+
 /**
  * Tokenizer
 */
@@ -139,18 +147,21 @@ int		ft_strcmp(char *s1, char *s2);
 void	free_array(char **arr);
 
 //Builtins
-int	echo(t_token *token_lst);
-int	env_builtin(t_env *env);
-int	pwd(void);
-int	cd(t_token	*token_lst, t_env *env);
-int	export(t_token *token_lst, t_env **env);
-int	unset(t_token *token_lst, t_env **env);
+int		pwd(void);
+int		env_builtin(t_env *env);
+int		echo(t_token *token_lst);
 void	print_export(t_env *env);
+int		cd(t_token	*token_lst, t_env *env);
+int		unset(t_token *token_lst, t_env **env);
+int		export(t_token *token_lst, t_env **env);
 
 //Exec
-void	handle_command(t_token *token_lst, t_env *env);
+void	free_exec(t_exec *exec);
 void	exec_command(t_exec	*exec);
-int	is_bultin(t_token *token_lst, t_env *env);
+int		is_bultin(t_token *token_lst);
+int		exec_bultin(t_token *token_lst, t_env *env);
+void	handle_command(t_token **token_lst, t_env *env);
+int		init_exec(t_token *token_lst, t_env *env, t_exec **exec);
 
 //Redirections
 int	handle_redirection(t_token *token_lst, t_exec **exec);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/14 12:05:10 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/15 14:14:39 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static char	*read_new_line(char *line)
 		write(1, &line[0], 1);
 		write(1, ERR_EOF2, ft_strlen(ERR_EOF2));
 		free(line);
-		return (NULL);	
+		return (NULL);
 	}
 	line = ft_strjoin(line, "\n");
 	free(temp);
@@ -80,17 +80,15 @@ static char	*read_new_line(char *line)
 */
 int	main(int argc, char **argv, char **envp)
 {
+	t_data	data;
 	char	*line;
-	t_env	*env;
-	t_token	**token_lst;
 
 	g_exit_status = 0;
 	(void)argc;
 	(void)argv;
 	if (argc > 1)
 		return (printf("./minishell takes no argument\n"), 0);
-	env = init_env(envp);
-	print_env(env);
+	data.env = init_env(envp);
 	signal_handling();
 	while (1)
 	{
@@ -101,14 +99,11 @@ int	main(int argc, char **argv, char **envp)
 			ctrl_d_handler(line, token_lst, env);
 		while (line != NULL && close_quotes(line) == false)
 			line = read_new_line(line);
-		if (line != NULL)
-		{
-			add_history(line);
-			token_lst = tokenize(line, env);
-			handle_command(*token_lst, env);
-			free_all_token(token_lst);
-			free(line);
-		}
+		add_history(line);
+		data.token = tokenize(line, data.env);
+		handle_command(data.token, data.env);
+		free_all_token(data.token);
+		free(line);
 	}
 	//rl_clear_history();
 	//free_all_env ou free_all

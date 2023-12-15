@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:30:00 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/13 16:22:58 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/14 12:18:01 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_env_key(char *envp)
 	if (!envp)
 		return (NULL);
 	i = 0;
-	while (envp[i] != '=')
+	while (envp[i] != '=' && envp[i] != '+')
 		i++;
 	return (ft_strndup(envp, i));
 }

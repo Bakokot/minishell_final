@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 12:04:37 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/14 10:37:53 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/15 14:15:01 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,10 @@ static int	is_plus(t_token *token_lst)
 	size_t	i;
 
 	i = 0;
-	printf("before loop\n");
 	while (token_lst->token[i])
 	{
-		printf("in loop before\n");
 		if (token_lst->token[i] == '+')
-		{
-
 			return (1);
-		}
 		i++;
 	}
 	return (0);

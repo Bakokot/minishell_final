@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 11:58:45 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/01 16:09:10 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/14 15:09:31 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	unset(t_token *token_lst, t_env **env)
 	int	i;
 
 	token_lst = token_lst->next;
+	if (token_lst->type != 0)
+		return (0);
 	i = find_key(token_lst->token, *env);
 	if (i == -1)
 		return (0);

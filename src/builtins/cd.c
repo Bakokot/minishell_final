@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 11:56:31 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/11 14:04:49 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/15 13:54:17 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	cd(t_token	*token_lst, t_env *env)
 	{
 		home = find_home(env);
 		if (!home)
-			return(printf("cd: HOME not set"), 1);
+			return(ft_printf(2, "cd: HOME not set"), 1);
 		chdir(home);
 		return (0);
 	}

@@ -35,6 +35,7 @@ $(NAME):	${OBJS}
 $(OBJS): $(OBJS_DIR)%.o: ${SRCS_DIR}%.c $(INC) Makefile
 	@mkdir -p $(@D)
 	@$(CC) $(CC_FLAGS) -I${INC_DIR} -c $< -o $@
+
 clean:
 			@rm -rf $(OBJS_DIR)
 			@echo "libft cleaned"
@@ -43,7 +44,8 @@ fclean:		clean
 			@${RM} ${NAME}
 			@echo "libft fcleaned"
 
-re:			fclean all
+re:			fclean
+	all
 
 .PHONY: all clean fclean re
 

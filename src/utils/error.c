@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 18:38:01 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/13 16:02:47 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/15 13:25:11 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	log_error(char *str, int fd)
 {
-	write(fd, str, ft_strlen(str));
+		write(fd, str, ft_strlen(str));
 }

@@ -6,72 +6,33 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/13 15:36:09 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/15 13:50:21 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_path(char *cmd, t_env *env)
-{
-	size_t	i;
-	size_t	size;
-	char	*path;
-	char	**all_path;
-
-	i = 0;
-	all_path = ft_split(lookup_values("PATH", env), ':');
-	while (all_path[i])
-	{
-		size = ft_strlen(all_path[i]) + ft_strlen(cmd) + 2;
-		path = malloc(sizeof(char) * size);
-		if (!path)
-			return (NULL);
-		ft_strlcpy(path, all_path[i], size);
-		ft_strlcat(path, "/", size);
-		ft_strlcat(path, cmd, size);
-		if (access(path, F_OK | X_OK) >= 0)
-			return (path);
-		free(path);
-		i++;
-	}
-	return (NULL);
-}
-
-int	init_exec(t_token *token_lst, t_env *env, t_exec **exec)
-{
-	(*exec)->sstdin = dup(0);
-	(*exec)->sstdout = dup(1);
-	(*exec)->sstderr = dup(2);
-	if (handle_redirection(token_lst, exec))
-		return (1);
-	(*exec)->envp = env_lst_into_char(env);
-	(*exec)->args = token_lst_into_char(token_lst);
-	(*exec)->path = get_path(token_lst->token, env);
-	return (0);
-}
-
-void	restore_fd(t_exec *exec)
+static void	restore_fd(t_exec *exec)
 {
 	dup2(exec->sstdin, 0);
 	dup2(exec->sstdout, 1);
 	dup2(exec->sstderr, 2);
-	free(exec);
 }
 
-void	handle_command(t_token *token_lst, t_env *env)
+void	handle_command(t_token **token_lst, t_env *env)
 {
 	t_exec	*exec;
 
 	exec = malloc(sizeof(t_exec));
 	if (!exec)
 		return ;
-	if (init_exec(token_lst, env, &exec))
+	if (init_exec(*token_lst, env, &exec))
 	{
-		free(exec);
+		free_exec(exec);
 		return ;
 	}
-	if (is_bultin(token_lst, env))
+	if (exec_bultin(*token_lst, env))
 		exec_command(exec);
 	restore_fd(exec);
+	free_exec(exec);
 }

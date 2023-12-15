@@ -4,6 +4,10 @@ LIBFT_DIR	=	libft/
 LIBFT_NAME	=	libft.a
 LIBFT		=	$(addprefix $(LIBFT_DIR), $(LIBFT_NAME))
 
+FT_PRINTF_DIR = ft_printf/
+FT_PRINTF_NAME = libftprintf.a
+FT_PRINTF = $(addprefix $(FT_PRINTF_DIR), $(FT_PRINTF_NAME))
+
 INC            :=    minishell.h
 INC_DIR        :=    inc/
 
@@ -45,10 +49,10 @@ CC            :=    cc
 CC_FLAGS      :=    -Wextra -Werror -Wall
 
 
-all: $(NAME)
+all: libft ft_printf $(NAME)
 
-$(NAME): libft $(OBJ)
-	$(CC) $(CC_FLAGS) $(OBJ) -L ./libft -lft -lreadline -o $@
+$(NAME): $(OBJ) $(FT_PRINTF) $(LIBFT)
+	$(CC) $(CC_FLAGS) $(OBJ) -L ./libft -lft -L ./ft_printf -lftprintf -lreadline -o $@
 	@echo "All compiled"
 
 $(OBJ): $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS) Makefile
@@ -57,14 +61,17 @@ $(OBJ): $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS) Makefile
 	@echo "Compiling in progress ${COMPILED}/${TOTAL_COMPILATION}"
 	@$(CC) $(CC_FLAGS) -I $(INC_DIR) -c $< -o $@
 
+ft_printf:
+	@make -C ft_printf
+
 libft:
 	@make -C libft
 
-clean: cleanlibft
+clean: cleanlibft cleanprintf
 	@rm -rf $(OBJ_DIR)
 	@echo "Everything removed"
 
-fclean: fcleanlibft clean
+fclean: fcleanlibft fcleanprintf clean
 	@rm -rf $(NAME)
 
 cleanlibft:
@@ -73,7 +80,13 @@ cleanlibft:
 fcleanlibft: cleanlibft
 	@make fclean -C ${LIBFT_DIR}
 
+cleanprintf:
+	@make clean -C $(FT_PRINTF_DIR)
+
+fcleanprintf: cleanprintf
+	@make fclean -C $(FT_PRINTF_DIR)
+
 re: fclean
 	make all
 
-.PHONY: all clean fclean re libft
+.PHONY: all clean fclean re libft ft_printf
