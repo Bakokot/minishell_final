@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/15 14:14:39 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/15 16:21:06 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,31 +80,29 @@ static char	*read_new_line(char *line)
 */
 int	main(int argc, char **argv, char **envp)
 {
-	t_data	data;
+	t_env	*env;
 	char	*line;
+	t_token	**token;
 
 	g_exit_status = 0;
-	(void)argc;
 	(void)argv;
 	if (argc > 1)
 		return (printf("./minishell takes no argument\n"), 0);
-	data.env = init_env(envp);
+	env = init_env(envp);
 	signal_handling();
 	while (1)
 	{
-		token_lst = NULL;
+		token = NULL;
 		signal_handling();
 		line = readline("minishell $>");
 		if (line == NULL)
-			ctrl_d_handler(line, token_lst, env);
+			ctrl_d_handler(line, token, env);
 		while (line != NULL && close_quotes(line) == false)
 			line = read_new_line(line);
 		add_history(line);
-		data.token = tokenize(line, data.env);
-		handle_command(data.token, data.env);
-		free_all_token(data.token);
+		token = tokenize(line, env);
+		handle_command(token, env);
+		free_all_token(token);
 		free(line);
 	}
-	//rl_clear_history();
-	//free_all_env ou free_all
 }

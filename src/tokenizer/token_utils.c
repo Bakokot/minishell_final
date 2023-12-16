@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:40:06 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/13 15:50:38 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/15 22:19:42 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ void	add_back_token(t_token **token_lst, t_token *token)
 	if (!token_lst || !token)
 		return ;
 	if (*token_lst)
-	{
 		get_last_token(*token_lst)->next = token;
-	}
 	else
 		*token_lst = token;
 }
