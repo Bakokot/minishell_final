@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:49:23 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/19 13:04:36 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/19 13:12:56 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,24 @@ static char	*single_dollarn(char *updated_token)
 	return (updated_token);
 }
 
+static char	*exit_status_var(char *updated_token)
+{
+	char	*temp;
+	char	*exit_status;
+
+	temp = updated_token;
+	exit_status = ft_itoa(g_exit_status);
+	if (updated_token == NULL)
+		updated_token = exit_status;
+	else
+	{
+		updated_token = ft_strjoin(updated_token, exit_status);
+		free(temp);
+		free(exit_status);
+	}
+	return (updated_token);
+}
+
 /**
  * Actual replacement of a single $VAR
  * If we have $ or $$, we treat the $VAR as a litteral $ or two litterals $$
@@ -102,6 +120,8 @@ static char	*change_var(char *token, int *i, char *updated_token, t_env *env)
 		updated_token = single_dollarn(updated_token);
 		return (updated_token);
 	}
+	else if (token[*i] == '?')
+		updated_token = exit_status_var(updated_token);
 	temp = updated_token;
 	marker = *i;
 	while (token[*i] != '\'' && token[*i] != '\"' && !ft_isspace(token[*i]) && token[*i] != '$' && token[*i])
