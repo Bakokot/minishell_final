@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:49:23 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/19 13:12:56 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/19 13:30:18 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,11 @@ static char	*change_var(char *token, int *i, char *updated_token, t_env *env)
 		return (updated_token);
 	}
 	else if (token[*i] == '?')
+	{	
 		updated_token = exit_status_var(updated_token);
+		*i += 1;
+		return (updated_token);
+	}
 	temp = updated_token;
 	marker = *i;
 	while (token[*i] != '\'' && token[*i] != '\"' && !ft_isspace(token[*i]) && token[*i] != '$' && token[*i])
@@ -221,7 +225,9 @@ static void	update_varn(t_token *token, t_env *env)
 	int		flag_quote;
 	int		i;
 	char	*updated_token;
+	char	*temp;
 
+	temp = token->token;
 	i = 0;
 	flag_quote = 0;
 	flag_quote = is_quote(token->token[i]);
@@ -248,6 +254,8 @@ static void	update_varn(t_token *token, t_env *env)
 		}
 	}
 	printf("FINAL TOKEN --> %s\n", updated_token);
+	token->token = updated_token;
+	free(temp);
 }
 
 /**

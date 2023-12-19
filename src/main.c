@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/19 11:17:41 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/19 13:28:16 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(line);
 			token_lst = tokenize(line, env);
-			//handle_command(*token_lst, env);
+			handle_command(*token_lst, env);
 			free_all_token(token_lst);
 			free(line);
 		}
