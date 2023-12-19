@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:29:20 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/13 15:50:22 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/19 11:15:33 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ t_env	*get_last_env(t_env *lst)
 */
 char	*lookup_values(char *key, t_env *env)
 {
+
 	while (env)
 	{
 		if (ft_strcmp(key, env->key) == 0)
