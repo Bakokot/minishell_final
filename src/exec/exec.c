@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 16:52:08 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/16 18:55:03 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/19 13:24:11 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ int	init_exec(t_exec *exec)
 {
 	exec->sstdin = dup(0);
 	exec->sstdout = dup(1);
-	exec->sstderr = dup(2);
 	exec->fd_heredoc = -1;
+	exec->in = -1;
+	exec->out = -1;
 	exec->envp = NULL;
 	exec->args = NULL;
 	exec->path = NULL;
@@ -35,6 +36,19 @@ void	free_exec(t_exec *exec)
 	free(exec);
 }
 
+void	restore_fd(t_exec *exec)
+{
+	if (exec->fd_heredoc != -1)
+	{
+		unlink("heredoc");
+		close(exec->fd_heredoc);
+	}
+	dup2(exec->sstdin, 0);
+	dup2(exec->sstdout, 1);
+	close(exec->sstdin);
+	close(exec->sstdout);
+}
+
 void	exec_command(t_exec	*exec)
 {
 	int		pid;
@@ -45,15 +59,11 @@ void	exec_command(t_exec	*exec)
 	if (pid == 0)
 	{
 		if (execve(exec->path, exec->args, exec->envp) == -1)
-		{
-			write(exec->sstderr, exec->args[0], ft_strlen(exec->args[0]));
-			write(exec->sstderr, ": command not found\n", 21);
-		}
-		exit(0);
+			ft_printf(2, "%s : command not found\n", exec->args[0]);
 	}
 	else
 	{
-		waitpid(pid, NULL, 0);
-		kill(pid, SIGTERM);
+		waitpid(pid, NULL, WUNTRACED);
+		ft_printf(exec->sstdout, "command executed\n");
 	}
 }

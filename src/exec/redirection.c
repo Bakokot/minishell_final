@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:24:23 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/16 19:39:10 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/18 23:25:07 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,37 +53,37 @@ static void	remove_redirection(t_token *head)
 	}
 }
 
-static int	change_output(t_token *token_lst, t_exec **exec, int flags)
+static int	change_output(t_token *token_lst, t_exec *exec, int flags)
 {
 	int	file;
 
 	file = open(token_lst->next->token, flags, 0777);
 	if (!file)
 	{
-		ft_printf((*exec)->sstderr, "Error in open\n");
+		ft_printf(2, "Error in open\n");
 		return (1);
 	}
 	dup2(file, 1);
-	(*exec)->out = file;
+	exec->out = file;
 	return (0);
 }
 
-static int	change_input(t_token *token_lst, t_exec **exec, int flags)
+static int	change_input(t_token *token_lst, t_exec *exec, int flags)
 {
 	int	file;
 
 	file = open(token_lst->next->token, flags, 0777);
 	if (file == -1)
 	{
-		ft_printf((*exec)->sstderr, "No such file or directory: %s\n", token_lst->next->token);
+		ft_printf(2, "No such file or directory: %s\n", token_lst->next->token);
 		return (1);
 	}
 	dup2(file, 0);
-	(*exec)->in = file;
+	exec->in = file;
 	return (0);
 }
 
-int	change_standard_fd(t_token *token_lst, t_exec **exec, t_env *env)
+int	change_standard_fd(t_token *token_lst, t_exec *exec, t_env *env)
 {
 	int	returns;
 	t_token	*head;
@@ -95,7 +95,7 @@ int	change_standard_fd(t_token *token_lst, t_exec **exec, t_env *env)
 		if (token_lst->type == 2)
 			returns = change_input(token_lst, exec, O_RDONLY);
 		if (token_lst->type == 3)
-			returns = handle_heredoc(token_lst, *exec, env);
+			returns = handle_heredoc(token_lst, exec, env);
 		if (token_lst->type == 4)
 			returns = change_output(token_lst, exec, O_WRONLY | O_CREAT | O_TRUNC);
 		if (token_lst->type == 5)

@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:30:00 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/15 22:45:33 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/19 01:26:02 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_env	*init_env(char **envp)
 	{
 		key = get_env_key(envp[i]);
 		values = get_env_values(envp[i]);
-		new = create_new_env(key, values, 2);
+		new = create_new_env(key, values);
 		add_back_env(&env, new);
 		i++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_vars.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:06:21 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/05 13:46:23 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/17 15:31:09 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	*add_values(char *dollarless_token, char *values)
  * - We extract the KEY and lookup in the env
  * --> If it doesn't exist in the env : we do nothing
  * --> Else
- * - We add the VALUES connected to the KEY to the dollarless_token 
+ * - We add the VALUES connected to the KEY to the dollarless_token
 */
 static char	*replace_dollar(t_token *token, int *i, \
 char *dollarless_token, t_env *env)
@@ -76,7 +76,7 @@ static void	init_values(char **dollarless, int *i, int *marker)
  * -------------------------------------------------------
  * To know how many char we wanna copy, we keep a marker
  * that remembers the index i before we started counting
- * 
+ *
  * If we find a $ alone, we consider the $ as a litteral char
  * like we do in bash
 */

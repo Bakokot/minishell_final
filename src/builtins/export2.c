@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 16:14:50 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/15 15:10:15 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/19 01:26:34 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	swap_node(t_env *cur, t_env *next)
 	next->values = tmp_value;
 }
 
-static t_env	*lst_copy(t_env *env, int sstderr)
+static t_env	*lst_copy(t_env *env)
 {
 	t_env	*env_copy;
 	t_env	*new;
@@ -33,7 +33,7 @@ static t_env	*lst_copy(t_env *env, int sstderr)
 	env_copy = NULL;
 	while (env)
 	{
-		new = create_new_env(ft_strdup(env->key), ft_strdup(env->values), sstderr);
+		new = create_new_env(ft_strdup(env->key), ft_strdup(env->values));
 		if (!new)
 			return (free_all_env(env_copy), NULL);
 		add_back_env(&env_copy, new);
@@ -42,13 +42,13 @@ static t_env	*lst_copy(t_env *env, int sstderr)
 	return (env_copy);
 }
 
-void	print_export(t_env *env, int sstderr)
+void	print_export(t_env *env)
 {
 	size_t	size;
 	t_env	*env_copy;
 	t_env	*head;
 
-	env_copy = lst_copy(env, sstderr);
+	env_copy = lst_copy(env);
 	if (!env_copy)
 		return ;
 	head = env_copy;

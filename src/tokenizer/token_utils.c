@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:40:06 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/15 22:19:42 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/19 01:26:15 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_token	*create_new_token(char *str, int type)
 
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
-		return (log_error(ERR_MALLOC, 2), NULL);
+		return (log_error(ERR_MALLOC), NULL);
 	new_token->token = str;
 	new_token->type = type;
 	new_token->next = NULL;
@@ -41,9 +41,7 @@ void	add_back_token(t_token **token_lst, t_token *token)
 t_token	*get_last_token(t_token *lst)
 {
 	while (lst && lst->next)
-	{
 		lst = lst->next;
-	}
 	return (lst);
 }
 

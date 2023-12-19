@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 23:22:01 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/16 19:46:22 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/17 15:51:54 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,10 @@ void	free_all_token(t_token **token_lst)
 
 	while (*token_lst)
 	{
-		temp = (*token_lst)->next;
-		if ((*token_lst)->token)
-			free((*token_lst)->token);
-		free(*token_lst);
-		*token_lst = temp;
+		temp = (*token_lst);
+		*token_lst = (*token_lst)->next;
+		free(temp->token);
+		free(temp);
 	}
 	free(token_lst);
 }

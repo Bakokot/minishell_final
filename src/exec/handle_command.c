@@ -6,26 +6,11 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/16 20:11:52 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/19 13:13:58 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	restore_fd(t_exec *exec)
-{
-	if (exec->fd_heredoc != -1)
-	{
-		unlink("heredoc");
-		close(exec->fd_heredoc);
-	}
-	dup2(exec->sstdin, 0);
-	dup2(exec->sstdout, 1);
-	dup2(exec->sstderr, 2);
-	close(exec->sstdin);
-	close(exec->sstdout);
-	close(exec->sstderr);
-}
 
 static char	*get_path(char *cmd, t_env *env)
 {
@@ -65,7 +50,7 @@ t_exec	*handle_redirection(t_token *token_lst, t_env *env)
 		return (NULL);
 	if (init_exec(exec))
 		return (free_exec(exec), NULL);
-	if (change_standard_fd(token_lst, &exec, env))
+	if (change_standard_fd(token_lst, exec, env))
 		return (free_exec(exec), NULL);
 	exec->envp = env_lst_into_char(env);
 	exec->args = token_lst_into_char(token_lst);
@@ -74,21 +59,115 @@ t_exec	*handle_redirection(t_token *token_lst, t_env *env)
 	exec->path = get_path(token_lst->token, env);
 	if (!exec->path && is_bultin(token_lst) == 1)
 	{
-		ft_printf(exec->sstderr, "%s : command not found\n", token_lst->token);
+		ft_printf(2, "%s : command not found\n", token_lst->token);
 		return (free_exec(exec), NULL);
 	}
 	return (exec);
 }
 
-void	handle_command(t_token **token_lst, t_env *env)
+int	execute(t_token *token, t_env *env)
 {
 	t_exec	*exec;
 
-	exec = handle_redirection(*token_lst, env);
+	exec = handle_redirection(token, env);
 	if (!exec)
-		return ;
-	if (exec_bultin(*token_lst, env, exec->sstderr))
+		return (1);
+	if (exec_bultin(token, env) == 1)
 		exec_command(exec);
 	restore_fd(exec);
 	free_exec(exec);
+	return (0);
+}
+
+t_token	*get_command(t_token *token, int index)
+{
+	int	i;
+
+	i = 0;
+	while (token)
+	{
+		if (index == 0)
+			return (token);
+		if (token->type == 1)
+			i++;
+		if (i == index)
+			return (token->next);
+		token = token-> next;
+	}
+	return (NULL);
+}
+
+//fd[0] == read;
+//fd[1] == write;
+
+void	child_pipex(t_token *token, t_env *env, int **pipes, int cmd_nbr)
+{
+	int		count;
+	t_exec	*exec;
+
+	exec = handle_redirection(token, env);
+	if (!exec)
+		return ;
+	count = count_pipes(token);
+	token = get_command(token, cmd_nbr);
+	ft_printf(exec->sstdout, "CMD%d is %s\n", cmd_nbr, token->token);
+	if (cmd_nbr != 0 && exec->in == -1)
+	{
+		dup2(pipes[cmd_nbr - 1][0], 0);
+		ft_printf(exec->sstdout, "CMD%d after redirect input\n", cmd_nbr);
+	}
+	if (cmd_nbr < count && exec->out == -1)
+	{
+		dup2(pipes[cmd_nbr][1], 1);
+		ft_printf(exec->sstdout, "CMD%d after redirect output\n", cmd_nbr);
+	}
+	if (exec_bultin(token, env) == 1)
+		exec_command(exec);
+	close_pipes(pipes, count);
+	restore_fd(exec);
+	free_exec(exec);
+	exit(0);
+}
+
+int	pipex(t_token *token, t_env *env, int count)
+{
+	int	**pipes;
+	int	pid;
+	int	i;
+
+	i = 0;
+	pipes = setup_pipes(token);
+	if (!pipes)
+		return (1);
+	while (i <= count)
+	{
+		pid = fork();
+		if (pid < 0)
+			return (1);
+		if (pid == 0)
+			child_pipex(token, env, pipes, i);
+		else
+		{
+			waitpid(pid, NULL, WUNTRACED);
+			close_pipes(pipes, i - 1);
+			printf("next command\n");
+		}
+		i++;
+	}
+	printf("All pipex finished\n");
+	close_pipes(pipes, count);
+	free_pipes(pipes);
+	return (0);
+}
+
+void	handle_command(t_token *token, t_env *env)
+{
+	int	count;
+
+	//check args;
+	count = count_pipes(token);
+	if (count == 0)
+		execute(token, env);
+	else
+		pipex(token, env, count);
 }

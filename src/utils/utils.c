@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 13:20:03 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/13 15:50:11 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/19 01:25:43 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*ft_strndup(char *s1, size_t size)
 	i = 0;
 	cpy = (char *)malloc(sizeof(*s1) * (size + 1));
 	if (!cpy)
-		return (log_error(ERR_MALLOC, 2), NULL);
+		return (log_error(ERR_MALLOC), NULL);
 	while (i < size)
 	{
 		cpy[i] = s1[i];

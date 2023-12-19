@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 11:56:31 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/15 15:05:41 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/19 01:19:15 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*find_home(t_env *env)
 	return (NULL);
 }
 
-int	cd(t_token	*token_lst, t_env *env, int sstderr)
+int	cd(t_token	*token_lst, t_env *env)
 {
 	char *home;
 
@@ -36,13 +36,13 @@ int	cd(t_token	*token_lst, t_env *env, int sstderr)
 	{
 		home = find_home(env);
 		if (!home)
-			return(ft_printf(sstderr, "cd: HOME not set"), 1);
+			return(ft_printf(2, "cd: HOME not set"), 1);
 		chdir(home);
 		return (0);
 	}
 	if (chdir(token_lst->token) == -1)
 	{
-		ft_printf(sstderr, "cd: %s: No such file or directory\n", token_lst->token);
+		ft_printf(2, "cd: %s: No such file or directory\n", token_lst->token);
 		return (1);
 	}
 	return (0);

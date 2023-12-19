@@ -6,13 +6,13 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:29:20 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/15 15:05:37 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/19 01:25:07 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*create_new_env(char *key, char *values, int sstderr)
+t_env	*create_new_env(char *key, char *values)
 {
 	t_env	*new_env;
 
@@ -20,7 +20,7 @@ t_env	*create_new_env(char *key, char *values, int sstderr)
 		return (NULL);
 	new_env = malloc(sizeof(t_env));
 	if (!new_env)
-		return (log_error(ERR_MALLOC, sstderr), NULL);
+		return (log_error(ERR_MALLOC), NULL);
 	new_env->key = key;
 	new_env->values = values;
 	new_env->next = NULL;

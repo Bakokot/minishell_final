@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/16 19:39:31 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/19 12:14:25 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,8 @@ typedef struct s_exec
 	int		fd_heredoc;
 	int		sstdin;
 	int		sstdout;
-	int		sstderr;
 	int		in;
 	int		out;
-	int		err;
 }	t_exec;
 
 
@@ -122,7 +120,7 @@ t_env	*init_env(char **envp);
  * t_env struct utils
 */
 t_env	*get_last_env(t_env *lst);
-t_env	*create_new_env(char *key, char *values, int sstderr);
+t_env	*create_new_env(char *key, char *values);
 char	*get_env_key(char *envp);
 char	*get_env_values(char *envp);
 char	**env_lst_into_char(t_env *env);
@@ -145,24 +143,30 @@ void	free_array(char **arr);
 int		pwd(void);
 int		env_builtin(t_env *env);
 int		echo(t_token *token_lst);
-void	print_export(t_env *env, int sstderr);
-int		cd(t_token	*token_lst, t_env *env, int sstderr);
+void	print_export(t_env *env);
+int		cd(t_token	*token_lst, t_env *env);
 int		unset(t_token *token_lst, t_env **env);
-int		export(t_token *token_lst, t_env **env, int sstderr);
+int		export(t_token *token_lst, t_env **env);
 
 //Exec
+int		init_exec(t_exec *exec);
 void	free_exec(t_exec *exec);
+void	handle_command(t_token *token_lst, t_env *env);
 void	exec_command(t_exec	*exec);
 int		is_bultin(t_token *token_lst);
-int		exec_bultin(t_token *token_lst, t_env *env, int sstderr);
-void	handle_command(t_token **token_lst, t_env *env);
-int		init_exec(t_exec *exec);
+int		exec_bultin(t_token *token_lst, t_env *env);
 
 //Redirections
 t_exec	*handle_redirection(t_token *token_lst, t_env *env);
-int		change_standard_fd(t_token *token_lst, t_exec **exec, t_env *env);
+int		change_standard_fd(t_token *token_lst, t_exec *exec, t_env *env);
 int		handle_heredoc(t_token *token, t_exec *exec, t_env *env);
+void	restore_fd(t_exec *exec);
 
+//Pipe
+int	**setup_pipes(t_token *token);
+size_t	count_pipes(t_token *token);
+void	close_pipes(int **pipes, int limiter);
+void	free_pipes(int **pipes);
 
 /**
  * Freeing
@@ -174,7 +178,7 @@ void	free_all_token(t_token **token_lst);
 /**
  * Error management
 */
-void	log_error(char *str, int fd);
+void	log_error(char *str);
 
 /**
  * Signals management

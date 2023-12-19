@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 11:58:45 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/14 15:09:31 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/17 15:03:38 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static void	unset_variable(t_env **env, size_t index)
 	before = tmp;
 	current = tmp->next;
 	before->next = current->next;
+	free(current->key);
+	free(current->values);
 	free(current);
 }
 

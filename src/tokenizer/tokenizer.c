@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 12:56:19 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/13 15:50:29 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/19 01:26:08 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ t_token	**tokenize(char *line, t_env *env)
 
 	token_lst = malloc(sizeof(t_token *));
 	if (!token_lst)
-		return (log_error(ERR_MALLOC, 2), NULL);
+		return (log_error(ERR_MALLOC), NULL);
 	*token_lst = create_new_token("to delete", 0);
 	i = 0;
 	while (line[i])
