@@ -6,13 +6,13 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 16:52:08 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/19 13:24:11 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/19 15:57:49 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	init_exec(t_exec *exec)
+void	init_exec(t_exec *exec)
 {
 	exec->sstdin = dup(0);
 	exec->sstdout = dup(1);
@@ -22,7 +22,6 @@ int	init_exec(t_exec *exec)
 	exec->envp = NULL;
 	exec->args = NULL;
 	exec->path = NULL;
-	return (0);
 }
 
 void	free_exec(t_exec *exec)
@@ -40,8 +39,8 @@ void	restore_fd(t_exec *exec)
 {
 	if (exec->fd_heredoc != -1)
 	{
-		unlink("heredoc");
 		close(exec->fd_heredoc);
+		unlink("heredoc");
 	}
 	dup2(exec->sstdin, 0);
 	dup2(exec->sstdout, 1);
@@ -58,12 +57,10 @@ void	exec_command(t_exec	*exec)
 		return ;
 	if (pid == 0)
 	{
+
 		if (execve(exec->path, exec->args, exec->envp) == -1)
 			ft_printf(2, "%s : command not found\n", exec->args[0]);
 	}
 	else
-	{
 		waitpid(pid, NULL, WUNTRACED);
-		ft_printf(exec->sstdout, "command executed\n");
-	}
 }

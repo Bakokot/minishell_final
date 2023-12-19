@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/19 13:13:58 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/19 16:07:30 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ t_exec	*handle_redirection(t_token *token_lst, t_env *env)
 	exec = malloc(sizeof(t_exec));
 	if (!exec)
 		return (NULL);
-	if (init_exec(exec))
-		return (free_exec(exec), NULL);
+	init_exec(exec);
 	if (change_standard_fd(token_lst, exec, env))
 		return (free_exec(exec), NULL);
 	exec->envp = env_lst_into_char(env);
@@ -76,87 +75,6 @@ int	execute(t_token *token, t_env *env)
 		exec_command(exec);
 	restore_fd(exec);
 	free_exec(exec);
-	return (0);
-}
-
-t_token	*get_command(t_token *token, int index)
-{
-	int	i;
-
-	i = 0;
-	while (token)
-	{
-		if (index == 0)
-			return (token);
-		if (token->type == 1)
-			i++;
-		if (i == index)
-			return (token->next);
-		token = token-> next;
-	}
-	return (NULL);
-}
-
-//fd[0] == read;
-//fd[1] == write;
-
-void	child_pipex(t_token *token, t_env *env, int **pipes, int cmd_nbr)
-{
-	int		count;
-	t_exec	*exec;
-
-	exec = handle_redirection(token, env);
-	if (!exec)
-		return ;
-	count = count_pipes(token);
-	token = get_command(token, cmd_nbr);
-	ft_printf(exec->sstdout, "CMD%d is %s\n", cmd_nbr, token->token);
-	if (cmd_nbr != 0 && exec->in == -1)
-	{
-		dup2(pipes[cmd_nbr - 1][0], 0);
-		ft_printf(exec->sstdout, "CMD%d after redirect input\n", cmd_nbr);
-	}
-	if (cmd_nbr < count && exec->out == -1)
-	{
-		dup2(pipes[cmd_nbr][1], 1);
-		ft_printf(exec->sstdout, "CMD%d after redirect output\n", cmd_nbr);
-	}
-	if (exec_bultin(token, env) == 1)
-		exec_command(exec);
-	close_pipes(pipes, count);
-	restore_fd(exec);
-	free_exec(exec);
-	exit(0);
-}
-
-int	pipex(t_token *token, t_env *env, int count)
-{
-	int	**pipes;
-	int	pid;
-	int	i;
-
-	i = 0;
-	pipes = setup_pipes(token);
-	if (!pipes)
-		return (1);
-	while (i <= count)
-	{
-		pid = fork();
-		if (pid < 0)
-			return (1);
-		if (pid == 0)
-			child_pipex(token, env, pipes, i);
-		else
-		{
-			waitpid(pid, NULL, WUNTRACED);
-			close_pipes(pipes, i - 1);
-			printf("next command\n");
-		}
-		i++;
-	}
-	printf("All pipex finished\n");
-	close_pipes(pipes, count);
-	free_pipes(pipes);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/19 12:14:25 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/19 16:09:10 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ int		unset(t_token *token_lst, t_env **env);
 int		export(t_token *token_lst, t_env **env);
 
 //Exec
-int		init_exec(t_exec *exec);
+void		init_exec(t_exec *exec);
 void	free_exec(t_exec *exec);
 void	handle_command(t_token *token_lst, t_env *env);
 void	exec_command(t_exec	*exec);
@@ -162,11 +162,13 @@ int		change_standard_fd(t_token *token_lst, t_exec *exec, t_env *env);
 int		handle_heredoc(t_token *token, t_exec *exec, t_env *env);
 void	restore_fd(t_exec *exec);
 
-//Pipe
-int	**setup_pipes(t_token *token);
+//Pipex + Utils
+int	pipex(t_token *token, t_env *env, int count);
 size_t	count_pipes(t_token *token);
-void	close_pipes(int **pipes, int limiter);
+int	**setup_pipes(t_token *token);
 void	free_pipes(int **pipes);
+void	close_pipes(int **pipes, int limiter);
+t_token	*get_command(t_token *token, int index);
 
 /**
  * Freeing

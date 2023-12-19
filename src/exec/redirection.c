@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:24:23 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/18 23:25:07 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/19 16:03:20 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	remove_redirection(t_token *head)
 	token_lst = head;
 	while (token_lst && token_lst->type != 1)
 	{
-		if (token_lst->type != 0 && token_lst->type != 1)
+		if (token_lst->type != 0)
 		{
 			unset_token(&head, index);
 			token_lst = head;
@@ -73,7 +73,7 @@ static int	change_input(t_token *token_lst, t_exec *exec, int flags)
 	int	file;
 
 	file = open(token_lst->next->token, flags, 0777);
-	if (file == -1)
+	if (!file)
 	{
 		ft_printf(2, "No such file or directory: %s\n", token_lst->next->token);
 		return (1);
