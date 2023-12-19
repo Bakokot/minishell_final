@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 16:01:40 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/19 16:11:40 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/19 16:23:52 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int	pipex(t_token *token, t_env *env, int count)
 		{
 			close_pipes(pipes, i - 1);
 			waitpid(pid, NULL, WUNTRACED);
-			ft_printf(2, "end of cmd\n");
 		}
 		i++;
 	}
