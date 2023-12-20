@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/20 15:40:54 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/20 19:08:07 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,9 @@ void	print_env(t_env *env);
 void	replace_varsn(t_token **token_lst, t_env *env);
 char	*update_token(char *token, int *i, int marker, char *updated_token);
 char	*change_var(char *token, int *i, char *updated_token, t_env *env);
-
+char	*single_dollarn(char *updated_token);
+char	*double_dollar(char *updated_token);
+char	*exit_status_var(char *updated_token);
+bool	special_cases(char *token, char **updated_token, int *i);
 
 #endif
