@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:31:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/20 22:22:33 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/20 22:33:51 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,38 @@ int	write_heredoc(t_token **heredoc, t_exec *exec, t_env *env)
 		return (free_all_token(heredoc), 1);
 	dup2(exec->fd_heredoc, 0);
 	exec->in = exec->fd_heredoc;
+	free_all_token(heredoc);
+	return (0);
+}
+
+int	end_heredoc(t_token *token, char *line)
+{
+	char	*delimiter;
+
+	delimiter = token->next->token;
+	if (line == NULL)
+		return (1);
+	if (ft_strlen(delimiter) == ft_strlen(line))
+		if (!ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1))
+			return (1);
 	return (0);
 }
 
 int	handle_heredoc(t_token *token, t_exec *exec, t_env *env)
 {
+	char	*line;
 	t_token	*new;
 	t_token	**heredoc;
-	char	*line;
-	char	*delimiter;
 
 	heredoc = setup_heredoc(exec);
 	if (!heredoc)
 		return (1);
-	delimiter = token->next->token;
 	while (1)
 	{
 		line = readline("heredoc>");
-		if (!ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) && ft_strlen(delimiter) == ft_strlen(line))
+		if (line == NULL)
+			break ;
+		if (end_heredoc(token, line))
 			break ;
 		new = create_new_token(line, 0);
 		if (!new)
@@ -77,6 +91,5 @@ int	handle_heredoc(t_token *token, t_exec *exec, t_env *env)
 	free(line);
 	if (write_heredoc(heredoc, exec, env) == 1)
 		return (1);
-	free_all_token(heredoc);
 	return (0);
 }
