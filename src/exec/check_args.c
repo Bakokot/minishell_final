@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:09:35 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/20 16:54:35 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/20 19:44:40 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	check_args(t_token *token)
 {
+	if (token == NULL)
+		return (1);
 	if (token->type == 1)
 	{
 		ft_printf(2, "Error: No command before pipe\n");

@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/20 17:22:39 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/20 21:35:44 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_exec	*handle_redirection(t_token **token_lst, t_env *env)
 		return (free_exec(exec), NULL);
 	remove_redirection(token_lst);
 	if (*token_lst == NULL)
-		add_back_token(token_lst, create_new_token(ft_strdup("cat"), 0));
+		return(free_exec(exec), NULL);
 	exec->envp = env_lst_into_char(env);
 	exec->args = token_lst_into_char(*token_lst);
 	if (!exec->args || !exec->envp)
@@ -76,7 +76,6 @@ int	execute(t_token **token, t_env *env)
 		return (1);
 	if (exec_bultin(*token, env) == 1)
 		exec_command(exec);
-	restore_fd(exec);
 	free_exec(exec);
 	return (0);
 }
@@ -85,6 +84,8 @@ void	handle_command(t_token **token, t_env *env)
 {
 	int	count;
 
+	if (check_args(*token) == 1)
+		return ;
 	count = count_pipes(*token);
 	if (count == 0)
 		execute(token, env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/20 19:26:10 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/20 22:24:34 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int argc, char **argv, char **envp)
 	g_exit_status = 0;
 	(void)argv;
 	if (argc > 1)
-		return (printf("./minishell takes no argument\n"), 0);
+		return (ft_printf(2, "./minishell takes no argument\n"), 0);
 	env = init_env(envp);
 	signal_handling();
 	while (1)

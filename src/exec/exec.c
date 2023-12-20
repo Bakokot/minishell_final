@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 16:52:08 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/19 15:57:49 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/20 19:56:36 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	init_exec(t_exec *exec)
 
 void	free_exec(t_exec *exec)
 {
+	restore_fd(exec);
 	if (exec->args != NULL)
 		free_array(exec->args);
 	if (exec->envp != NULL)

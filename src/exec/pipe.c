@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 16:01:40 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/20 17:44:58 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/20 19:57:09 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	child_pipex(t_token *token, t_env *env, int **pipes, int cmd_nbr)
 	close_pipes(pipes, count);
 	if (exec_bultin(token, env) == 1)
 		exec_command(exec);
-	restore_fd(exec);
 	free_exec(exec);
 	exit(0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_replace_var.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:49:23 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/20 19:11:31 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/20 21:26:47 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,6 @@ static void	update_varn(t_token *token, t_env *env)
 
 	i = 0;
 	temp = token->token;
-	i = 0;
-	temp = token->token;
 	flag_quote = is_quote(token->token[i]);
 	updated_token = NULL;
 	while (token->token[i])
@@ -112,7 +110,6 @@ static void	update_varn(t_token *token, t_env *env)
 			updated_token = no_quote_behaviour(token->token, &i, \
 			updated_token, env);
 	}
-	//printf("FINAL TOKEN --> %s\n", updated_token);
 	token->token = updated_token;
 	free(temp);
 }

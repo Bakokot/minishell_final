@@ -6,11 +6,25 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:31:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/20 11:18:28 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/20 22:22:33 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_token	**setup_heredoc(t_exec *exec)
+{
+	t_token	**heredoc;
+
+	heredoc = NULL;
+	unlink("heredoc");
+	dup2(exec->sstdin, 0);
+	heredoc = malloc(sizeof(t_token *));
+	if (!heredoc)
+		return (NULL);
+	*heredoc = NULL;
+	return (heredoc);
+}
 
 int	write_heredoc(t_token **heredoc, t_exec *exec, t_env *env)
 {
@@ -20,8 +34,7 @@ int	write_heredoc(t_token **heredoc, t_exec *exec, t_env *env)
 	exec->fd_heredoc = open("heredoc", O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (exec->fd_heredoc == -1)
 		return (free_all_token(heredoc), 1);
-	//replace_vars(heredoc, env);
-	(void)env;
+	replace_varsn(heredoc, env);
 	while (head)
 	{
 		if (head->token == NULL)
@@ -47,10 +60,9 @@ int	handle_heredoc(t_token *token, t_exec *exec, t_env *env)
 	char	*line;
 	char	*delimiter;
 
-	heredoc = malloc(sizeof(t_token *));
+	heredoc = setup_heredoc(exec);
 	if (!heredoc)
 		return (1);
-	*heredoc = NULL;
 	delimiter = token->next->token;
 	while (1)
 	{

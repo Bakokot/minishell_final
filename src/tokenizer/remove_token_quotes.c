@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_token_quotes.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 12:27:57 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/20 19:23:12 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/20 21:32:29 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,27 +56,16 @@ static char	*strdup_erase_closed_quotes(char *str)
 	while (str[i])
 	{
 		if (flag == 0 && is_quote(str[i]) != 0)
-		{
-			printf("entered quote == \t%c\n", str[i]);
 			flag = str[i++];
-			//i++;
-		}
 		if (str[i] == flag)
 		{
-			printf("entered end quote == \t%c\n", str[i]);
 			flag = 0;
 			i++;
 		}
 		else if (str[i] != flag)
-		{
-			printf("entered copy char == \t%c\n", str[i]);
 			ret[j++] = str[i++];
-			//j++;
-			//i++;
-		}
 	}
 	ret[j] = 0;
-	printf("%s\n", ret);
 	return (ret);
 }
 
@@ -93,7 +82,6 @@ void	remove_token_quotes(t_token **token_lst)
 	{
 		if (closed_quotes(cpy->token) == true)
 		{
-			printf("ici\n");
 			temp = cpy->token;
 			cpy->quoted = true;
 			cpy->token = strdup_erase_closed_quotes(cpy->token);

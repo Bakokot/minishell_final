@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 12:56:19 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/20 19:35:50 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/20 21:35:48 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ t_token	**tokenize(char *line, t_env *env)
 			i++;
 		if (is_metachar(line[i]))
 			add_metachar_token(token_lst, line, &i);
-		else
+		else if (!ft_isspace(line[i]) && line[i])
 			add_litteral_token(token_lst, line, &i);
 		while (ft_isspace(line[i]))
 			i++;
