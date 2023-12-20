@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:24:23 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/20 15:57:14 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/20 16:59:47 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	change_output(t_token *token_lst, t_exec *exec, int flags)
 	int	file;
 
 	file = open(token_lst->next->token, flags, 0777);
-	if (!file)
+	if (file == -1)
 	{
 		ft_printf(2, "Error in open\n");
 		return (1);
@@ -59,7 +59,7 @@ static int	change_input(t_token *token_lst, t_exec *exec, int flags)
 	int	file;
 
 	file = open(token_lst->next->token, flags, 0777);
-	if (!file)
+	if (file == -1)
 	{
 		ft_printf(2, "No such file or directory: %s\n", token_lst->next->token);
 		return (1);
