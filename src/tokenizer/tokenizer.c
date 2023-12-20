@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 12:56:19 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/19 16:33:41 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/20 13:02:48 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,22 +79,6 @@ static void	add_litteral_token(t_token **token_lst, char *line, int *i)
 	add_back_token(token_lst, create_new_token(str, LITTERAL));
 }
 
-/**
- * DEBUG PRINTF TOKEN LST
-*/
-static void	print_token_lst(t_token *token_lst)
-{
-	printf("----- TOKEN LIST -----\n");
-	while (token_lst)
-	{
-		printf("TOKEN == %s\n", token_lst->token);
-		printf("TOKEN == %d\n", token_lst->type);
-		printf("---------------------\n");
-		token_lst = token_lst->next;
-	}
-}
-
-
 t_token	**tokenize(char *line, t_env *env)
 {
 	t_token	**token_lst;
@@ -117,8 +101,6 @@ t_token	**tokenize(char *line, t_env *env)
 			i++;
 	}
 	delete_first_token(token_lst);
-	print_token_lst(*token_lst);
-	(void)env;
 	replace_varsn(token_lst, env);
 	return (token_lst);
 }

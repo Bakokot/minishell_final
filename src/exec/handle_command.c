@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/19 16:07:30 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/20 12:35:22 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	handle_command(t_token *token, t_env *env)
 {
 	int	count;
 
-	//check args;
 	count = count_pipes(token);
 	if (count == 0)
 		execute(token, env);

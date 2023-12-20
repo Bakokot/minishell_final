@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:31:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/17 15:59:57 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/20 11:18:28 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	write_heredoc(t_token **heredoc, t_exec *exec, t_env *env)
 	exec->fd_heredoc = open("heredoc", O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (exec->fd_heredoc == -1)
 		return (free_all_token(heredoc), 1);
-	replace_vars(heredoc, env);
+	//replace_vars(heredoc, env);
+	(void)env;
 	while (head)
 	{
 		if (head->token == NULL)

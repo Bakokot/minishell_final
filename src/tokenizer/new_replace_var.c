@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_replace_var.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:49:23 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/19 13:46:56 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/20 13:18:35 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,14 @@ static char	*no_quote_behaviour(char *token, int *i, char *updated_token, t_env 
 */
 static void	update_varn(t_token *token, t_env *env)
 {
-	int		flag_quote;
 	int		i;
-	char	*updated_token;
 	char	*temp;
+	int		flag_quote;
+	char	*updated_token;
 
-	temp = token->token;
 	i = 0;
 	flag_quote = 0;
+	temp = token->token;
 	flag_quote = is_quote(token->token[i]);
 	updated_token = NULL;
 	while (token->token[i])
@@ -103,21 +103,15 @@ static void	update_varn(t_token *token, t_env *env)
 		{
 			updated_token = double_quote_behaviour(token->token, &i, updated_token, env);
 			flag_quote = 0;
-			printf("%s\n", updated_token);
 		}
 		else if (flag_quote == '\'')
 		{
 			updated_token = single_quote_behaviour(token->token, &i, updated_token);
 			flag_quote = 0;
-			printf("%s\n", updated_token);
 		}
 		else
-		{
 			updated_token = no_quote_behaviour(token->token, &i, updated_token, env);
-			printf("%s\n", updated_token);
-		}
 	}
-	printf("FINAL TOKEN --> %s\n", updated_token);
 	token->token = updated_token;
 	free(temp);
 }

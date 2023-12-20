@@ -3,28 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/19 16:28:30 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/20 13:02:37 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_exit_status;
-
-void print_env(t_env *env)
-{
-	while (env)
-	{
-		printf("------------\n");
-		printf("KEY --> %s\n", env->key);
-		if (env->values)
-			printf("	VALUE --> %s\n", env->values);
-		env = env->next;
-	}
-}
 
 static bool close_quotes(char *line)
 {

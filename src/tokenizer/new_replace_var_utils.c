@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_replace_var_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 13:32:48 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/19 13:37:31 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/20 13:23:54 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*update_token(char *token, int *i, int marker, char *updated_token)
 }
 
 /**
- * Add two litteral dollars to the updated_token 
+ * Add two litteral dollars to the updated_token
 */
 static char	*double_dollar(char *updated_token)
 {
@@ -121,7 +121,7 @@ char	*change_var(char *token, int *i, char *updated_token, t_env *env)
 		return (updated_token);
 	}
 	else if (token[*i] == '?')
-	{	
+	{
 		updated_token = exit_status_var(updated_token);
 		*i += 1;
 		return (updated_token);
@@ -136,9 +136,7 @@ char	*change_var(char *token, int *i, char *updated_token, t_env *env)
 	if (value != NULL)
 	{
 		if (updated_token == NULL)
-		{	
 			updated_token = ft_strdup(value);
-		}
 		else
 		{
 			updated_token = ft_strjoin(updated_token, value);
