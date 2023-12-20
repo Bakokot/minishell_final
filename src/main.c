@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/20 13:02:37 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/20 15:39:18 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	main(int argc, char **argv, char **envp)
 			line = read_new_line(line);
 		add_history(line);
 		token = tokenize(line, env);
-		handle_command(*token, env);
+		handle_command(token, env);
 		free_all_token(token);
 		free(line);
 	}

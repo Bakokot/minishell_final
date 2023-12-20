@@ -6,51 +6,37 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:24:23 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/19 16:03:20 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/20 15:57:14 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	unset_token(t_token **token_lst, size_t index)
+static void	unset_token(t_token **token_lst, int index)
 {
 	t_token	*tmp;
-	t_token	*before;
 	t_token	*current;
 
 	tmp = *token_lst;
-	while (index - 1 > 0 && tmp)
+	if (index == 0)
 	{
-		tmp = tmp->next;
-		index--;
+		current = tmp;
+		*token_lst = tmp->next->next;
 	}
-	before = tmp;
-	current = tmp->next;
-	before->next = current->next->next;
+	else
+	{
+		while (index - 1 > 0 && tmp)
+		{
+			tmp = tmp->next;
+			index--;
+		}
+		current = tmp->next;
+		tmp->next = current->next->next;
+	}
 	free(current->next->token);
 	free(current->next);
 	free(current->token);
 	free(current);
-}
-
-static void	remove_redirection(t_token *head)
-{
-	size_t	index;
-	t_token	*token_lst;
-
-	index = 0;
-	token_lst = head;
-	while (token_lst && token_lst->type != 1)
-	{
-		if (token_lst->type != 0)
-		{
-			unset_token(&head, index);
-			token_lst = head;
-			index = 0;
-		}
-		index++;
-		token_lst = token_lst->next;
-	}
 }
 
 static int	change_output(t_token *token_lst, t_exec *exec, int flags)
@@ -86,9 +72,7 @@ static int	change_input(t_token *token_lst, t_exec *exec, int flags)
 int	change_standard_fd(t_token *token_lst, t_exec *exec, t_env *env)
 {
 	int	returns;
-	t_token	*head;
 
-	head = token_lst;
 	returns = 0;
 	while (token_lst && exec && token_lst->type != 1)
 	{
@@ -104,6 +88,28 @@ int	change_standard_fd(t_token *token_lst, t_exec *exec, t_env *env)
 			return (1);
 		token_lst = token_lst->next;
 	}
-	remove_redirection(head);
 	return (0);
+}
+
+void	remove_redirection(t_token **head)
+{
+	int		index;
+	t_token	*token_lst;
+
+	index = 0;
+	token_lst = *head;
+	while (token_lst && token_lst->type != 1)
+	{
+		if (token_lst->type != 0)
+		{
+			unset_token(head, index);
+			token_lst = *head;
+			index = 0;
+		}
+		else
+		{
+			index++;
+			token_lst = token_lst->next;
+		}
+	}
 }

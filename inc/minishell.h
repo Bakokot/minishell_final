@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/19 16:28:13 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/20 15:40:54 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,15 +151,16 @@ int		export(t_token *token_lst, t_env **env);
 //Exec
 void		init_exec(t_exec *exec);
 void	free_exec(t_exec *exec);
-void	handle_command(t_token *token_lst, t_env *env);
+void	handle_command(t_token **token_lst, t_env *env);
 void	exec_command(t_exec	*exec);
 int		is_bultin(t_token *token_lst);
 int		exec_bultin(t_token *token_lst, t_env *env);
 
 //Redirections
-t_exec	*handle_redirection(t_token *token_lst, t_env *env);
-int		change_standard_fd(t_token *token_lst, t_exec *exec, t_env *env);
+t_exec	*handle_redirection(t_token **token_lst, t_env *env);
 int		handle_heredoc(t_token *token, t_exec *exec, t_env *env);
+int		change_standard_fd(t_token *token_lst, t_exec *exec, t_env *env);
+void	remove_redirection(t_token **head);
 void	restore_fd(t_exec *exec);
 
 //Pipex + Utils
