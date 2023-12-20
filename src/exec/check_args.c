@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:09:35 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/20 19:44:40 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/20 22:56:23 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,6 @@ int	check_args(t_token *token)
 	}
 	while (token)
 	{
-		if (token->type == 1 && token->next == NULL)
-		{
-			ft_printf(2, "Error: No command after pipe\n");
-			return (1);
-		}
 		if (token->type == 3 && (token->next == NULL || token->next->type != 0))
 		{
 			ft_printf(2, "Error: Invalid delimiter for heredoc\n");

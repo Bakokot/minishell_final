@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 16:01:40 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/20 19:57:09 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/21 00:22:49 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,31 +33,58 @@ void	child_pipex(t_token *token, t_env *env, int **pipes, int cmd_nbr)
 	exit(0);
 }
 
+void	wait_all(int *pid, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i <= count)
+	{
+		waitpid(pid[i], NULL, WUNTRACED);
+		i++;
+	}
+	free(pid);
+}
+
+int	create_child(int *pid, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i <= count)
+	{
+		pid[i] = fork();
+		if (pid[i] < 0)
+			return (1);
+		if (pid[i] == 0)
+			return (1);
+		i++;
+	}
+	return (1);
+}
+
 int	pipex(t_token *token, t_env *env, int count)
 {
 	int	**pipes;
-	int	pid;
+	int	*pid;
 	int	i;
 
 	i = 0;
 	pipes = setup_pipes(token);
 	if (!pipes)
 		return (1);
+	pid = malloc(sizeof(int) * (count + 1));
+	if (!pid)
+		return (1);
+	create_child(pid, count);
 	while (i <= count)
 	{
-		pid = fork();
-		if (pid < 0)
-			return (1);
-		if (pid == 0)
+		if (pid[i] == 0)
 			child_pipex(token, env, pipes, i);
-		else
-		{
-			close_pipes(pipes, i - 1);
-			waitpid(pid, NULL, WUNTRACED);
-		}
 		i++;
 	}
 	close_pipes(pipes, count);
+	wait_all(pid, count);
 	free_pipes(pipes);
 	return (0);
 }

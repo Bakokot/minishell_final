@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:31:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/20 22:33:51 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/20 23:02:14 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_token	**setup_heredoc(t_exec *exec)
 	return (heredoc);
 }
 
-int	write_heredoc(t_token **heredoc, t_exec *exec, t_env *env)
+int	write_heredoc(t_token **heredoc, t_exec *exec)
 {
 	t_token *head;
 
@@ -34,7 +34,6 @@ int	write_heredoc(t_token **heredoc, t_exec *exec, t_env *env)
 	exec->fd_heredoc = open("heredoc", O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (exec->fd_heredoc == -1)
 		return (free_all_token(heredoc), 1);
-	replace_varsn(heredoc, env);
 	while (head)
 	{
 		if (head->token == NULL)
@@ -60,7 +59,10 @@ int	end_heredoc(t_token *token, char *line)
 
 	delimiter = token->next->token;
 	if (line == NULL)
+	{
+		ft_printf(2, "Warning: heredoc delimiter was %s\n", delimiter);
 		return (1);
+	}
 	if (ft_strlen(delimiter) == ft_strlen(line))
 		if (!ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1))
 			return (1);
@@ -89,7 +91,9 @@ int	handle_heredoc(t_token *token, t_exec *exec, t_env *env)
 		add_back_token(heredoc, new);
 	}
 	free(line);
-	if (write_heredoc(heredoc, exec, env) == 1)
+	if (token->next->quoted == false)
+		replace_varsn(heredoc, env);
+	if (write_heredoc(heredoc, exec) == 1)
 		return (1);
 	return (0);
 }
