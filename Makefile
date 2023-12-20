@@ -14,7 +14,7 @@ SRC            :=	main.c\
 					utils/error.c utils/utils.c utils/freeing.c utils/ft_strcmp.c\
 					env/env_utils.c env/env.c \
 					tokenizer/tokenizer.c tokenizer/token_utils.c\
-					tokenizer/new_replace_var.c tokenizer/new_replace_var_utils.c\
+					tokenizer/new_replace_var.c tokenizer/new_replace_var_utils.c tokenizer/replace_var_special_cases.c\
 					minigc/gc.c\
 					signals/signals.c\
 					builtins/echo.c builtins/env.c builtins/pwd.c builtins/cd.c \

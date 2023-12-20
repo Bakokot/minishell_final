@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:49:23 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/19 13:46:56 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/20 15:21:15 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
  * Replace the $VAR normally
  * Stops whenever we cross a quote to change the behaviour
 */
-static char	*double_quote_behaviour(char *token, int *i, char *updated_token, t_env *env)
+static char	*double_quote_behaviour(char *token, int *i, \
+char *updated_token, t_env *env)
 {
 	int	marker;
 
@@ -60,7 +61,8 @@ static char	*single_quote_behaviour(char *token, int *i, char *updated_token)
  * Replace the $VAR normally
  * Stops whenever we cross a quote to change the behaviour
 */
-static char	*no_quote_behaviour(char *token, int *i, char *updated_token, t_env *env)
+static char	*no_quote_behaviour(char *token, int *i, \
+char *updated_token, t_env *env)
 {
 	int	marker;
 
@@ -93,31 +95,22 @@ static void	update_varn(t_token *token, t_env *env)
 
 	temp = token->token;
 	i = 0;
-	flag_quote = 0;
 	flag_quote = is_quote(token->token[i]);
 	updated_token = NULL;
 	while (token->token[i])
 	{
 		flag_quote = is_quote(token->token[i]);
 		if (flag_quote == '\"')
-		{
-			updated_token = double_quote_behaviour(token->token, &i, updated_token, env);
-			flag_quote = 0;
-			printf("%s\n", updated_token);
-		}
+			updated_token = double_quote_behaviour(token->token, &i, \
+			updated_token, env);
 		else if (flag_quote == '\'')
-		{
-			updated_token = single_quote_behaviour(token->token, &i, updated_token);
-			flag_quote = 0;
-			printf("%s\n", updated_token);
-		}
+			updated_token = single_quote_behaviour(token->token, &i, \
+			updated_token);
 		else
-		{
-			updated_token = no_quote_behaviour(token->token, &i, updated_token, env);
-			printf("%s\n", updated_token);
-		}
+			updated_token = no_quote_behaviour(token->token, &i, \
+			updated_token, env);
 	}
-	printf("FINAL TOKEN --> %s\n", updated_token);
+	//printf("FINAL TOKEN --> %s\n", updated_token);
 	token->token = updated_token;
 	free(temp);
 }
