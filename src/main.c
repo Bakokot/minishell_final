@@ -3,38 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/20 15:39:18 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/20 19:26:10 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_exit_status;
-
-static bool close_quotes(char *line)
-{
-	int	i;
-	int	quote_type;
-
-	i = 0;
-	while (line[i])
-	{
-		quote_type = is_quote(line[i]);
-		i++;
-		while (quote_type != 0 && line[i])
-		{
-			if (quote_type == line[i])
-				quote_type = 0;
-			i++;
-		}
-	}
-	if (quote_type == 0)
-		return (true);
-	return (false);
-}
 
 static char	*read_new_line(char *line)
 {
@@ -85,7 +63,7 @@ int	main(int argc, char **argv, char **envp)
 		line = readline("minishell $>");
 		if (line == NULL)
 			ctrl_d_handler(line, token, env);
-		while (line != NULL && close_quotes(line) == false)
+		while (line != NULL && unclosed_quotes(line) == true)
 			line = read_new_line(line);
 		add_history(line);
 		token = tokenize(line, env);

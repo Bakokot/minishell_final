@@ -6,7 +6,7 @@
 /*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/20 19:08:07 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/20 19:30:51 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_token
 {
 	char			*token;
 	t_type			type;
+	bool			quoted;
 	struct s_token	*next;
 }	t_token;
 
@@ -98,6 +99,18 @@ void	skip_single_quotes(int *i, char *str);
 bool	single_dollar(t_token *token);
 char	*update_dollarless_token(t_token *token, int i, \
 int marker, char *new_token);
+
+/**
+ * New Tokenizer fubction (need to delete some previous functions)
+*/
+void	replace_varsn(t_token **token_lst, t_env *env);
+char	*update_token(char *token, int *i, int marker, char *updated_token);
+char	*change_var(char *token, int *i, char *updated_token, t_env *env);
+char	*single_dollarn(char *updated_token);
+char	*double_dollar(char *updated_token);
+char	*exit_status_var(char *updated_token);
+bool	special_cases(char *token, char **updated_token, int *i);
+void	remove_token_quotes(t_token **token_lst);
 
 /**
  * t_token struct utils
@@ -138,6 +151,8 @@ int		is_double_redirection(char *str);
 char	*ft_strndup(char *s1, size_t size);
 int		ft_strcmp(char *s1, char *s2);
 void	free_array(char **arr);
+bool	closed_quotes(char *str);
+bool 	unclosed_quotes(char *line);
 
 //Builtins
 int		pwd(void);
@@ -164,9 +179,9 @@ void	remove_redirection(t_token **head);
 void	restore_fd(t_exec *exec);
 
 //Pipex + Utils
-int	pipex(t_token *token, t_env *env, int count);
+int		pipex(t_token *token, t_env *env, int count);
 size_t	count_pipes(t_token *token);
-int	**setup_pipes(t_token *token);
+int		**setup_pipes(t_token *token);
 void	free_pipes(int **pipes);
 void	close_pipes(int **pipes, int limiter);
 t_token	*get_command(t_token *token, int index);
@@ -220,14 +235,5 @@ void	gc_free_all(t_gc_glob *gc);
  * TO ERASE IN THE END
 */
 void	print_env(t_env *env);
-
-
-void	replace_varsn(t_token **token_lst, t_env *env);
-char	*update_token(char *token, int *i, int marker, char *updated_token);
-char	*change_var(char *token, int *i, char *updated_token, t_env *env);
-char	*single_dollarn(char *updated_token);
-char	*double_dollar(char *updated_token);
-char	*exit_status_var(char *updated_token);
-bool	special_cases(char *token, char **updated_token, int *i);
 
 #endif
