@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 16:01:40 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/20 15:40:43 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/20 17:44:58 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	child_pipex(t_token *token, t_env *env, int **pipes, int cmd_nbr)
 	token = get_command(token, cmd_nbr);
 	exec = handle_redirection(&token, env);
 	if (!exec)
-		return ;
+		exit(0);
 	if (cmd_nbr != 0 && exec->in == -1)
 		dup2(pipes[cmd_nbr - 1][0], 0);
 	if (cmd_nbr < count && exec->out == -1)
