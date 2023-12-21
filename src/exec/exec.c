@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 16:52:08 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/21 11:40:13 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/21 13:05:39 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	init_exec(t_exec *exec)
 
 void	free_exec(t_exec *exec)
 {
+	if (exec == NULL)
+		return ;
 	restore_fd(exec);
 	if (exec->args != NULL)
 		free_array(exec->args);

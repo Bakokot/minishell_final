@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/21 08:41:43 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/21 13:23:25 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ void	print_export(t_env *env);
 int		cd(t_token	*token_lst, t_env *env);
 int		unset(t_token *token_lst, t_env **env);
 int		export(t_token *token_lst, t_env **env);
+int	ft_exit(t_env *env, t_token **token, t_exec *exec);
 
 //Exec
 void		init_exec(t_exec *exec);
@@ -171,6 +172,7 @@ int		check_args(t_token *token);
 void	exec_command(t_exec	*exec);
 int		is_bultin(t_token *token_lst);
 int		exec_bultin(t_token *token_lst, t_env *env);
+int		exec_exit(t_token **token, t_env *env, t_exec *exec);
 
 //Redirections
 t_exec	*handle_redirection(t_token **token_lst, t_env *env);

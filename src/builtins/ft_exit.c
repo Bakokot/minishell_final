@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 11:49:33 by thibault          #+#    #+#             */
-/*   Updated: 2023/12/21 12:14:12 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/21 13:20:56 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,31 @@ static bool	strisnum(char *str)
 	return (true);
 }
 
-void	ft_exit(t_env *env, t_token **to_free, t_token **token)
+int	ft_exit(t_env *env, t_token **token, t_exec *exec)
 {
-	char	*str;
-	ft_printf(1, "\nexit", 1);
-	if ((*token)->next->token == NULL)
+	int		exit_status;
+
+	exit_status = 2;
+	ft_printf(1, "exit\n", 1);
+	if ((*token)->next == NULL)
 	{
-		free_all(to_free, env);
-		exit(0);
+		free_exec(exec);
+		free_all(token, env);
+		exit(g_exit_status);
 	}
-	if ((*token)->next->token && !(*token)->next->next->token)
+	else
 	{
 		if (strisnum((*token)->next->token))
 		{
-			free_all(to_free, env);
-			exit(ft_atoi((*token)->next->token));
+			if ((*token)->next->next != NULL)
+				return (ft_printf(1, "exit: too many arguments\n", (*token)->next->token), 1);
+			exit_status = ft_atoi((*token)->next->token);
 		}
-		str = ft_strdup((*token)->next->token);
-		free_all(to_free, env);
-		ft_printf(1, "bash: exit: %s: numeric argument required\n", str);
-		free(str);
-		exit(2);
+		else
+			ft_printf(1, "exit: %s: numeric argument required\n", (*token)->next->token);
+		free_exec(exec);
+		free_all(token, env);
+		exit(exit_status);
 	}
-	if ((*token)->next->token && (*token)->next->next->token)
-	{
-		ft_printf(1, "bash: exit: too many arguments\n", (*token)->next->token);
-		return ;
-	}
+	return (0);
 }

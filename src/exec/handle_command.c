@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/21 12:28:22 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/21 13:23:10 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,12 @@ int	execute(t_token **token, t_env *env)
 		g_exit_status = 127;
 		return (1);
 	}
-	exec_exit(token, env, exec);
+	if (exec_exit(token, env, exec) == 1)
+	{
+		g_exit_status = 1;
+		free_exec(exec);
+		return (0);
+	}
 	if (exec_bultin(*token, env) == 1)
 		exec_command(exec);
 	free_exec(exec);
