@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 11:58:45 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/17 15:03:38 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/21 09:33:13 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	unset_variable(t_env **env, size_t index)
 int	unset(t_token *token_lst, t_env **env)
 {
 	t_env	*tmp;
-	int	i;
+	int		i;
 
 	token_lst = token_lst->next;
 	if (token_lst->type != 0)
@@ -69,4 +69,3 @@ int	unset(t_token *token_lst, t_env **env)
 		unset_variable(env, i);
 	return (0);
 }
-

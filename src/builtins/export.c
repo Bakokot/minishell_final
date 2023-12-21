@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 12:04:37 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/19 01:20:21 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/21 09:32:27 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	is_plus(t_token *token_lst)
 	return (0);
 }
 
-static void change_value(t_env **env, t_token *token_lst, int index)
+static void	change_value(t_env **env, t_token *token_lst, int index)
 {
 	t_env	*tmp;
 
@@ -59,7 +59,7 @@ static void change_value(t_env **env, t_token *token_lst, int index)
 	tmp->values = get_env_values(token_lst->token);
 }
 
-static void add_value(t_env **env, t_token *token_lst, int index)
+static void	add_value(t_env **env, t_token *token_lst, int index)
 {
 	t_env	*tmp;
 	char	*new_value;
@@ -81,7 +81,8 @@ static void add_value(t_env **env, t_token *token_lst, int index)
 		return ;
 	}
 	ft_strlcpy(new_value, tmp->values, size_token * size_env + 1);
-	ft_strlcat(new_value, get_env_values(token_lst->token), size_token * size_env + 1);
+	ft_strlcat(new_value, get_env_values(token_lst->token), \
+	size_token * size_env + 1);
 	free(tmp->values);
 	tmp->values = new_value;
 }
@@ -100,7 +101,8 @@ int	export(t_token *token_lst, t_env **env)
 		new = *env;
 		while (new)
 			new = new->next;
-		new = create_new_env(get_env_key(token_lst->token), get_env_values(token_lst->token));
+		new = create_new_env(get_env_key(token_lst->token), \
+		get_env_values(token_lst->token));
 		add_back_env(env, new);
 	}
 	else
@@ -112,4 +114,3 @@ int	export(t_token *token_lst, t_env **env)
 	}
 	return (0);
 }
-

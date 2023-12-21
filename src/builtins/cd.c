@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 11:56:31 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/19 01:19:15 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/21 09:32:59 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ static char	*find_home(t_env *env)
 
 int	cd(t_token	*token_lst, t_env *env)
 {
-	char *home;
+	char	*home;
 
 	token_lst = token_lst->next;
 	if (token_lst == NULL)
 	{
 		home = find_home(env);
 		if (!home)
-			return(ft_printf(2, "cd: HOME not set"), 1);
+			return (ft_printf(2, "cd: HOME not set"), 1);
 		chdir(home);
 		return (0);
 	}

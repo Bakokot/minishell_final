@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 12:42:04 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/21 01:28:01 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/21 09:19:19 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * @return true if the line isn't between unclosed quotes
  * @return false if the line is between unclosed quotes
 */
-bool unclosed_quotes(char *line)
+bool	unclosed_quotes(char *line)
 {
 	int	i;
 	int	quote_type;
@@ -45,7 +45,7 @@ bool unclosed_quotes(char *line)
 bool	closed_quotes(char *str)
 {
 	int	i;
-	int quote_type;
+	int	quote_type;
 
 	i = 0;
 	quote_type = 0;

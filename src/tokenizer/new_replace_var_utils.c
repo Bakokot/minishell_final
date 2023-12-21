@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   new_replace_var_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 13:32:48 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/21 02:40:11 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/21 09:23:06 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * Update the token with what we have analyzed before stu;bling upon a $VAR
+ * Update the token with what we have analyzed before stumbling upon a $VAR
 */
 char	*update_token(char *token, int *i, int marker, char *updated_token)
 {
@@ -31,9 +31,7 @@ char	*update_token(char *token, int *i, int marker, char *updated_token)
 		else
 		{
 			if (updated_token == NULL)
-			{
 				updated_token = ft_strndup(token + marker, *i - marker);
-			}
 			else
 			{
 				temp2 = ft_strndup(token + marker, *i - marker);

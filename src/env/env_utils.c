@@ -6,7 +6,7 @@
 /*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:29:20 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/19 16:27:33 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/21 09:30:52 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ t_env	*get_last_env(t_env *lst)
 */
 char	*lookup_values(char *key, t_env *env)
 {
-
 	while (env)
 	{
 		if (ft_strcmp(key, env->key) == 0)

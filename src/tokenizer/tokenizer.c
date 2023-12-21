@@ -6,7 +6,7 @@
 /*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 12:56:19 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/21 08:57:23 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/21 09:28:07 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,25 @@ static void	add_litteral_token(t_token **token_lst, char *line, int *i)
 	add_back_token(token_lst, create_new_token(str, LITTERAL));
 }
 
+/**
+ * loop for the function t_token	**tokenize(char *line, t_env *env)
+ * it fills the tokens, wether they are litteral or metachar ones
+*/
+static void	tokenize_loop(int *i, char *line, t_token **token_lst)
+{
+	while (line[*i])
+	{
+		while (ft_isspace(line[*i]))
+			*i += 1;
+		if (is_metachar(line[*i]))
+			add_metachar_token(token_lst, line, i);
+		else if (!ft_isspace(line[*i]) && line[*i])
+			add_litteral_token(token_lst, line, i);
+		while (ft_isspace(line[*i]))
+			*i += 1;
+	}
+}
+
 t_token	**tokenize(char *line, t_env *env)
 {
 	t_token	**token_lst;
@@ -90,19 +109,7 @@ t_token	**tokenize(char *line, t_env *env)
 	*token_lst = create_new_token("to delete", 0);
 	i = 0;
 	if (line != NULL)
-	{
-		while (line[i])
-		{
-			while (ft_isspace(line[i]))
-				i++;
-			if (is_metachar(line[i]))
-				add_metachar_token(token_lst, line, &i);
-			else if (!ft_isspace(line[i]) && line[i])
-				add_litteral_token(token_lst, line, &i);
-			while (ft_isspace(line[i]))
-				i++;
-		}
-	}
+		tokenize_loop(&i, line, token_lst);
 	delete_first_token(token_lst);
 	replace_varsn(token_lst, env);
 	remove_token_quotes(token_lst);

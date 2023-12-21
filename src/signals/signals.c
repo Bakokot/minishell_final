@@ -6,7 +6,7 @@
 /*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:12:08 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/21 08:52:43 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/21 09:29:31 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,18 +56,16 @@ static void	backslash_handler(int sig)
 }
 
 /**
+ * When we're IN_SHELL :
  * [Ctrl + \]	SIGQUIT --> ignored
  * [CTRL + C]	SIGINT --> print ^C and make a new prompt
  * [CTRL + D]	End Of File (EOF) --> not handled here
  * 		When we CTRL + D, we send a line == N#ULL (see in main)
+ * ELSE we want to reset the typical behaviour 
+ * of the signals when we're IN_PROGRAM
 */
 void	signal_handling(int status)
 {
-	/*
-	FIRST CASE : We're in the shell :
-	- CTRL + C --> print ^C and get a new prompt display
-	- CTRL + \ --> do nothing
-	*/
 	if (status == IN_SHELL)
 	{
 		signal(SIGQUIT, SIG_IGN);
