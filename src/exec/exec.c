@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 16:52:08 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/21 00:07:24 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/21 02:47:17 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ void	exec_command(t_exec	*exec)
 	if (pid == 0)
 	{
 		if (execve(exec->path, exec->args, exec->envp) == -1)
+		{
 			ft_printf(2, "%s : command not found\n", exec->args[0]);
+			exit(0);
+		}
 	}
 	else
 		waitpid(pid, NULL, WUNTRACED);

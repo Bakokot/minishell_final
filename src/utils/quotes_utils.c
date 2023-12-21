@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 12:42:04 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/20 21:29:01 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/21 01:28:01 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ bool	closed_quotes(char *str)
 	int	i;
 	int quote_type;
 
-	quote_type = 0;
 	i = 0;
-	while (str[i])
+	quote_type = 0;
+	while (str && str[i])
 	{
 		quote_type = is_quote(str[i]);
 		while (quote_type != 0 && str[i])
