@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/21 13:23:10 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/21 14:04:16 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	handle_command(t_token **token, t_env *env)
 	else
 	{
 		signal_handling(IN_PROGRAM);
-		pipex(*token, env, count);
+		pipex(token, env, count);
 		signal_handling(IN_SHELL);
 	}
 }

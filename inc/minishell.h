@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/21 13:23:25 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/21 14:04:24 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ void	remove_redirection(t_token **head);
 void	restore_fd(t_exec *exec);
 
 //Pipex + Utils
-int		pipex(t_token *token, t_env *env, int count);
+int		pipex(t_token **token, t_env *env, int count);
 size_t	count_pipes(t_token *token);
 int		**setup_pipes(t_token *token);
 void	free_pipes(int **pipes);

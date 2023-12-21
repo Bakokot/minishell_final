@@ -6,16 +6,24 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 16:01:40 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/21 00:22:49 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/21 14:04:12 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	free_all_child(t_token **token, t_env *env, int **pipes, int *pid)
+{
+	free_all_token(token);
+	free_all_env(env);
+	free_pipes(pipes);
+	free(pid);
+}
+
 void	child_pipex(t_token *token, t_env *env, int **pipes, int cmd_nbr)
 {
-	int		count;
 	t_exec	*exec;
+	int		count;
 
 	count = count_pipes(token);
 	token = get_command(token, cmd_nbr);
@@ -30,7 +38,6 @@ void	child_pipex(t_token *token, t_env *env, int **pipes, int cmd_nbr)
 	if (exec_bultin(token, env) == 1)
 		exec_command(exec);
 	free_exec(exec);
-	exit(0);
 }
 
 void	wait_all(int *pid, int count)
@@ -41,6 +48,7 @@ void	wait_all(int *pid, int count)
 	while (i <= count)
 	{
 		waitpid(pid[i], NULL, WUNTRACED);
+		kill(pid[i], SIGTERM);
 		i++;
 	}
 	free(pid);
@@ -63,14 +71,14 @@ int	create_child(int *pid, int count)
 	return (1);
 }
 
-int	pipex(t_token *token, t_env *env, int count)
+int	pipex(t_token **token, t_env *env, int count)
 {
 	int	**pipes;
 	int	*pid;
 	int	i;
 
 	i = 0;
-	pipes = setup_pipes(token);
+	pipes = setup_pipes(*token);
 	if (!pipes)
 		return (1);
 	pid = malloc(sizeof(int) * (count + 1));
@@ -80,7 +88,11 @@ int	pipex(t_token *token, t_env *env, int count)
 	while (i <= count)
 	{
 		if (pid[i] == 0)
-			child_pipex(token, env, pipes, i);
+		{
+			child_pipex(*token, env, pipes, i);
+			free_all_child(token, env, pipes, pid);
+			exit(0);
+		}
 		i++;
 	}
 	close_pipes(pipes, count);
