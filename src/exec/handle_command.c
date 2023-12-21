@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/21 02:40:28 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/21 11:34:22 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ t_exec	*handle_redirection(t_token **token_lst, t_env *env)
 	exec->path = get_path((*token_lst)->token, env);
 	if (exec->path == NULL && is_bultin(*token_lst) == 1)
 	{
+		g_exit_status = 127;
 		ft_printf(2, "%s : command not found\n", (*token_lst)->token);
 		return (free_exec(exec), NULL);
 	}
@@ -73,7 +74,10 @@ int	execute(t_token **token, t_env *env)
 
 	exec = handle_redirection(token, env);
 	if (exec == NULL)
+	{
+		g_exit_status = 127;
 		return (1);
+	}
 	if (exec_bultin(*token, env) == 1)
 		exec_command(exec);
 	free_exec(exec);
@@ -88,7 +92,15 @@ void	handle_command(t_token **token, t_env *env)
 		return ;
 	count = count_pipes(*token);
 	if (count == 0)
+	{
+		signal_handling(IN_PROGRAM);
 		execute(token, env);
+		signal_handling(IN_SHELL);
+	}
 	else
+	{
+		signal_handling(IN_PROGRAM);
 		pipex(*token, env, count);
+		signal_handling(IN_SHELL);
+	}
 }

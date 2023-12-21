@@ -6,7 +6,7 @@
 /*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 16:52:08 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/21 08:44:03 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/21 11:40:13 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,11 @@ void	restore_fd(t_exec *exec)
 void	exec_command(t_exec	*exec)
 {
 	int		pid;
+	int		status;
 
-	signal_handling(IN_PROGRAM);
+	status = -1;
 	pid = fork();
+	g_exit_status = 0;
 	if (pid < 0)
 		return ;
 	if (pid == 0)
@@ -62,10 +64,13 @@ void	exec_command(t_exec	*exec)
 		if (execve(exec->path, exec->args, exec->envp) == -1)
 		{
 			ft_printf(2, "%s : command not found\n", exec->args[0]);
-			exit(0);
+			exit(2);
 		}
 	}
 	else
-		waitpid(pid, NULL, WUNTRACED);
-	signal_handling(IN_SHELL);
+	{
+		waitpid(pid, &status, WUNTRACED);
+		if (status != 0)
+			g_exit_status = 127;
+	}
 }
