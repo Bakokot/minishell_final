@@ -6,7 +6,7 @@
 /*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 16:52:08 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/21 08:44:03 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/21 10:48:17 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,21 @@ void	restore_fd(t_exec *exec)
 	close(exec->sstdout);
 }
 
+static void	handler(int sig)
+{
+	(void)sig;
+	g_exit_status = 127;
+}
+
 void	exec_command(t_exec	*exec)
 {
 	int		pid;
+	int		status;
 
+	status = -1;
+	signal(SIGUSR1, handler);
 	signal_handling(IN_PROGRAM);
+	g_exit_status = 0;
 	pid = fork();
 	if (pid < 0)
 		return ;
@@ -62,10 +72,14 @@ void	exec_command(t_exec	*exec)
 		if (execve(exec->path, exec->args, exec->envp) == -1)
 		{
 			ft_printf(2, "%s : command not found\n", exec->args[0]);
+			kill(pid, SIGUSR1);
 			exit(0);
 		}
 	}
 	else
-		waitpid(pid, NULL, WUNTRACED);
+	{
+		waitpid(pid, &status, WUNTRACED);
+	}
 	signal_handling(IN_SHELL);
+	printf("%d\n", status);
 }
