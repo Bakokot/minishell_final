@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_replace_var.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:49:23 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/21 11:44:52 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/21 12:29:01 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char *updated_token, t_env *env)
 	marker = *i;
 	while (token[*i] && token[*i] != '\"' && token[*i] != '\"')
 	{
-		if (token[*i] == '$' && lookup_values(token + 1, env) != NULL)
+		if (token[*i] == '$')
 		{
 			updated_token = update_token(token, i, marker, updated_token);
 			*i += 1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/21 11:34:22 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/21 12:28:22 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	execute(t_token **token, t_env *env)
 		g_exit_status = 127;
 		return (1);
 	}
+	exec_exit(token, env, exec);
 	if (exec_bultin(*token, env) == 1)
 		exec_command(exec);
 	free_exec(exec);

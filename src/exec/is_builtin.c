@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:03:07 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/21 12:14:25 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/21 12:28:46 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,10 @@ int	exec_bultin(t_token *token_lst, t_env *env)
 	if (!ft_strncmp("unset", token_lst->token, 5) && ft_strlen(token_lst->token) == 5)
 		return (unset(token_lst, &env), 0);
 	return (1);
+}
+
+void	exec_exit(t_token **token, t_env *env, t_env *env)
+{
+	if (!ft_strncmp("exit", (*token)->token, 4) && ft_strlen((*token)->token) == 4)
+		ft_exit();
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:31:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/21 11:49:22 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/21 12:28:26 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ int	handle_heredoc(t_token *token, t_exec *exec, t_env *env)
 	while (1)
 	{
 		line = readline("heredoc>");
-		if (line == NULL)
-			break ;
 		if (end_heredoc(token, line))
 			break ;
 		new = create_new_token(line, 0);
