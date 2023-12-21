@@ -6,7 +6,7 @@
 /*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/21 09:15:57 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/21 11:52:47 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ static void	handle_line(char *line, t_token ***token, t_env *env)
 {
 	add_history(line);
 	*token = tokenize(line, env);
+	free(line);
 	handle_command(*token, env);
 	free_all_token(*token);
-	free(line);
 	return ;
 }
 
