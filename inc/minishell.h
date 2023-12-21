@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/20 19:43:15 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/21 08:41:43 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ void	log_error(char *str);
 /**
  * Signals management
 */
-void	signal_handling(void);
+void	signal_handling(int status);
 void	ctrl_d_handler(char *line, t_token **token_lst, t_env *env);
 
 /**

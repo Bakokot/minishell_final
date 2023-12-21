@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 12:56:19 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/20 21:35:48 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/21 08:57:23 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,19 @@ t_token	**tokenize(char *line, t_env *env)
 		return (log_error(ERR_MALLOC), NULL);
 	*token_lst = create_new_token("to delete", 0);
 	i = 0;
-	while (line[i])
+	if (line != NULL)
 	{
-		while (ft_isspace(line[i]))
-			i++;
-		if (is_metachar(line[i]))
-			add_metachar_token(token_lst, line, &i);
-		else if (!ft_isspace(line[i]) && line[i])
-			add_litteral_token(token_lst, line, &i);
-		while (ft_isspace(line[i]))
-			i++;
+		while (line[i])
+		{
+			while (ft_isspace(line[i]))
+				i++;
+			if (is_metachar(line[i]))
+				add_metachar_token(token_lst, line, &i);
+			else if (!ft_isspace(line[i]) && line[i])
+				add_litteral_token(token_lst, line, &i);
+			while (ft_isspace(line[i]))
+				i++;
+		}
 	}
 	delete_first_token(token_lst);
 	replace_varsn(token_lst, env);

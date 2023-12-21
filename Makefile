@@ -21,7 +21,7 @@ SRC            :=	main.c\
 					tokenizer/new_replace_var.c tokenizer/new_replace_var_utils.c tokenizer/replace_var_special_cases.c\
 					tokenizer/remove_token_quotes.c\
 					minigc/gc.c\
-					signals/signals.c\
+					signals/signals.c signals/ctrl_d.c\
 					builtins/echo.c builtins/env.c builtins/pwd.c builtins/cd.c \
 					builtins/unset.c builtins/export.c builtins/export2.c exec/exec.c exec/is_builtin.c exec/utils.c\
 					exec/handle_command.c exec/redirection.c exec/heredoc.c exec/pipe.c exec/pipe_utils.c exec/check_args.c

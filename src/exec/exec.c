@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 16:52:08 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/21 02:47:17 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/21 08:44:03 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	exec_command(t_exec	*exec)
 {
 	int		pid;
 
+	signal_handling(IN_PROGRAM);
 	pid = fork();
 	if (pid < 0)
 		return ;
@@ -66,4 +67,5 @@ void	exec_command(t_exec	*exec)
 	}
 	else
 		waitpid(pid, NULL, WUNTRACED);
+	signal_handling(IN_SHELL);
 }
