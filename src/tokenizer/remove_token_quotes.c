@@ -6,7 +6,7 @@
 /*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 12:27:57 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/22 13:26:47 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/22 14:49:21 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,15 @@ void	remove_token_quotes(t_token **token_lst)
 	{
 		if (closed_quotes(cpy->token) == true)
 		{
-			temp = cpy->token;
-			cpy->quoted = true;
-			cpy->token = strdup_erase_closed_quotes(cpy->token);
-			free(temp);
+				temp = cpy->token;
+			if (ft_strlen(cpy->token) == 2)
+				cpy->token = ft_strdup("''");
+			else
+			{
+				cpy->quoted = true;
+				cpy->token = strdup_erase_closed_quotes(cpy->token);
+			}
+				free(temp);
 		}
 		cpy = cpy->next;
 	}
