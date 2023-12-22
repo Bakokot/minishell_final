@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/22 13:02:34 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/22 14:27:28 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,12 @@ typedef struct s_env
 	struct s_env		*next;
 }	t_env;
 
+typedef struct s_heredoc
+{
+	int		fd_heredoc;
+	char	*heredoc;
+}	t_heredoc;
+
 typedef struct s_exec
 {
 	char	**args;
@@ -88,6 +94,7 @@ typedef struct s_exec
 	int		sstdout;
 	int		in;
 	int		out;
+	t_heredoc	*hd;
 }	t_exec;
 
 
@@ -167,8 +174,8 @@ int		export(t_token *token_lst, t_env **env);
 int	ft_exit(t_env *env, t_token **token, t_exec *exec);
 
 //Exec
-void		init_exec(t_exec *exec);
-void	free_exec(t_exec *exec);
+void	init_exec(t_exec *exec, t_heredoc *hd);
+void	free_exec(t_exec *exec, t_token *token);
 void	handle_command(t_token **token_lst, t_env *env);
 int		check_args(t_token *token);
 void	exec_command(t_exec	*exec);
@@ -177,14 +184,14 @@ int		exec_bultin(t_token *token_lst, t_env *env);
 int		exec_exit(t_token **token, t_env *env, t_exec *exec);
 
 //Redirections
-t_exec	*handle_redirection(t_token **token_lst, t_env *env);
-int		handle_heredoc(t_token *token, t_exec *exec, t_env *env);
-int		change_standard_fd(t_token *token_lst, t_exec *exec, t_env *env);
+t_exec	*handle_redirection(t_token **token_lst, t_env *env, t_heredoc *hd);
+t_heredoc	*check_heredocs(t_token	*token, t_env *env);
+int		change_standard_fd(t_token *token_lst, t_exec *exec);
 void	remove_redirection(t_token **head);
-void	restore_fd(t_exec *exec);
+void	restore_fd(t_exec *exec, t_token *token);
 
 //Pipex + Utils
-int		pipex(t_token **token, t_env *env, int count);
+int		pipex(t_token **token, t_env *env, int count, t_heredoc *hd);
 size_t	count_pipes(t_token *token);
 int		**setup_pipes(t_token *token);
 void	free_pipes(int **pipes);

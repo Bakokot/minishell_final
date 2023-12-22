@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/22 13:27:57 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/22 14:30:06 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,13 @@ static void printlist(t_token *token)
 	}
 }
 
-static void	handle_line(char *line, t_token ***token, t_env *env)
+static void	handle_line(char *line, t_token **token, t_env *env)
 {
 	add_history(line);
-	*token = tokenize(line, env);
+	token = tokenize(line, env);
 	free(line);
-	printlist(**token);
-	handle_command(*token, env);
-	free_all_token(*token);
+	handle_command(token, env);
+	free_all_token(token);
 	return ;
 }
 
@@ -99,6 +98,6 @@ int	main(int argc, char **argv, char **envp)
 		while (line != NULL && unclosed_quotes(line) == true)
 			line = read_new_line(line);
 		if (line != NULL)
-			handle_line(line, &token, env);
+			handle_line(line, token, env);
 	}
 }

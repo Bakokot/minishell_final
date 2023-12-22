@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 16:01:40 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/21 14:04:12 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/22 13:03:48 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,33 +18,27 @@ void	free_all_child(t_token **token, t_env *env, int **pipes, int *pid)
 	free_all_env(env);
 	free_pipes(pipes);
 	free(pid);
+	exit(0);
 }
 
-void	child_pipex(t_token *token, t_env *env, int **pipes, int cmd_nbr)
-{
-	t_exec	*exec;
-	int		count;
+// void	child_pipex(t_token **token, t_env *env, int **pipes, int *pid)
+// {
+// 	int		count;
 
-	count = count_pipes(token);
-	token = get_command(token, cmd_nbr);
-	exec = handle_redirection(&token, env);
-	if (!exec)
-		exit(0);
-	if (cmd_nbr != 0 && exec->in == -1)
-		dup2(pipes[cmd_nbr - 1][0], 0);
-	if (cmd_nbr < count && exec->out == -1)
-		dup2(pipes[cmd_nbr][1], 1);
-	close_pipes(pipes, count);
-	if (exec_bultin(token, env) == 1)
-		exec_command(exec);
-	free_exec(exec);
-}
+// 	redirect_pipes_child(*token, exec, pipes, i);
+// 	if (!exec)
+// 		exit(0);
+// 	count = count_pipes(*token);
+// 	close_pipes(pipes, count);
+// 	exec_command(exec);
+// }
 
-void	wait_all(int *pid, int count)
+void	wait_all(int *pid, int **pipes, int count)
 {
 	int	i;
 
 	i = 0;
+	close_pipes(pipes, count);
 	while (i <= count)
 	{
 		waitpid(pid[i], NULL, WUNTRACED);
@@ -52,6 +46,7 @@ void	wait_all(int *pid, int count)
 		i++;
 	}
 	free(pid);
+	free_pipes(pipes);
 }
 
 int	create_child(int *pid, int count)
@@ -71,11 +66,25 @@ int	create_child(int *pid, int count)
 	return (1);
 }
 
-int	pipex(t_token **token, t_env *env, int count)
+void	redirect_pipes_child(t_token *token, t_exec *exec, int **pipes, int i)
 {
-	int	**pipes;
-	int	*pid;
-	int	i;
+	int	count;
+
+	count = count_pipes(token);
+	if (i != 0 && exec->in == -1)
+		dup2(pipes[i - 1][0], 0);
+	if (i < count && exec->out == -1)
+		dup2(pipes[i][1], 1);
+	close_pipes(pipes, -1);
+}
+
+int	pipex(t_token **token, t_env *env, int count, t_heredoc *hd)
+{
+	int		i;
+	int		*pid;
+	int		**pipes;
+	t_token	*curr;
+	t_exec	*exec;
 
 	i = 0;
 	pipes = setup_pipes(*token);
@@ -89,14 +98,19 @@ int	pipex(t_token **token, t_env *env, int count)
 	{
 		if (pid[i] == 0)
 		{
-			child_pipex(*token, env, pipes, i);
+			curr = get_command(*token, i);
+			exec = handle_redirection(&curr, env, hd);
+			if (!exec)
+				exit(0);
+			redirect_pipes_child(*token, exec, pipes, i);
+			if (exec_bultin(*token, env))
+				exec_command(exec);
+			free_exec(exec, *token);
 			free_all_child(token, env, pipes, pid);
-			exit(0);
 		}
 		i++;
 	}
-	close_pipes(pipes, count);
-	wait_all(pid, count);
-	free_pipes(pipes);
+	close_pipes(pipes, -1);
+	wait_all(pid, pipes, count);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 11:49:33 by thibault          #+#    #+#             */
-/*   Updated: 2023/12/21 13:20:56 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/22 11:26:40 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_exit(t_env *env, t_token **token, t_exec *exec)
 	ft_printf(1, "exit\n", 1);
 	if ((*token)->next == NULL)
 	{
-		free_exec(exec);
+		free_exec(exec, *token);
 		free_all(token, env);
 		exit(g_exit_status);
 	}
@@ -48,7 +48,7 @@ int	ft_exit(t_env *env, t_token **token, t_exec *exec)
 		}
 		else
 			ft_printf(1, "exit: %s: numeric argument required\n", (*token)->next->token);
-		free_exec(exec);
+		free_exec(exec, *token);
 		free_all(token, env);
 		exit(exit_status);
 	}

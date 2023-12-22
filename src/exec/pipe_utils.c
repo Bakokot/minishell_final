@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:06:20 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/19 16:07:13 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/22 12:31:45 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,12 @@ void	close_pipes(int **pipes, int limiter)
 	int	i;
 
 	i = 0;
-	while (pipes[i] && i <= limiter)
+	while (pipes[i])
 	{
 		close(pipes[i][0]);
 		close(pipes[i][1]);
+		if (limiter != -1 && i == limiter )
+			return ;
 		i++;
 	}
 }
