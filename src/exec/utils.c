@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:17:00 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 15:32:03 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/22 21:26:17 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,11 @@ char	**token_lst_into_char(t_token *token_lst)
 	}
 	args[i] = NULL;
 	return (args);
+}
+
+int	translate_error(int	nbr)
+{
+	if (nbr > 255)
+		nbr = nbr / 256;
+	return (nbr);
 }

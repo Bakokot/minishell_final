@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:12:08 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/21 09:29:31 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/22 22:41:07 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	ctrl_c_handler(int sig)
 static void	ctrl_c_prog(int sig)
 {
 	(void)sig;
-	g_exit_status = 128 + SIGINT;
+	g_exit_status = -1;
 	rl_on_new_line();
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
@@ -61,7 +61,7 @@ static void	backslash_handler(int sig)
  * [CTRL + C]	SIGINT --> print ^C and make a new prompt
  * [CTRL + D]	End Of File (EOF) --> not handled here
  * 		When we CTRL + D, we send a line == N#ULL (see in main)
- * ELSE we want to reset the typical behaviour 
+ * ELSE we want to reset the typical behaviour
  * of the signals when we're IN_PROGRAM
 */
 void	signal_handling(int status)

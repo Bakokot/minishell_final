@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 19:15:09 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/15 16:24:00 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/22 22:34:42 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ int	echo(t_token *token_lst)
 	}
 	if (option == 0)
 		printf("\n");
+	g_exit_status = 0;
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 11:51:01 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/21 09:32:39 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/22 22:35:24 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ int	pwd(void)
 	printf("%s\n", path);
 	if (path)
 		free(path);
+	g_exit_status = 0;
 	return (0);
 }

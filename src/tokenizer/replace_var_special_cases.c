@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   replace_var_special_cases.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 14:44:56 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/20 15:02:50 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/22 21:24:38 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * Check for special cases : 
+ * Check for special cases :
  * - A single litteral $
  * - Two $$
  * - $? --> change for last exit status
@@ -42,7 +42,7 @@ bool	special_cases(char *token, char **updated_token, int *i)
 }
 
 /**
- * Add two litteral dollars to the updated_token 
+ * Add two litteral dollars to the updated_token
 */
 char	*double_dollar(char *updated_token)
 {
@@ -83,7 +83,7 @@ char	*exit_status_var(char *updated_token)
 	char	*exit_status;
 
 	temp = updated_token;
-	exit_status = ft_itoa(g_exit_status);
+	exit_status = ft_itoa(translate_error(g_exit_status));
 	if (updated_token == NULL)
 		updated_token = exit_status;
 	else

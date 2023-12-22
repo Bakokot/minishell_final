@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 16:01:40 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 17:40:38 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/22 22:39:38 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	wait_all(int *pid, int **pipes, int count, t_heredoc *hd)
 			unlink(hd[i].heredoc);
 		}
 		free(hd[i].heredoc);
-		waitpid(pid[i], NULL, WUNTRACED);
+		waitpid(pid[i], &g_exit_status, WUNTRACED);
 		kill(pid[i], SIGTERM);
 		i++;
 	}

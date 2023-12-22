@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 12:04:37 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/21 09:32:27 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/22 22:34:59 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,6 @@ int	export(t_token *token_lst, t_env **env)
 		else
 			change_value(env, token_lst, index);
 	}
+	g_exit_status = 0;
 	return (0);
 }

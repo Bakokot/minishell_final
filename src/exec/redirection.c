@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:24:23 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 16:14:01 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/22 22:03:43 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ static int	change_output(t_token *token_lst, t_exec *exec, int flags)
 	file = open(token_lst->next->token, flags, 0777);
 	if (file == -1)
 	{
-		ft_printf(2, "Error in open\n");
+		ft_printf(2, "%s: Is a directory\n", token_lst->next->token);
+		g_exit_status = 1;
 		return (1);
 	}
 	dup2(file, 1);
@@ -62,6 +63,7 @@ static int	change_input(t_token *token_lst, t_exec *exec, int flags)
 	if (file == -1)
 	{
 		ft_printf(2, "No such file or directory: %s\n", token_lst->next->token);
+		g_exit_status = 1;
 		return (1);
 	}
 	dup2(file, 0);

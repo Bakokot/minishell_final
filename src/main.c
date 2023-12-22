@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/22 14:56:00 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/22 21:52:48 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ static void	handle_line(char *line, t_token **token, t_env *env)
 	free(line);
 	handle_command(token, env);
 	free_all_token(token);
-	return ;
 }
 
 /**
@@ -72,10 +71,10 @@ int	main(int argc, char **argv, char **envp)
 	char	*line;
 	t_token	**token;
 
-	g_exit_status = 0;
 	(void)argv;
 	if (argc > 1)
 		return (ft_printf(2, "./minishell takes no argument\n"), 0);
+	g_exit_status = 0;
 	env = init_env(envp);
 	while (1)
 	{

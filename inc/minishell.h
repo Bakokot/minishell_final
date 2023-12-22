@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/22 16:17:58 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/22 22:36:34 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,7 @@ int		**setup_pipes(t_token *token);
 void	free_pipes(int **pipes);
 void	close_pipes(int **pipes, int limiter);
 t_token	*get_command(t_token *token, int index);
+int		translate_error(int	nbr);
 
 /**
  * Freeing

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 11:56:31 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/21 09:32:59 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/22 22:34:33 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,19 @@ int	cd(t_token	*token_lst, t_env *env)
 	{
 		home = find_home(env);
 		if (!home)
+		{
+			g_exit_status = 1;
 			return (ft_printf(2, "cd: HOME not set"), 1);
+		}
 		chdir(home);
 		return (0);
 	}
 	if (chdir(token_lst->token) == -1)
 	{
 		ft_printf(2, "cd: %s: No such file or directory\n", token_lst->token);
+		g_exit_status = 1;
 		return (1);
 	}
+	g_exit_status = 0;
 	return (0);
 }

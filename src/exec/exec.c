@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 16:52:08 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 15:38:55 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/22 22:30:31 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,15 @@ void	restore_fd(t_exec *exec, t_token *token)
 
 void	exec_command(t_exec	*exec)
 {
-	int		pid;
-	int		status;
+	int	status;
+	int	pid;
 
-	status = -1;
 	pid = fork();
-	g_exit_status = 0;
 	if (pid < 0)
+	{
+		g_exit_status = -1;
 		return ;
+	}
 	if (pid == 0)
 	{
 		if (execve(exec->path, exec->args, exec->envp) == -1)
@@ -84,7 +85,9 @@ void	exec_command(t_exec	*exec)
 	else
 	{
 		waitpid(pid, &status, WUNTRACED);
-		if (status != 0)
-			g_exit_status = 127;
+		if (g_exit_status == -1)
+			g_exit_status = 130;
+		else
+			g_exit_status = status;
 	}
 }
