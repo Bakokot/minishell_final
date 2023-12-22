@@ -6,7 +6,7 @@
 /*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/22 14:30:11 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/22 14:56:00 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ static char	*read_new_line(char *line)
 
 static void	handle_line(char *line, t_token **token, t_env *env)
 {
-	add_history(line);
+	if (ft_strcmp(line, "") != 0)
+		add_history(line);
 	token = tokenize(line, env);
 	free(line);
 	handle_command(token, env);
