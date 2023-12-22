@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 16:01:40 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 15:18:59 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/22 15:47:11 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	free_all_child(t_token **token, t_env *env, int **pipes, int *pid)
 // 	exec_command(exec);
 // }
 
-void	wait_all(int *pid, int **pipes, int count)
+void	wait_all(int *pid, int **pipes, int count, t_heredoc *hd)
 {
 	int	i;
 
@@ -41,10 +41,17 @@ void	wait_all(int *pid, int **pipes, int count)
 	close_pipes(pipes, count);
 	while (i <= count)
 	{
+		if (hd[i].fd_heredoc != -1)
+		{
+			close(hd[i].fd_heredoc);
+			unlink(hd[i].heredoc);
+		}
+		free(hd[i].heredoc);
 		waitpid(pid[i], NULL, WUNTRACED);
 		kill(pid[i], SIGTERM);
 		i++;
 	}
+	free(hd);
 	free(pid);
 	free_pipes(pipes);
 }
@@ -112,6 +119,6 @@ int	pipex(t_token **token, t_env *env, int count, t_heredoc *hd)
 		i++;
 	}
 	close_pipes(pipes, -1);
-	wait_all(pid, pipes, count);
+	wait_all(pid, pipes, count, hd);
 	return (0);
 }
