@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 14:33:31 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/22 14:43:38 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*get_path(char *cmd, t_env *env)
 	if (ft_strchr(cmd, '/') != NULL)
 		return (ft_strdup(cmd));
 	all_path = ft_split(lookup_values("PATH", env), ':');
-	while (all_path && all_path[i])
+	while (all_path && all_path[i] && cmd != NULL)
 	{
 		size = ft_strlen(all_path[i]) + ft_strlen(cmd) + 2;
 		path = malloc(sizeof(char) * size);
@@ -58,7 +58,7 @@ t_exec	*handle_redirection(t_token **token_lst, t_env *env, t_heredoc *hd)
 	exec->args = token_lst_into_char(*token_lst);
 	if (!exec->args || !exec->envp)
 		return (free_exec(exec, *token_lst), NULL);
-	exec->path = get_path((*token_lst)->token, env);
+	exec->path = get_path(exec->args[0], env);
 	if (exec->path == NULL && is_bultin(*token_lst) == 1)
 	{
 		g_exit_status = 127;
