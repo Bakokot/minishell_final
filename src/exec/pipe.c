@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 16:01:40 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 15:47:11 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/22 17:40:38 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,6 @@ void	free_all_child(t_token **token, t_env *env, int **pipes, int *pid)
 	free(pid);
 	exit(0);
 }
-
-// void	child_pipex(t_token **token, t_env *env, int **pipes, int *pid)
-// {
-// 	int		count;
-
-// 	redirect_pipes_child(*token, exec, pipes, i);
-// 	if (!exec)
-// 		exit(0);
-// 	count = count_pipes(*token);
-// 	close_pipes(pipes, count);
-// 	exec_command(exec);
-// }
 
 void	wait_all(int *pid, int **pipes, int count, t_heredoc *hd)
 {
@@ -73,16 +61,25 @@ int	create_child(int *pid, int count)
 	return (1);
 }
 
-void	redirect_pipes_child(t_token *token, t_exec *exec, int **pipes, int i)
+int	redirect_pipes_child(t_exec *exec, int **pipes, int i)
 {
-	int	count;
-
-	count = count_pipes(token);
+	if (!exec)
+	{
+		close_pipes(pipes, -1);
+		return (1);
+	}
 	if (i != 0 && exec->in == -1)
 		dup2(pipes[i - 1][0], 0);
-	if (i < count && exec->out == -1)
+	if (pipes[i] && exec->out == -1)
 		dup2(pipes[i][1], 1);
 	close_pipes(pipes, -1);
+	return (0);
+}
+
+void	child_pipex(t_token *curr, t_exec *exec, t_env *env)
+{
+	if (exec_bultin(curr, env))
+		exec_command(exec);
 }
 
 int	pipex(t_token **token, t_env *env, int count, t_heredoc *hd)
@@ -90,35 +87,26 @@ int	pipex(t_token **token, t_env *env, int count, t_heredoc *hd)
 	int		i;
 	int		*pid;
 	int		**pipes;
-	t_token	*curr;
 	t_exec	*exec;
+	t_token	*curr;
 
-	i = 0;
+	i = -1;
 	pipes = setup_pipes(*token);
-	if (!pipes)
-		return (1);
 	pid = malloc(sizeof(int) * (count + 1));
-	if (!pid)
+	if (!pid || !pipes)
 		return (1);
 	create_child(pid, count);
-	while (i <= count)
+	while (++i <= count)
 	{
 		if (pid[i] == 0)
 		{
 			curr = get_command(*token, i);
 			exec = handle_redirection(&curr, env, hd);
-			if (exec)
-			{
-				redirect_pipes_child(*token, exec, pipes, i);
-				if (exec_bultin(curr, env))
-					exec_command(exec);
-			}
+			if (!redirect_pipes_child(exec, pipes, i))
+				child_pipex(curr, exec, env);
 			free_exec(exec, *token);
 			free_all_child(token, env, pipes, pid);
 		}
-		i++;
 	}
-	close_pipes(pipes, -1);
-	wait_all(pid, pipes, count, hd);
-	return (0);
+	return (wait_all(pid, pipes, count, hd), 0);
 }
