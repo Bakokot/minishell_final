@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 16:01:40 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 13:03:48 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/22 15:18:59 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,12 @@ int	pipex(t_token **token, t_env *env, int count, t_heredoc *hd)
 		{
 			curr = get_command(*token, i);
 			exec = handle_redirection(&curr, env, hd);
-			if (!exec)
-				exit(0);
-			redirect_pipes_child(*token, exec, pipes, i);
-			if (exec_bultin(*token, env))
-				exec_command(exec);
+			if (exec)
+			{
+				redirect_pipes_child(*token, exec, pipes, i);
+				if (exec_bultin(curr, env))
+					exec_command(exec);
+			}
 			free_exec(exec, *token);
 			free_all_child(token, env, pipes, pid);
 		}

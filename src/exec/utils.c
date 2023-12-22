@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:17:00 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 14:35:54 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/22 14:48:43 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ char	**token_lst_into_char(t_token *token_lst)
 				return (free_array(args), NULL);
 			if (size != 1)
 			ft_strlcpy(args[i], token_lst->token, size);
+			i++;
 		}
 		token_lst = token_lst->next;
-		i++;
 	}
 	args[i] = NULL;
 	return (args);
