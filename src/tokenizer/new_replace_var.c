@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_replace_var.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:49:23 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/21 12:29:01 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/22 01:36:54 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,13 @@ static void	update_varn(t_token *token, t_env *env)
 			updated_token = no_quote_behaviour(token->token, &i, \
 			updated_token, env);
 	}
-	token->token = updated_token;
+	if (!updated_token)
+	{
+		token->token = malloc(1 * sizeof(char));
+		token->token[0] = 0;
+	}
+	else
+		token->token = updated_token;
 	free(temp);
 }
 
