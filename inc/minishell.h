@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/21 14:04:24 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/22 13:02:34 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_token
 	char			*token;
 	t_type			type;
 	bool			quoted;
+	bool			empty;
 	struct s_token	*next;
 }	t_token;
 
@@ -123,6 +124,7 @@ char	*add_litteral_dollar(char *dollarless_token, int *i, char *tkn);
 void	set_new_token(t_token *token, char *dollarless);
 size_t	token_size(t_token *token_lst);
 char	**token_lst_into_char(t_token *token_lst);
+void	delete_token(t_token **token_lst, t_token *token);
 
 /**
  * Environment

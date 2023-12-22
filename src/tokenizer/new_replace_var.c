@@ -6,7 +6,7 @@
 /*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:49:23 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/22 01:36:54 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/22 13:26:44 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,8 @@ static void	update_varn(t_token *token, t_env *env)
 	}
 	if (!updated_token)
 	{
-		token->token = malloc(1 * sizeof(char));
-		token->token[0] = 0;
+		token->token = updated_token;
+		token->empty = true;
 	}
 	else
 		token->token = updated_token;
@@ -126,11 +126,19 @@ static void	update_varn(t_token *token, t_env *env)
 void	replace_varsn(t_token **token_lst, t_env *env)
 {
 	t_token	*token;
+	t_token	*temp;
 
 	token = (*token_lst);
 	while (token)
 	{
 		update_varn(token, env);
-		token = token->next;
+		if (token->empty == true)
+		{
+			temp = token->next;
+			delete_token(token_lst, token);
+			token = temp;
+		}
+		else
+			token = token->next;
 	}
 }

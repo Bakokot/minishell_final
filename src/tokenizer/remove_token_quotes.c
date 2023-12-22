@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_token_quotes.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 12:27:57 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/20 21:32:29 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/22 13:26:47 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,10 @@ void	remove_token_quotes(t_token **token_lst)
 	t_token	*cpy;
 	char	*temp;
 
+	if (!(*token_lst))
+	{
+		return ;
+	}
 	cpy = *token_lst;
 	while (cpy)
 	{

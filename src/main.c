@@ -6,7 +6,7 @@
 /*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/21 11:52:47 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/22 13:27:57 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,24 @@ static char	*read_new_line(char *line)
 	return (line);
 }
 
+static void printlist(t_token *token)
+{
+	while (token)
+	{
+		if (token->token)
+			printf("token == %s\n", token->token);
+		else
+			printf("token == null\n");
+		token = token->next;
+	}
+}
+
 static void	handle_line(char *line, t_token ***token, t_env *env)
 {
 	add_history(line);
 	*token = tokenize(line, env);
 	free(line);
+	printlist(**token);
 	handle_command(*token, env);
 	free_all_token(*token);
 	return ;
