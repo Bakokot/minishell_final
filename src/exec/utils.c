@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:17:00 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 14:48:43 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/22 15:32:03 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	**token_lst_into_char(t_token *token_lst)
 			args[i] = malloc(sizeof(char) * size);
 			if (!args[i])
 				return (free_array(args), NULL);
-			if (size != 1)
 			ft_strlcpy(args[i], token_lst->token, size);
 			i++;
 		}
