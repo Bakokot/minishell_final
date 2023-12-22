@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 16:52:08 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 15:32:41 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/22 15:38:55 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	restore_fd(t_exec *exec, t_token *token)
 		{
 			close(exec->hd[i].fd_heredoc);
 			unlink(exec->hd[i].heredoc);
-			free(exec->hd[i].heredoc);
 		}
+		free(exec->hd[i].heredoc);
 		i++;
 	}
 	free(exec->hd);
