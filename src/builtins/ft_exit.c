@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 11:49:33 by thibault          #+#    #+#             */
-/*   Updated: 2023/12/22 11:26:40 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/22 16:08:47 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ int	ft_exit(t_env *env, t_token **token, t_exec *exec)
 		if (strisnum((*token)->next->token))
 		{
 			if ((*token)->next->next != NULL)
-				return (ft_printf(1, "exit: too many arguments\n", (*token)->next->token), 1);
+				return (ft_printf(1, "exit: too many arguments\n"));
 			exit_status = ft_atoi((*token)->next->token);
 		}
 		else
-			ft_printf(1, "exit: %s: numeric argument required\n", (*token)->next->token);
+			ft_printf(1, "exit: %s%d", (*token)->next->token, ERR_EX);
 		free_exec(exec, *token);
 		free_all(token, env);
 		exit(exit_status);

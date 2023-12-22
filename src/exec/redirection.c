@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:24:23 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 13:06:52 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/22 16:14:01 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,31 +69,31 @@ static int	change_input(t_token *token_lst, t_exec *exec, int flags)
 	return (0);
 }
 
-int	change_standard_fd(t_token *token_lst, t_exec *exec)
+int	change_standard_fd(t_token *tklst, t_exec *exec)
 {
 	int	i;
 	int	returns;
 
 	i = 0;
 	returns = 0;
-	while (token_lst)
+	while (tklst)
 	{
-		if (token_lst->type == 2)
-			returns = change_input(token_lst, exec, O_RDONLY);
-		if (token_lst->type == 3)
+		if (tklst->type == RI)
+			returns = change_input(tklst, exec, O_RDONLY);
+		if (tklst->type == HEREDOC)
 		{
 			dup2(exec->hd[i].fd_heredoc, 0);
 			exec->in = exec->hd[i].fd_heredoc;
 		}
-		if (token_lst->type == 4)
-			returns = change_output(token_lst, exec, O_WRONLY | O_CREAT | O_TRUNC);
-		if (token_lst->type == 5)
-			returns = change_output(token_lst, exec, O_WRONLY | O_CREAT | O_APPEND);
-		if (token_lst->type == 1)
+		if (tklst->type == RO)
+			returns = change_output(tklst, exec, O_WRONLY | O_CREAT | O_TRUNC);
+		if (tklst->type == ARO)
+			returns = change_output(tklst, exec, O_WRONLY | O_CREAT | O_APPEND);
+		if (tklst->type == PIPE)
 			i++;
 		if (returns == 1)
 			return (1);
-		token_lst = token_lst->next;
+		tklst = tklst->next;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:31:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 14:33:24 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/22 16:16:08 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ t_token	**setup_heredoc(t_heredoc *hd, int nbr_cmd)
 
 int	write_heredoc(t_token **heredoc, t_heredoc *hd, int nbr_cmd)
 {
-	t_token *head;
+	t_token	*head;
 
 	head = *heredoc;
-	hd[nbr_cmd].fd_heredoc = open(hd[nbr_cmd].heredoc, O_RDWR | O_CREAT | O_TRUNC, 0777);
+	hd[nbr_cmd].fd_heredoc = open(hd[nbr_cmd].heredoc, \
+	O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (hd[nbr_cmd].fd_heredoc == -1)
 		return (free_all_token(heredoc), 1);
 	while (head)
@@ -48,22 +49,6 @@ int	write_heredoc(t_token **heredoc, t_heredoc *hd, int nbr_cmd)
 	if (hd[nbr_cmd].fd_heredoc == -1)
 		return (free_all_token(heredoc), 1);
 	free_all_token(heredoc);
-	return (0);
-}
-
-int	end_heredoc(t_token *token, char *line)
-{
-	char	*delimiter;
-
-	delimiter = token->next->token;
-	if (line == NULL)
-	{
-		ft_printf(2, "Warning: heredoc delimiter was %s\n", delimiter);
-		return (1);
-	}
-	if (ft_strlen(delimiter) == ft_strlen(line))
-		if (!ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1))
-			return (1);
 	return (0);
 }
 

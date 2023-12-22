@@ -6,7 +6,7 @@
 /*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 12:56:19 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/22 13:14:28 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/22 15:56:34 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,20 +98,6 @@ static void	tokenize_loop(int *i, char *line, t_token **token_lst)
 	}
 }
 
-static void printlist(t_token *token)
-{
-	while (token)
-	{
-		if (token->token)
-		{
-			printf("token == %s\n", token->token);
-		}
-		else
-			printf("token == null\n");
-		token = token->next;
-	}
-}
-
 t_token	**tokenize(char *line, t_env *env)
 {
 	t_token	**token_lst;
@@ -125,9 +111,7 @@ t_token	**tokenize(char *line, t_env *env)
 	if (line != NULL)
 		tokenize_loop(&i, line, token_lst);
 	delete_first_token(token_lst);
-	printlist(*token_lst);
 	replace_varsn(token_lst, env);
-	printlist(*token_lst);
 	remove_token_quotes(token_lst);
 	return (token_lst);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 15:47:39 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/22 16:18:22 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_exec	*handle_redirection(t_token **token_lst, t_env *env, t_heredoc *hd)
 		return (free_exec(exec, *token_lst), NULL);
 	remove_redirection(token_lst);
 	if (*token_lst == NULL)
-		return(free_exec(exec, *token_lst), NULL);
+		return (free_exec(exec, *token_lst), NULL);
 	exec->envp = env_lst_into_char(env);
 	exec->args = token_lst_into_char(*token_lst);
 	if (!exec->args || exec->args[0] == NULL || !exec->envp)

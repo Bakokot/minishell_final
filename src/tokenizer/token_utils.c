@@ -6,7 +6,7 @@
 /*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:40:06 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/22 13:26:13 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/22 15:54:18 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +71,4 @@ void	delete_token(t_token **token_lst, t_token *token)
 	if (token->token)
 		free(token->token);
 	free(token);
-}
-
-size_t	token_size(t_token *token_lst)
-{
-	size_t	size;
-
-	size = 0;
-	while (token_lst)
-	{
-		size++;
-		token_lst = token_lst->next;
-	}
-	return (size);
 }

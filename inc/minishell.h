@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/22 15:17:33 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/22 16:17:58 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define ERR_MALLOC "Memory allocation error\n"
 # define ERR_EOF1 "minishell: unexpected EOF while looking for matching `"
 # define ERR_EOF2 "\'\nminishell: syntax error: unexpected end of file\n"
+# define ERR_EX ": numeric argument required\n"
 
 /*
  * SIGNAL STATE
@@ -186,6 +187,7 @@ int		exec_exit(t_token **token, t_env *env, t_exec *exec);
 //Redirections
 t_exec	*handle_redirection(t_token **token_lst, t_env *env, t_heredoc *hd);
 t_heredoc	*check_heredocs(t_token	*token, t_env *env);
+int		end_heredoc(t_token *token, char *line);
 int		change_standard_fd(t_token *token_lst, t_exec *exec);
 void	remove_redirection(t_token **head);
 void	restore_fd(t_exec *exec, t_token *token);

@@ -6,7 +6,7 @@
 /*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:49:23 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/22 13:26:44 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/22 16:01:47 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,32 +91,24 @@ static void	update_varn(t_token *token, t_env *env)
 	int		i;
 	char	*temp;
 	int		flag_quote;
-	char	*updated_token;
+	char	*n_token;
 
 	i = 0;
 	temp = token->token;
-	flag_quote = is_quote(token->token[i]);
-	updated_token = NULL;
+	n_token = NULL;
 	while (token->token[i])
 	{
 		flag_quote = is_quote(token->token[i]);
 		if (flag_quote == '\"')
-			updated_token = double_quote_behaviour(token->token, &i, \
-			updated_token, env);
+			n_token = double_quote_behaviour(token->token, &i, n_token, env);
 		else if (flag_quote == '\'')
-			updated_token = single_quote_behaviour(token->token, &i, \
-			updated_token);
+			n_token = single_quote_behaviour(token->token, &i, n_token);
 		else
-			updated_token = no_quote_behaviour(token->token, &i, \
-			updated_token, env);
+			n_token = no_quote_behaviour(token->token, &i, n_token, env);
 	}
-	if (!updated_token)
-	{
-		token->token = updated_token;
+	if (!n_token)
 		token->empty = true;
-	}
-	else
-		token->token = updated_token;
+	token->token = n_token;
 	free(temp);
 }
 
