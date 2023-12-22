@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/22 14:30:06 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/22 14:30:11 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,6 @@ static char	*read_new_line(char *line)
 	line = ft_strjoin(line, new_line);
 	free(temp);
 	return (line);
-}
-
-static void printlist(t_token *token)
-{
-	while (token)
-	{
-		if (token->token)
-			printf("token == %s\n", token->token);
-		else
-			printf("token == null\n");
-		token = token->next;
-	}
 }
 
 static void	handle_line(char *line, t_token **token, t_env *env)

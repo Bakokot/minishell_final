@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 14:24:42 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/22 14:33:31 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ void	handle_command(t_token **token, t_env *env)
 	if (check_args(*token) == 1)
 		return ;
 	count = count_pipes(*token);
-	signal_handling(IN_PROGRAM);
 	hd = check_heredocs(*token, env);
+	signal_handling(IN_PROGRAM);
 	if (hd)
 	{
 		if (count == 0)
