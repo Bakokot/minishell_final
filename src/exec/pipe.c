@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 16:01:40 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 22:39:38 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/23 00:17:03 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	free_all_child(t_token **token, t_env *env, int **pipes, int *pid)
 	free_all_env(env);
 	free_pipes(pipes);
 	free(pid);
-	exit(0);
+	exit(g_exit_status);
 }
 
 void	wait_all(int *pid, int **pipes, int count, t_heredoc *hd)
@@ -100,8 +100,8 @@ int	pipex(t_token **token, t_env *env, int count, t_heredoc *hd)
 	{
 		if (pid[i] == 0)
 		{
+			exec = handle_redirection(token, env, hd, i);
 			curr = get_command(*token, i);
-			exec = handle_redirection(&curr, env, hd);
 			if (!redirect_pipes_child(exec, pipes, i))
 				child_pipex(curr, exec, env);
 			free_exec(exec, *token);

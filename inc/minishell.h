@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/22 22:36:34 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/22 23:59:21 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,7 @@ int		exec_bultin(t_token *token_lst, t_env *env);
 int		exec_exit(t_token **token, t_env *env, t_exec *exec);
 
 //Redirections
-t_exec	*handle_redirection(t_token **token_lst, t_env *env, t_heredoc *hd);
+t_exec	*handle_redirection(t_token **token_lst, t_env *env, t_heredoc *hd, int i);
 t_heredoc	*check_heredocs(t_token	*token, t_env *env);
 int		end_heredoc(t_token *token, char *line);
 int		change_standard_fd(t_token *token_lst, t_exec *exec);

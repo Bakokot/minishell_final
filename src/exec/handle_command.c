@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 16:18:22 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/23 00:21:50 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	*get_path(char *cmd, t_env *env)
 	return (NULL);
 }
 
-t_exec	*handle_redirection(t_token **token_lst, t_env *env, t_heredoc *hd)
+t_exec	*handle_redirection(t_token **token_lst, t_env *env, t_heredoc *hd, int i)
 {
 	t_exec	*exec;
 
@@ -49,20 +49,22 @@ t_exec	*handle_redirection(t_token **token_lst, t_env *env, t_heredoc *hd)
 	if (!exec)
 		return (NULL);
 	init_exec(exec, hd);
-	if (change_standard_fd(*token_lst, exec))
+	if (change_standard_fd(get_command(*token_lst, i), exec))
 		return (free_exec(exec, *token_lst), NULL);
 	remove_redirection(token_lst);
 	if (*token_lst == NULL)
 		return (free_exec(exec, *token_lst), NULL);
 	exec->envp = env_lst_into_char(env);
-	exec->args = token_lst_into_char(*token_lst);
+	exec->args = token_lst_into_char(get_command(*token_lst, i));
 	if (!exec->args || exec->args[0] == NULL || !exec->envp)
 		return (free_exec(exec, *token_lst), NULL);
 	exec->path = get_path(exec->args[0], env);
-	if (exec->path == NULL && is_bultin(*token_lst) == 1)
+	if (exec->path == NULL &&\
+	 is_bultin(get_command(*token_lst, i)) == 1)
 	{
+		ft_printf(2, "%s : command not found\n",\
+		 get_command(*token_lst, i)->token);
 		g_exit_status = 127;
-		ft_printf(2, "%s : command not found\n", (*token_lst)->token);
 		return (free_exec(exec, *token_lst), NULL);
 	}
 	return (exec);
@@ -72,17 +74,9 @@ int	execute(t_token **token, t_env *env, t_heredoc *hd)
 {
 	t_exec		*exec;
 
-	exec = handle_redirection(token, env, hd);
-	if (token == NULL)
-	{
-		g_exit_status = 0;
+	exec = handle_redirection(token, env, hd, 0);
+	if (exec == NULL || token == NULL)
 		return (1);
-	}
-	if (exec == NULL)
-	{
-		g_exit_status = 127;
-		return (1);
-	}
 	if (exec_exit(token, env, exec) == 1)
 	{
 		g_exit_status = 1;
