@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:24:23 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 22:03:43 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/23 03:21:33 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	change_standard_fd(t_token *tklst, t_exec *exec)
 
 	i = 0;
 	returns = 0;
-	while (tklst)
+	while (tklst && tklst->type != 1)
 	{
 		if (tklst->type == RI)
 			returns = change_input(tklst, exec, O_RDONLY);

@@ -6,11 +6,24 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/23 00:21:50 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/23 04:27:37 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*check_directory(char *path)
+{
+	if (access(path, F_OK) == 0)
+	{
+		if (access(path, X_OK) == 0)
+			return (ft_strdup(path));
+		printf("%s: Is a directory\n", path);
+	}
+	else
+		printf("%s: No such file or directory\n", path);
+	return (NULL);
+}
 
 static char	*get_path(char *cmd, t_env *env)
 {
@@ -21,7 +34,7 @@ static char	*get_path(char *cmd, t_env *env)
 
 	i = 0;
 	if (ft_strchr(cmd, '/') != NULL)
-		return (ft_strdup(cmd));
+		return (ft_strdup(cmd));							//check_directory()
 	all_path = ft_split(lookup_values("PATH", env), ':');
 	while (all_path && all_path[i] && cmd != NULL)
 	{
@@ -32,7 +45,7 @@ static char	*get_path(char *cmd, t_env *env)
 		ft_strlcpy(path, all_path[i], size);
 		ft_strlcat(path, "/", size);
 		ft_strlcat(path, cmd, size);
-		if (access(path, F_OK | X_OK) >= 0)
+		if (access(path, F_OK | X_OK) == 0)
 			return (free_array(all_path), path);
 		free(path);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 16:52:08 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 23:47:23 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/23 03:24:40 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	free_exec(t_exec *exec, t_token *token)
 {
 	if (exec == NULL)
 		return ;
-	if (token && exec)
+	if (exec)
 		restore_fd(exec, token);
 	if (exec->args != NULL)
 		free_array(exec->args);
