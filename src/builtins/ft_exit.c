@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 11:49:33 by thibault          #+#    #+#             */
-/*   Updated: 2023/12/22 22:09:53 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/23 02:02:21 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_exit(t_env *env, t_token **token, t_exec *exec)
 			exit_status = translate_error(ft_atoi((*token)->next->token));
 		}
 		else
-			ft_printf(1, "exit: %s%d", (*token)->next->token, ERR_EX);
+			ft_printf(1, "exit: %s%s", (*token)->next->token, ERR_EX);
 		free_exec(exec, *token);
 		free_all(token, env);
 		exit(exit_status);

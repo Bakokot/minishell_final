@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:03:07 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 16:17:42 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/23 01:58:52 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 int	check_bultin(char *cmd, char *to_check)
 {
-	if (ft_strlen(to_check) == ft_strlen(to_check))
-		if (!ft_strncmp(cmd, to_check, 2))
+	size_t	i;
+
+	i = ft_strlen(cmd);
+	if (ft_strlen(to_check) == i)
+		if (!ft_strncmp(cmd, to_check, i))
 			return (1);
 	return (0);
 }
