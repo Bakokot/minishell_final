@@ -6,25 +6,26 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/22 23:59:21 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/25 17:43:43 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <stdbool.h>
-# include <signal.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
+# include <stdbool.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <signal.h>
+# include <stdio.h>
 # include <fcntl.h>
 
-# include "../libft/inc/libft.h"
 # include "../ft_printf/ft_printf.h"
+# include "../libft/inc/libft.h"
 
 # define SUCCESS 0
 # define ERROR 404
@@ -32,9 +33,9 @@
 /**
  * ERROR MESSAGES
 */
-# define ERR_MALLOC "Memory allocation error\n"
 # define ERR_EOF1 "minishell: unexpected EOF while looking for matching `"
 # define ERR_EOF2 "\'\nminishell: syntax error: unexpected end of file\n"
+# define ERR_MALLOC "Memory allocation error\n"
 # define ERR_EX ": numeric argument required\n"
 
 /*

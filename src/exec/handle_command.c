@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/23 04:27:37 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/25 18:13:21 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,22 @@
 
 char	*check_directory(char *path)
 {
+	struct stat	file;
+
+	if (stat(path, &file) == -1)
+		return (NULL);
 	if (access(path, F_OK) == 0)
 	{
-		if (access(path, X_OK) == 0)
-			return (ft_strdup(path));
-		printf("%s: Is a directory\n", path);
+		if (S_ISDIR(file.st_mode))
+		{
+			ft_printf(2, "%s: Is a directory\n", path);
+			g_exit_status = 126;
+			return (NULL);
+		}
+		return (ft_strdup(path));
 	}
-	else
-		printf("%s: No such file or directory\n", path);
+	ft_printf(2, "%s: No such file or directory\n", path);
+	g_exit_status = 127;
 	return (NULL);
 }
 
@@ -34,7 +42,10 @@ static char	*get_path(char *cmd, t_env *env)
 
 	i = 0;
 	if (ft_strchr(cmd, '/') != NULL)
-		return (ft_strdup(cmd));							//check_directory()
+	{
+		path = check_directory(cmd);
+		return (path);
+	}
 	all_path = ft_split(lookup_values("PATH", env), ':');
 	while (all_path && all_path[i] && cmd != NULL)
 	{
@@ -73,7 +84,7 @@ t_exec	*handle_redirection(t_token **token_lst, t_env *env, t_heredoc *hd, int i
 		return (free_exec(exec, *token_lst), NULL);
 	exec->path = get_path(exec->args[0], env);
 	if (exec->path == NULL &&\
-	 is_bultin(get_command(*token_lst, i)) == 1)
+	 is_bultin(exec->args[0], i) == 1)
 	{
 		ft_printf(2, "%s : command not found\n",\
 		 get_command(*token_lst, i)->token);
