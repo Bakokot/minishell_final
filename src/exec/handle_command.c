@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/26 14:16:27 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/26 16:19:02 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static char	*get_path(char *cmd, t_env *env)
 		i++;
 	}
 	free_array(all_path);
-	if (is_bultin(cmd) == 0)
+	if (is_bultin(cmd) == 1)
 		ft_printf(2, "%s : command not found\n", cmd);
 	return (NULL);
 }
