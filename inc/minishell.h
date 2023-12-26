@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/26 14:13:23 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/26 19:55:41 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,8 @@ int		ft_strcmp(char *s1, char *s2);
 void	free_array(char **arr);
 bool	closed_quotes(char *str);
 bool 	unclosed_quotes(char *line);
+bool	unclosed_pipe(char *line);
+char	strchr_quote(char *line);
 
 //Builtins
 int		pwd(void);

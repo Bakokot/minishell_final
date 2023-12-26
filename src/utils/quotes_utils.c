@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 12:42:04 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/23 01:31:05 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/26 19:55:45 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,30 @@ bool	closed_quotes(char *str)
 		i++;
 	}
 	return (false);
+}
+
+/**
+ * @return true if the line has unclosed pipe
+ * @return false if the line ahs not unclosed pipe
+*/
+bool	unclosed_pipe(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i + 1])
+		i++;
+	if (line[i] == '|')
+		return (true);
+	return (false);
+}
+
+char	strchr_quote(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] != '\"' && line[i] != '\'')
+		i++;
+	return (line[i]);
 }
