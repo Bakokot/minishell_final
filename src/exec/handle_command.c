@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/25 18:13:21 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/26 14:16:27 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,6 @@ static char	*get_path(char *cmd, t_env *env)
 	char	**all_path;
 
 	i = 0;
-	if (ft_strchr(cmd, '/') != NULL)
-	{
-		path = check_directory(cmd);
-		return (path);
-	}
 	all_path = ft_split(lookup_values("PATH", env), ':');
 	while (all_path && all_path[i] && cmd != NULL)
 	{
@@ -62,7 +57,24 @@ static char	*get_path(char *cmd, t_env *env)
 		i++;
 	}
 	free_array(all_path);
+	if (is_bultin(cmd) == 0)
+		ft_printf(2, "%s : command not found\n", cmd);
 	return (NULL);
+}
+
+t_exec	*fill_exec(t_exec *exec, t_token *token_lst, t_env *env)
+{
+	exec->envp = env_lst_into_char(env);
+	exec->args = token_lst_into_char(token_lst);
+	if (!exec->args || exec->args[0] == NULL || !exec->envp)
+		return (free_exec(exec, token_lst), NULL);
+	if (ft_strchr(exec->args[0], '/') != NULL)
+		exec->path = check_directory(exec->args[0]);
+	else
+		exec->path = get_path(exec->args[0], env);
+	if (exec->path == NULL)
+		return (free_exec(exec, token_lst), NULL);
+	return (exec);
 }
 
 t_exec	*handle_redirection(t_token **token_lst, t_env *env, t_heredoc *hd, int i)
@@ -78,19 +90,7 @@ t_exec	*handle_redirection(t_token **token_lst, t_env *env, t_heredoc *hd, int i
 	remove_redirection(token_lst);
 	if (*token_lst == NULL)
 		return (free_exec(exec, *token_lst), NULL);
-	exec->envp = env_lst_into_char(env);
-	exec->args = token_lst_into_char(get_command(*token_lst, i));
-	if (!exec->args || exec->args[0] == NULL || !exec->envp)
-		return (free_exec(exec, *token_lst), NULL);
-	exec->path = get_path(exec->args[0], env);
-	if (exec->path == NULL &&\
-	 is_bultin(exec->args[0], i) == 1)
-	{
-		ft_printf(2, "%s : command not found\n",\
-		 get_command(*token_lst, i)->token);
-		g_exit_status = 127;
-		return (free_exec(exec, *token_lst), NULL);
-	}
+	exec = fill_exec(exec, get_command(*token_lst, i), env);
 	return (exec);
 }
 
@@ -122,13 +122,13 @@ void	handle_command(t_token **token, t_env *env)
 		return ;
 	count = count_pipes(*token);
 	hd = check_heredocs(*token, env);
-	signal_handling(IN_PROGRAM);
 	if (hd)
 	{
+		signal_handling(IN_PROGRAM);
 		if (count == 0)
 			execute(token, env, hd);
 		else
 			pipex(token, env, count, hd);
+		signal_handling(IN_SHELL);
 	}
-	signal_handling(IN_SHELL);
 }

@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/25 17:43:43 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/26 14:13:23 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ void	free_exec(t_exec *exec, t_token *token);
 void	handle_command(t_token **token_lst, t_env *env);
 int		check_args(t_token *token);
 void	exec_command(t_exec	*exec);
-int		is_bultin(t_token *token_lst);
+int		is_bultin(char *cmd);
 int		exec_bultin(t_token *token_lst, t_env *env);
 int		exec_exit(t_token **token, t_env *env, t_exec *exec);
 

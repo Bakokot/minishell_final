@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:03:07 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/23 01:58:52 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/25 21:52:44 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,21 @@ int	check_bultin(char *cmd, char *to_check)
 	return (0);
 }
 
-int	is_bultin(t_token *token_lst)
+int	is_bultin(char *cmd)
 {
-	if (check_bultin("cd", token_lst->token))
+	if (check_bultin("cd", cmd))
 		return (0);
-	if (check_bultin("echo", token_lst->token))
+	if (check_bultin("echo", cmd))
 		return (0);
-	if (check_bultin("env", token_lst->token))
+	if (check_bultin("env", cmd))
 		return (0);
-	if (check_bultin("export", token_lst->token))
+	if (check_bultin("export", cmd))
 		return (0);
-	if (check_bultin("pwd", token_lst->token))
+	if (check_bultin("pwd", cmd))
 		return (0);
-	if (check_bultin("unset", token_lst->token))
+	if (check_bultin("unset", cmd))
 		return (0);
-	if (check_bultin("exit", token_lst->token))
+	if (check_bultin("exit", cmd))
 		return (0);
 	return (1);
 }
