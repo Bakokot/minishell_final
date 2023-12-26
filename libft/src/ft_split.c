@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 07:58:25 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/21 01:11:24 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/27 00:54:48 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static size_t	count_nbr_word(char const *s, char c)
 			i++;
 			count++;
 			while (s[i] && s[i] != c)
-			i++;
+				i++;
 		}
 		else
 			i++;
