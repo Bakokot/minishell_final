@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/26 16:19:02 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/26 19:02:04 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,20 @@ static char	*get_path(char *cmd, t_env *env)
 	return (NULL);
 }
 
-t_exec	*fill_exec(t_exec *exec, t_token *token_lst, t_env *env)
+t_exec	*fill_exec(t_exec *exec, t_token *token_lst, t_env *env, int i)
 {
 	exec->envp = env_lst_into_char(env);
-	exec->args = token_lst_into_char(token_lst);
+	exec->args = token_lst_into_char(get_command(token_lst, i));
 	if (!exec->args || exec->args[0] == NULL || !exec->envp)
 		return (free_exec(exec, token_lst), NULL);
 	if (ft_strchr(exec->args[0], '/') != NULL)
 		exec->path = check_directory(exec->args[0]);
 	else
+	{
 		exec->path = get_path(exec->args[0], env);
+		if (!exec->path)
+			g_exit_status = 127;
+	}
 	if (exec->path == NULL)
 		return (free_exec(exec, token_lst), NULL);
 	return (exec);
@@ -90,7 +94,7 @@ t_exec	*handle_redirection(t_token **token_lst, t_env *env, t_heredoc *hd, int i
 	remove_redirection(token_lst);
 	if (*token_lst == NULL)
 		return (free_exec(exec, *token_lst), NULL);
-	exec = fill_exec(exec, get_command(*token_lst, i), env);
+	exec = fill_exec(exec, *token_lst, env, i);
 	return (exec);
 }
 

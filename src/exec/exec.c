@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 16:52:08 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/23 03:24:40 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/26 19:04:07 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,6 @@ void	exec_command(t_exec	*exec)
 		if (g_exit_status == -1)
 			g_exit_status = 130;
 		else
-			g_exit_status = status;
+			g_exit_status = translate_error(status);
 	}
 }

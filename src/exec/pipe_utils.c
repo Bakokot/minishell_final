@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:06:20 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 16:10:19 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/26 19:17:40 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ size_t	count_pipes(t_token *token)
 	while (token)
 	{
 		if (token->type == 1)
-			count ++;
+			count++;
 		token = token->next;
 	}
 	return (count);

@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:09:35 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/23 01:21:49 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/26 16:41:30 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,6 @@ int	check_args(t_token *token)
 		if (token->type != 0 && token->type != 1 && valid_redirection(token) == 1)
 		{
 			ft_printf(2, "Error: invalid redirections\n");
-			return (1);
-		}
-		if (token->type == 1 && token->next == NULL)
-		{
-			ft_printf(2, "Error: invalid command after PIPE\n");
 			return (1);
 		}
 		token = token->next;
