@@ -21,16 +21,19 @@ static void	check_arg(char c, va_list arg, int *count, int fd)
 	if (c == 'p')
 	{
 		ft_putstr("0x", count, fd);
-		ft_putnbr_base(va_arg(arg, long long unsigned int), "0123456789abcdef", count, fd);
+		ft_putnbr_base(va_arg(arg, long long unsigned int), \
+		"0123456789abcdef", count, fd);
 	}
 	if ((c == 'd' || c == 'i'))
 		ft_putnbr(va_arg(arg, int), count, fd);
 	if (c == 'u')
 		ft_putnbr_base(va_arg(arg, unsigned int), "0123456789", count, fd);
 	if (c == 'x')
-		ft_putnbr_base(va_arg(arg, unsigned int), "0123456789abcdef", count, fd);
+		ft_putnbr_base(va_arg(arg, unsigned int), \
+		"0123456789abcdef", count, fd);
 	if (c == 'X')
-		ft_putnbr_base(va_arg(arg, unsigned int), "0123456789ABCDEF", count, fd);
+		ft_putnbr_base(va_arg(arg, unsigned int), \
+		"0123456789ABCDEF", count, fd);
 	if (c == '%')
 		ft_putchar('%', count, fd);
 }

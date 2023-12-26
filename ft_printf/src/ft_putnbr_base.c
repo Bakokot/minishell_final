@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 13:37:50 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/15 13:24:34 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/27 00:56:39 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ft_strlen(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -22,9 +22,10 @@ static int	ft_strlen(char *str)
 	return (i);
 }
 
-void	ft_putnbr_base(long long unsigned int nbr, char *base, int *count, int fd)
+void	ft_putnbr_base(long long unsigned int nbr, \
+char *base, int *count, int fd)
 {
-	int size;
+	int	size;
 
 	size = ft_strlen(base);
 	if ((int)nbr > (size - 1))
