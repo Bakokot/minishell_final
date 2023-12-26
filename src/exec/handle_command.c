@@ -3,35 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   handle_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/26 19:02:04 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/27 00:15:18 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*check_directory(char *path)
-{
-	struct stat	file;
-
-	if (stat(path, &file) == -1)
-		return (NULL);
-	if (access(path, F_OK) == 0)
-	{
-		if (S_ISDIR(file.st_mode))
-		{
-			ft_printf(2, "%s: Is a directory\n", path);
-			g_exit_status = 126;
-			return (NULL);
-		}
-		return (ft_strdup(path));
-	}
-	ft_printf(2, "%s: No such file or directory\n", path);
-	g_exit_status = 127;
-	return (NULL);
-}
 
 static char	*get_path(char *cmd, t_env *env)
 {
@@ -81,7 +60,8 @@ t_exec	*fill_exec(t_exec *exec, t_token *token_lst, t_env *env, int i)
 	return (exec);
 }
 
-t_exec	*handle_redirection(t_token **token_lst, t_env *env, t_heredoc *hd, int i)
+t_exec	*handle_redirection(t_token **token_lst, t_env *env, \
+t_heredoc *hd, int i)
 {
 	t_exec	*exec;
 

@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 16:01:40 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/23 00:17:03 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/27 00:18:20 by thibault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_all_child(t_token **token, t_env *env, int **pipes, int *pid)
-{
-	free_all_token(token);
-	free_all_env(env);
-	free_pipes(pipes);
-	free(pid);
-	exit(g_exit_status);
-}
 
 void	wait_all(int *pid, int **pipes, int count, t_heredoc *hd)
 {

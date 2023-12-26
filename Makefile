@@ -14,7 +14,7 @@ INC_DIR        :=    inc/
 HEADERS        := $(addprefix $(INC_DIR), $(INC))
 
 SRC_DIR        :=	src/
-SRC            :=	main.c\
+SRC            :=	main.c new_line.c\
 					utils/error.c utils/utils.c utils/freeing.c utils/ft_strcmp.c utils/quotes_utils.c\
 					env/env_utils.c env/env.c \
 					tokenizer/tokenizer.c tokenizer/token_utils.c tokenizer/token_utils2.c\
@@ -23,8 +23,8 @@ SRC            :=	main.c\
 					signals/signals.c signals/ctrl_d.c\
 					builtins/echo.c builtins/env.c builtins/pwd.c builtins/cd.c \
 					builtins/unset.c builtins/export.c builtins/export2.c builtins/ft_exit.c exec/exec.c exec/is_builtin.c\
-					exec/utils.c exec/handle_command.c exec/redirection.c exec/heredoc.c exec/heredoc2.c exec/pipe.c exec/pipe_utils.c\
-					exec/check_args.c
+					exec/utils.c exec/handle_command.c exec/redirection.c exec/heredoc.c exec/heredoc2.c exec/pipe.c exec/pipe2.c exec/pipe_utils.c\
+					exec/check_args.c exec/check_dir.c
 
 COMPILED = 0
 TOTAL_COMPILATION = $(shell ((echo ${SRC}) | wc -w | sed -e 's/^[ \t]*//'))
