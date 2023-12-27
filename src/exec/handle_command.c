@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/27 00:15:18 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/27 11:38:12 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,12 @@ static char	*get_path(char *cmd, t_env *env)
 		i++;
 	}
 	free_array(all_path);
-	if (is_bultin(cmd) == 1)
-		ft_printf(2, "%s : command not found\n", cmd);
+	ft_printf(2, "%s : command not found\n", cmd);
 	return (NULL);
 }
 
 t_exec	*fill_exec(t_exec *exec, t_token *token_lst, t_env *env, int i)
 {
-	exec->envp = env_lst_into_char(env);
 	exec->args = token_lst_into_char(get_command(token_lst, i));
 	if (!exec->args || exec->args[0] == NULL || !exec->envp)
 		return (free_exec(exec, token_lst), NULL);
@@ -64,17 +62,21 @@ t_exec	*handle_redirection(t_token **token_lst, t_env *env, \
 t_heredoc *hd, int i)
 {
 	t_exec	*exec;
+	t_token	*current;
 
 	exec = malloc(sizeof(t_exec));
 	if (!exec)
 		return (NULL);
 	init_exec(exec, hd);
-	if (change_standard_fd(get_command(*token_lst, i), exec))
+	current = get_command(*token_lst, i);
+	if (change_standard_fd(current, exec))
 		return (free_exec(exec, *token_lst), NULL);
 	remove_redirection(token_lst);
 	if (*token_lst == NULL)
 		return (free_exec(exec, *token_lst), NULL);
-	exec = fill_exec(exec, *token_lst, env, i);
+	exec->envp = env_lst_into_char(env);
+	if (is_bultin(current->token) == 1)
+		exec = fill_exec(exec, *token_lst, env, i);
 	return (exec);
 }
 
