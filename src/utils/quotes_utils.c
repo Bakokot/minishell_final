@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 12:42:04 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/27 14:13:37 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/27 14:16:25 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ bool	closed_quotes(char *str)
 */
 bool	unclosed_pipe(char *line)
 {
-		int	i;
+	int	i;
 
 	i = 0;
 	if (line[0] == '\0')
