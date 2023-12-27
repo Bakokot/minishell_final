@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 11:56:31 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/27 12:44:12 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/27 14:54:54 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	cd(t_token	*token_lst, t_env *env)
 	char	*home;
 
 	token_lst = token_lst->next;
-	if (token_lst->type == 1)
+	if (token_lst && token_lst->type == 1)
 		token_lst = NULL;
 	if (token_lst == NULL)
 	{

@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   export2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 16:14:50 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/27 13:00:15 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/27 14:57:34 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	env_export(t_env *env)
+{
+	while (env)
+	{
+		printf("declare -x %s=", env->key);
+		if (env->values)
+			printf("%s", env->values);
+		printf("\n");
+		env = env->next;
+	}
+	g_exit_status = 0;
+	return (0);
+}
 
 static void	swap_node(t_env *cur, t_env *next)
 {
@@ -63,7 +77,7 @@ void	print_export(t_env *env)
 		else
 			env_copy = env_copy->next;
 	}
-	env_builtin(head);
+	env_export(head);
 	free_all_env(head);
 }
 
