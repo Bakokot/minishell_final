@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 12:42:04 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/27 12:53:31 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/27 14:13:37 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,15 @@ bool	closed_quotes(char *str)
 
 /**
  * @return true if the line has unclosed pipe
- * @return false if the line ahs not unclosed pipe
+ * @return false if the line has not unclosed pipe
 */
 bool	unclosed_pipe(char *line)
 {
-	int	i;
+		int	i;
 
 	i = 0;
+	if (line[0] == '\0')
+		return (false);
 	while (line[i + 1])
 		i++;
 	while (ft_isspace(line[i]) && i >= 0)
@@ -96,6 +98,8 @@ bool	double_pipe(t_token **lst)
 {
 	t_token	*cpy;
 
+	if (*lst == NULL)
+		return (false);
 	cpy = *lst;
 	while (cpy->next)
 	{
