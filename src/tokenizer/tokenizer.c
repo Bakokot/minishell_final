@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 12:56:19 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/22 17:42:33 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/27 12:37:07 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,12 @@ t_token	**tokenize(char *line, t_env *env)
 	if (line != NULL)
 		tokenize_loop(&i, line, token_lst);
 	delete_first_token(token_lst);
+	if (double_pipe(token_lst) == true)
+	{
+		ft_printf(2, "minishell: syntax error near unexpected token `|'\n");
+		free_all_token(token_lst);
+		return (NULL);
+	}
 	replace_varsn(token_lst, env);
 	remove_token_quotes(token_lst);
 	return (token_lst);

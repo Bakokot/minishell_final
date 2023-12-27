@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/27 00:11:02 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/27 12:37:30 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@ static void	handle_line(char *line, t_token **token, t_env *env)
 		add_history(line);
 	token = tokenize(line, env);
 	free(line);
-	handle_command(token, env);
-	free_all_token(token);
+	if (token != NULL)
+	{
+		handle_command(token, env);
+		free_all_token(token);
+	}
 }
 
 static t_token	**init_loop(void)

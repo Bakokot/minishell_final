@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 12:42:04 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/26 19:55:45 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/27 12:53:31 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ bool	unclosed_pipe(char *line)
 	i = 0;
 	while (line[i + 1])
 		i++;
+	while (ft_isspace(line[i]) && i >= 0)
+		i--;
 	if (line[i] == '|')
 		return (true);
 	return (false);
@@ -88,4 +90,18 @@ char	strchr_quote(char *line)
 	while (line[i] != '\"' && line[i] != '\'')
 		i++;
 	return (line[i]);
+}
+
+bool	double_pipe(t_token **lst)
+{
+	t_token	*cpy;
+
+	cpy = *lst;
+	while (cpy->next)
+	{
+		if (cpy->type == PIPE && cpy->next->type == PIPE)
+			return (true);
+		cpy = cpy->next;
+	}
+	return (false);
 }
