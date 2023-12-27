@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 16:14:50 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/19 01:26:34 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/27 12:11:16 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,5 @@ void	print_export(t_env *env)
 			env_copy = env_copy->next;
 	}
 	env_builtin(head);
-	free_all_env(env_copy);
+	free_all_env(head);
 }
