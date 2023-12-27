@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/27 12:33:25 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/27 12:51:23 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@
 /**
  * ERROR MESSAGES
 */
-# define ERR_EOF1 "minishell: unexpected EOF while looking for matching `"
+# define ERR_EOF1 "\nminishell: unexpected EOF while looking for matching `"
 # define ERR_EOF2 "\'\nminishell: syntax error: unexpected end of file\n"
+# define ERR_EOF3 "\nminishell: syntax error: unexpected end of file\n"
 # define ERR_MALLOC "Memory allocation error\n"
 # define ERR_EX ": numeric argument required\n"
 
