@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/27 00:31:36 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/27 12:33:25 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ bool		closed_quotes(char *str);
 bool		unclosed_quotes(char *line);
 bool		unclosed_pipe(char *line);
 char		strchr_quote(char *line);
+bool		double_pipe(t_token **lst);
 
 //Builtins
 int			pwd(void);
