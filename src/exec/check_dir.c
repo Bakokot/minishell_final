@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_dir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibault <thibault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 00:14:00 by thibault          #+#    #+#             */
-/*   Updated: 2023/12/27 00:15:54 by thibault         ###   ########.fr       */
+/*   Updated: 2023/12/27 14:35:02 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ char	*check_directory(char *path)
 {
 	struct stat	file;
 
-	if (stat(path, &file) == -1)
-		return (NULL);
 	if (access(path, F_OK) == 0)
 	{
+		if (stat(path, &file) == -1)
+			return (NULL);
 		if (S_ISDIR(file.st_mode))
 		{
 			ft_printf(2, "%s: Is a directory\n", path);
