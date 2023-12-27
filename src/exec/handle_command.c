@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/27 11:52:47 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/27 12:53:32 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ t_heredoc *hd, int i)
 	if (!exec->envp)
 		return (free_exec(exec, *token_lst), NULL);
 	current = get_command(*token_lst, i);
+	if (current == NULL)
+		return (free_exec(exec, *token_lst), NULL);
 	if (is_bultin(current->token) == 1)
 		exec = fill_exec(exec, *token_lst, env, i);
 	return (exec);

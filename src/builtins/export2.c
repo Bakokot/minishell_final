@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 16:14:50 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/27 12:11:16 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/27 13:00:15 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,19 @@ void	print_export(t_env *env)
 	}
 	env_builtin(head);
 	free_all_env(head);
+}
+
+void	export_new(t_env **env, char *arg)
+{
+	char	*key;
+	char	*value;
+	t_env	*new;
+
+	new = *env;
+	while (new)
+		new = new->next;
+	key = get_env_key(arg);
+	value = get_env_values(arg);
+	new = create_new_env(key, value);
+	add_back_env(env, new);
 }

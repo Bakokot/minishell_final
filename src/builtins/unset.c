@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 11:58:45 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/23 01:11:33 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/27 12:28:28 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,20 @@ int	unset(t_token *token_lst, t_env **env)
 	if (token_lst->next == NULL)
 		return (0);
 	token_lst = token_lst->next;
-	if (token_lst->type != 0 || token_lst->empty == true)
-		return (0);
-	i = find_key(token_lst->token, *env);
-	if (i == -1)
-		return (0);
-	if (i == 0)
+	while (token_lst && token_lst->type != 1)
 	{
-		tmp = *env;
-		*env = (*env)->next;
-		free(tmp);
-		return (0);
+		i = find_key(token_lst->token, *env);
+		if (i == 0)
+		{
+			tmp = *env;
+			*env = (*env)->next;
+			free(tmp);
+			return (0);
+		}
+		else if (i != -1)
+			unset_variable(env, i);
+		token_lst = token_lst->next;
 	}
-	else
-		unset_variable(env, i);
 	g_exit_status = 0;
 	return (0);
 }

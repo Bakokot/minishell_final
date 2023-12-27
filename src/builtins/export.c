@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 12:04:37 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/27 12:03:25 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/27 12:58:56 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,27 +97,23 @@ static void	add_value(t_env **env, t_token *token_lst, int index)
 int	export(t_token *token_lst, t_env **env)
 {
 	int		index;
-	t_env	*new;
 
 	token_lst = token_lst->next;
 	if (!token_lst || token_lst->type != 0)
 		return (print_export(*env), 0);
-	index = find_key(token_lst->token, *env);
-	if (index == -1)
+	while (token_lst && token_lst->type != 1)
 	{
-		new = *env;
-		while (new)
-			new = new->next;
-		new = create_new_env(get_env_key(token_lst->token), \
-		get_env_values(token_lst->token));
-		add_back_env(env, new);
-	}
-	else if (index != -2)
-	{
-		if (is_plus(token_lst))
-			add_value(env, token_lst, index);
-		else
-			change_value(env, token_lst, index);
+		index = find_key(token_lst->token, *env);
+		if (index == -1)
+			export_new(env, token_lst->token);
+		else if (index != -2)
+		{
+			if (is_plus(token_lst))
+				add_value(env, token_lst, index);
+			else
+				change_value(env, token_lst, index);
+		}
+		token_lst = token_lst->next;
 	}
 	g_exit_status = 0;
 	return (0);
