@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:31:31 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/27 13:04:17 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/27 13:09:05 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ int			pwd(void);
 int			env_builtin(t_env *env);
 int			echo(t_token *token_lst);
 void		print_export(t_env *env);
-void		export_new(t_env **env, char *arg)
+void		export_new(t_env **env, char *arg);
 int			cd(t_token	*token_lst, t_env *env);
 int			unset(t_token *token_lst, t_env **env);
 int			export(t_token *token_lst, t_env **env);
