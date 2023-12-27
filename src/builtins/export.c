@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 12:04:37 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/22 22:34:59 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/27 12:03:25 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,14 @@ static int	find_key(char *find, t_env *env)
 		i++;
 		env = env->next;
 	}
-	return (-1);
+	i = 0;
+	while (find[i])
+	{
+		if (find[i] == '=')
+			return (-1);
+		i++;
+	}
+	return (-2);
 }
 
 static int	is_plus(t_token *token_lst)
@@ -105,7 +112,7 @@ int	export(t_token *token_lst, t_env **env)
 		get_env_values(token_lst->token));
 		add_back_env(env, new);
 	}
-	else
+	else if (index != -2)
 	{
 		if (is_plus(token_lst))
 			add_value(env, token_lst, index);

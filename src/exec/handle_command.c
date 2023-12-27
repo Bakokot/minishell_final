@@ -6,7 +6,7 @@
 /*   By: yallo <yallo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:38:24 by yallo             #+#    #+#             */
-/*   Updated: 2023/12/27 11:38:12 by yallo            ###   ########.fr       */
+/*   Updated: 2023/12/27 11:52:47 by yallo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*get_path(char *cmd, t_env *env)
 t_exec	*fill_exec(t_exec *exec, t_token *token_lst, t_env *env, int i)
 {
 	exec->args = token_lst_into_char(get_command(token_lst, i));
-	if (!exec->args || exec->args[0] == NULL || !exec->envp)
+	if (!exec->args || exec->args[0] == NULL)
 		return (free_exec(exec, token_lst), NULL);
 	if (ft_strchr(exec->args[0], '/') != NULL)
 		exec->path = check_directory(exec->args[0]);
@@ -75,6 +75,9 @@ t_heredoc *hd, int i)
 	if (*token_lst == NULL)
 		return (free_exec(exec, *token_lst), NULL);
 	exec->envp = env_lst_into_char(env);
+	if (!exec->envp)
+		return (free_exec(exec, *token_lst), NULL);
+	current = get_command(*token_lst, i);
 	if (is_bultin(current->token) == 1)
 		exec = fill_exec(exec, *token_lst, env, i);
 	return (exec);
