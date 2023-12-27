@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 12:42:04 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/27 14:16:25 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/27 14:20:20 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ bool	unclosed_pipe(char *line)
 		return (false);
 	while (line[i + 1])
 		i++;
-	while (ft_isspace(line[i]) && i >= 0)
+	while (ft_isspace(line[i]) && i > 0)
 		i--;
 	if (line[i] == '|')
 		return (true);

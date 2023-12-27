@@ -6,7 +6,7 @@
 /*   By: tbarde-c <tbarde-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:23:18 by tbarde-c          #+#    #+#             */
-/*   Updated: 2023/12/27 12:37:30 by tbarde-c         ###   ########.fr       */
+/*   Updated: 2023/12/27 14:25:25 by tbarde-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,23 @@
 
 int	g_exit_status;
 
+static bool no_history(char *line)
+{
+	int	i;
+
+	i = 0;
+	if (ft_strcmp(line, "") == 0)
+		return (true);
+	while (line[i] && ft_isspace(line[i]))
+		i++;
+	if (line[i] == '\0')
+		return (true);
+	return (false);
+}
+
 static void	handle_line(char *line, t_token **token, t_env *env)
 {
-	if (ft_strcmp(line, "") != 0)
+	if (no_history(line) == false)
 		add_history(line);
 	token = tokenize(line, env);
 	free(line);
